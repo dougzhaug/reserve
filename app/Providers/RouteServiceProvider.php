@@ -55,7 +55,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        Route::domain('boiox.test')
+        Route::domain('www.' . config('app.tld'))
              ->middleware('web')
              ->namespace($this->namespace)
              ->group(base_path('routes/web.php'));
@@ -70,7 +70,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapAdminRoutes()
     {
-        Route::domain('admin.boiox.test')
+        Route::domain('admin.' . config('app.tld'))
             ->middleware('admin')
             ->namespace($this->namespace)
             ->group(base_path('routes/admin.php'));
@@ -85,7 +85,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapAgentRoutes()
     {
-        Route::domain('agent.boiox.test')
+
+        Route::domain('agent.' . config('app.tld'))
             ->middleware('agent')
             ->namespace($this->namespace)
             ->group(base_path('routes/agent.php'));
