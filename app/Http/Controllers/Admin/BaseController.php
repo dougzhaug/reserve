@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
@@ -9,8 +12,10 @@ use Illuminate\Support\Facades\View;
 class BaseController extends Controller
 {
     //
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     public function __construct(Request $request)
     {
+//        $this->middleware('auth:admin');
         $this->autoLoad();
     }
 

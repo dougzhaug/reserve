@@ -11,4 +11,9 @@ class AdminsController extends BaseController
     {
         return view('admin.admins.index');
     }
+
+    public function create()
+    {
+        return view('admin.admins.index');
+    }
 }

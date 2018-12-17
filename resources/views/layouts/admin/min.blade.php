@@ -1,31 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('storage/static/admin/plugins/images/favicon.png')}}">
-    <title>Ample Admin Template - The Ultimate Multipurpose admin template</title>
+@section('head-link')
     <!-- Bootstrap Core CSS -->
-    <link href="{{asset('storage/static/admin/theme/min/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('static/admin/theme/min/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- Menu CSS -->
-    <link href="{{asset('storage/static/admin/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css')}}" rel="stylesheet">
+    <link href="{{asset('static/admin/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css')}}" rel="stylesheet">
     <!-- animation CSS -->
-    <link href="{{asset('storage/static/admin/theme/min/css/animate.css')}}" rel="stylesheet">
+    <link href="{{asset('static/admin/theme/min/css/animate.css')}}" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="{{asset('storage/static/admin/theme/min/css/style.css')}}" rel="stylesheet">
+    <link href="{{asset('static/admin/theme/min/css/style.css')}}" rel="stylesheet">
     <!-- color CSS -->
-    <link href="{{asset('storage/static/admin/theme/min/css/colors/blue-dark.css')}}" id="theme" rel="stylesheet">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
+    <link href="{{asset('static/admin/theme/min/css/colors/blue-dark.css')}}" id="theme" rel="stylesheet">
+@endsection
+
+@section('body')
 
 <body class="fix-header">
 <!-- ============================================================== -->
@@ -49,10 +37,10 @@
                 <!-- Logo -->
                 <a class="logo" href="index.html">
                     <!-- Logo icon image, you can use font-icon also --><b>
-                        <!--This is dark logo icon--><img src="{{asset('storage/static/admin/plugins/images/admin-logo.png')}}" alt="home" class="dark-logo" /><!--This is light logo icon--><img src="{{asset('storage/static/admin/plugins/images/admin-logo-dark.png')}}" alt="home" class="light-logo" />
+                        <!--This is dark logo icon--><img src="{{asset('static/admin/plugins/images/admin-logo.png')}}" alt="home" class="dark-logo" /><!--This is light logo icon--><img src="{{asset('static/admin/plugins/images/admin-logo-dark.png')}}" alt="home" class="light-logo" />
                     </b>
                     <!-- Logo text image you can use text also --><span class="hidden-xs">
-                        <!--This is dark logo text--><img src="{{asset('storage/static/admin/plugins/images/admin-text.png')}}" alt="home" class="dark-logo" /><!--This is light logo text--><img src="{{asset('storage/static/admin/plugins/images/admin-text-dark.png')}}" alt="home" class="light-logo" />
+                        <!--This is dark logo text--><img src="{{asset('static/admin/plugins/images/admin-text.png')}}" alt="home" class="dark-logo" /><!--This is light logo text--><img src="{{asset('static/admin/plugins/images/admin-text-dark.png')}}" alt="home" class="light-logo" />
                      </span> </a>
             </div>
             <!-- /Logo -->
@@ -70,22 +58,22 @@
                         <li>
                             <div class="message-center">
                                 <a href="#">
-                                    <div class="user-img"> <img src="{{asset('storage/static/admin/plugins/images/users/pawandeep.jpg')}}" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>
+                                    <div class="user-img"> <img src="{{asset('static/admin/plugins/images/users/pawandeep.jpg')}}" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>
                                     <div class="mail-contnet">
                                         <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:30 AM</span> </div>
                                 </a>
                                 <a href="#">
-                                    <div class="user-img"> <img src="{{asset('storage/static/admin/plugins/images/users/sonu.jpg')}}" alt="user" class="img-circle"> <span class="profile-status busy pull-right"></span> </div>
+                                    <div class="user-img"> <img src="{{asset('static/admin/plugins/images/users/sonu.jpg')}}" alt="user" class="img-circle"> <span class="profile-status busy pull-right"></span> </div>
                                     <div class="mail-contnet">
                                         <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span> <span class="time">9:10 AM</span> </div>
                                 </a>
                                 <a href="#">
-                                    <div class="user-img"> <img src="{{asset('storage/static/admin/plugins/images/users/arijit.jpg')}}" alt="user" class="img-circle"> <span class="profile-status away pull-right"></span> </div>
+                                    <div class="user-img"> <img src="{{asset('static/admin/plugins/images/users/arijit.jpg')}}" alt="user" class="img-circle"> <span class="profile-status away pull-right"></span> </div>
                                     <div class="mail-contnet">
                                         <h5>Arijit Sinh</h5> <span class="mail-desc">I am a singer!</span> <span class="time">9:08 AM</span> </div>
                                 </a>
                                 <a href="#">
-                                    <div class="user-img"> <img src="{{asset('storage/static/admin/plugins/images/users/pawandeep.jpg')}}" alt="user" class="img-circle"> <span class="profile-status offline pull-right"></span> </div>
+                                    <div class="user-img"> <img src="{{asset('static/admin/plugins/images/users/pawandeep.jpg')}}" alt="user" class="img-circle"> <span class="profile-status offline pull-right"></span> </div>
                                     <div class="mail-contnet">
                                         <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
                                 </a>
@@ -217,11 +205,11 @@
                         <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
                 </li>
                 <li class="dropdown">
-                    <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> <img src="{{asset('storage/static/admin/plugins/images/users/varun.jpg')}}" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">Steave</b><span class="caret"></span> </a>
+                    <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> <img src="{{asset('static/admin/plugins/images/users/varun.jpg')}}" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">Steave</b><span class="caret"></span> </a>
                     <ul class="dropdown-menu dropdown-user animated flipInY">
                         <li>
                             <div class="dw-user-box">
-                                <div class="u-img"><img src="{{asset('storage/static/admin/plugins/images/users/varun.jpg')}}" alt="user" /></div>
+                                <div class="u-img"><img src="{{asset('static/admin/plugins/images/users/varun.jpg')}}" alt="user" /></div>
                                 <div class="u-text">
                                     <h4>Steave Jobs</h4>
                                     <p class="text-muted">varun@gmail.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
@@ -254,8 +242,9 @@
             <div class="sidebar-head">
                 <h3><span class="fa-fw open-close"><i class="ti-menu hidden-xs"></i><i class="ti-close visible-xs"></i></span> <span class="hide-menu">Navigation</span></h3> </div>
             <ul class="nav" id="side-menu">
+                <li> <a href="javascript:void(0)" id="nav-index" class="waves-effect"><i  class="mdi mdi-settings fa-fw"></i> <span class="hide-menu">首页</span></a> </li>
                 <li class="user-pro">
-                    <a href="#" class="waves-effect"><img src="{{asset('storage/static/admin/plugins/images/users/varun.jpg')}}" alt="user-img" class="img-circle"> <span class="hide-menu"> Steve Gection<span class="fa arrow"></span></span>
+                    <a href="#" class="waves-effect"><img src="{{asset('static/admin/plugins/images/users/varun.jpg')}}" alt="user-img" class="img-circle"> <span class="hide-menu"> Steve Gection<span class="fa arrow"></span></span>
                     </a>
                     <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
                         <li><a href="javascript:void(0)"><i class="ti-user"></i> <span class="hide-menu">My Profile</span></a></li>
@@ -265,16 +254,25 @@
                         <li><a href="javascript:void(0)"><i class="fa fa-power-off"></i> <span class="hide-menu">Logout</span></a></li>
                     </ul>
                 </li>
-                <li> <a href="index.html" class="waves-effect"><i class="mdi mdi-av-timer fa-fw" data-icon="v"></i> <span class="hide-menu"> Dashboard <span class="fa arrow"></span> <span class="label label-rouded label-inverse pull-right">4</span></span></a>
+                <li> <a href="javascript:void(0)" class="waves-effect"><i class="mdi mdi-av-timer fa-fw" data-icon="v"></i> <span class="hide-menu"> Dashboard <span class="fa arrow"></span> <span class="label label-rouded label-inverse pull-right">4</span></span></a>
                     <ul class="nav nav-second-level">
-                        <li> <a href="index.html"><i class=" fa-fw">1</i><span class="hide-menu">Dashboard 1</span></a> </li>
-                        <li> <a href="index2.html"><i class=" fa-fw">2</i><span class="hide-menu">Dashboard 2</span></a> </li>
+                        <li> <a href="#" class="nav-a"><i class=" fa-fw">1</i><span class="hide-menu">Dashboard 1</span></a> </li>
+                        <li> <a href="javascript:void(0)" class="waves-effect"><i class="mdi mdi-av-timer fa-fw" data-icon="v"></i><span class="hide-menu">Dashboard 2 <span class="fa arrow"></span></span></a>
+                            <ul class="nav nav-second-level">
+                                <li> <a id="nav-eee" href="{{url('/admin')}}"><i class="fa-fw">P</i><span class="hide-menu">Products</span></a> </li>
+                                <li> <a href="product-orders.html"><i class="fa-fw">PO</i><span class="hide-menu">Product Orders</span></a> </li>
+                                <li> <a href="product-detail.html"><i class="fa-fw">PD</i><span class="hide-menu">Product Details</span></a> </li>
+                                <li> <a href="product-edit.html"><i class="fa-fw">PE</i><span class="hide-menu">Product Edit</span></a> </li>
+                                <li> <a href="product-cart.html"><i class="fa-fw">PC</i><span class="hide-menu">Product Cart</span></a> </li>
+                                <li> <a href="product-checkout.html"><i class="fa-fw">PC</i><span class="hide-menu">Product Checkout</span></a> </li>
+                            </ul>
+                        </li>
                         <li> <a href="index3.html"><i class=" fa-fw">3</i><span class="hide-menu">Dashboard 3</span></a> </li>
                     </ul>
                 </li>
-                <li> <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-cart-outline fa-fw" data-icon="v"></i> <span class="hide-menu"> eCommerce <span class="fa arrow"></span> </span></a>
+                <li> <a href="{{url('/order')}}" class="waves-effect"><i class="mdi mdi-cart-outline fa-fw" data-icon="v"></i> <span class="hide-menu"> eCommerce <span class="fa arrow"></span> </span></a>
                     <ul class="nav nav-second-level">
-                        <li> <a href="products.html"><i class="fa-fw">P</i><span class="hide-menu">Products</span></a> </li>
+                        <li> <a href="{{url('/order/create')}}"><i class="fa-fw">P</i><span class="hide-menu">Products</span></a> </li>
                         <li> <a href="product-orders.html"><i class="fa-fw">PO</i><span class="hide-menu">Product Orders</span></a> </li>
                         <li> <a href="product-detail.html"><i class="fa-fw">PD</i><span class="hide-menu">Product Details</span></a> </li>
                         <li> <a href="product-edit.html"><i class="fa-fw">PE</i><span class="hide-menu">Product Edit</span></a> </li>
@@ -511,28 +509,28 @@
                         <ul class="m-t-20 chatonline">
                             <li><b>Chat option</b></li>
                             <li>
-                                <a href="javascript:void(0)"><img src="{{asset('storage/static/admin/plugins/images/users/varun.jpg')}}" alt="user-img" class="img-circle"> <span>Varun Dhavan <small class="text-success">online</small></span></a>
+                                <a href="javascript:void(0)"><img src="{{asset('static/admin/plugins/images/users/varun.jpg')}}" alt="user-img" class="img-circle"> <span>Varun Dhavan <small class="text-success">online</small></span></a>
                             </li>
                             <li>
-                                <a href="javascript:void(0)"><img src="{{asset('storage/static/admin/plugins/images/users/genu.jpg')}}" alt="user-img" class="img-circle"> <span>Genelia Deshmukh <small class="text-warning">Away</small></span></a>
+                                <a href="javascript:void(0)"><img src="{{asset('static/admin/plugins/images/users/genu.jpg')}}" alt="user-img" class="img-circle"> <span>Genelia Deshmukh <small class="text-warning">Away</small></span></a>
                             </li>
                             <li>
-                                <a href="javascript:void(0)"><img src="{{asset('storage/static/admin/plugins/images/users/ritesh.jpg')}}" alt="user-img" class="img-circle"> <span>Ritesh Deshmukh <small class="text-danger">Busy</small></span></a>
+                                <a href="javascript:void(0)"><img src="{{asset('static/admin/plugins/images/users/ritesh.jpg')}}" alt="user-img" class="img-circle"> <span>Ritesh Deshmukh <small class="text-danger">Busy</small></span></a>
                             </li>
                             <li>
-                                <a href="javascript:void(0)"><img src="{{asset('storage/static/admin/plugins/images/users/arijit.jpg')}}" alt="user-img" class="img-circle"> <span>Arijit Sinh <small class="text-muted">Offline</small></span></a>
+                                <a href="javascript:void(0)"><img src="{{asset('static/admin/plugins/images/users/arijit.jpg')}}" alt="user-img" class="img-circle"> <span>Arijit Sinh <small class="text-muted">Offline</small></span></a>
                             </li>
                             <li>
-                                <a href="javascript:void(0)"><img src="{{asset('storage/static/admin/plugins/images/users/govinda.jpg')}}" alt="user-img" class="img-circle"> <span>Govinda Star <small class="text-success">online</small></span></a>
+                                <a href="javascript:void(0)"><img src="{{asset('static/admin/plugins/images/users/govinda.jpg')}}" alt="user-img" class="img-circle"> <span>Govinda Star <small class="text-success">online</small></span></a>
                             </li>
                             <li>
-                                <a href="javascript:void(0)"><img src="{{asset('storage/static/admin/plugins/images/users/hritik.jpg')}}" alt="user-img" class="img-circle"> <span>John Abraham<small class="text-success">online</small></span></a>
+                                <a href="javascript:void(0)"><img src="{{asset('static/admin/plugins/images/users/hritik.jpg')}}" alt="user-img" class="img-circle"> <span>John Abraham<small class="text-success">online</small></span></a>
                             </li>
                             <li>
-                                <a href="javascript:void(0)"><img src="{{asset('storage/static/admin/plugins/images/users/john.jpg')}}" alt="user-img" class="img-circle"> <span>Hritik Roshan<small class="text-success">online</small></span></a>
+                                <a href="javascript:void(0)"><img src="{{asset('static/admin/plugins/images/users/john.jpg')}}" alt="user-img" class="img-circle"> <span>Hritik Roshan<small class="text-success">online</small></span></a>
                             </li>
                             <li>
-                                <a href="javascript:void(0)"><img src="{{asset('storage/static/admin/plugins/images/users/pawandeep.jpg')}}" alt="user-img" class="img-circle"> <span>Pwandeep rajan <small class="text-success">online</small></span></a>
+                                <a href="javascript:void(0)"><img src="{{asset('static/admin/plugins/images/users/pawandeep.jpg')}}" alt="user-img" class="img-circle"> <span>Pwandeep rajan <small class="text-success">online</small></span></a>
                             </li>
                         </ul>
                     </div>
@@ -551,19 +549,28 @@
 </div>
 <!-- /#wrapper -->
 <!-- jQuery -->
-<script src="{{asset('storage/static/admin/plugins/bower_components/jquery/dist/jquery.min.js')}}"></script>
+<script src="{{asset('static/admin/plugins/bower_components/jquery/dist/jquery.min.js')}}"></script>
 <!-- Bootstrap Core JavaScript -->
-<script src="{{asset('storage/static/admin/theme/min/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+<script src="{{asset('static/admin/theme/min/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <!-- Menu Plugin JavaScript -->
-<script src="{{asset('storage/static/admin/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js')}}"></script>
+<script src="{{asset('static/admin/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js')}}"></script>
 <!--slimscroll JavaScript -->
-<script src="{{asset('storage/static/admin/theme/min/js/jquery.slimscroll.js')}}"></script>
+<script src="{{asset('static/admin/theme/min/js/jquery.slimscroll.js')}}"></script>
 <!--Wave Effects -->
-<script src="{{asset('storage/static/admin/theme/min/js/waves.js')}}"></script>
+<script src="{{asset('static/admin/theme/min/js/waves.js')}}"></script>
 <!-- Custom Theme JavaScript -->
-<script src="{{asset('storage/static/admin/theme/min/js/custom.min.js')}}"></script>
+<script src="{{asset('static/admin/theme/min/js/custom.min.js')}}"></script>
 <!--Style Switcher -->
-<script src="{{asset('storage/static/admin/plugins/bower_components/styleswitcher/jQuery.style.switcher.js')}}"></script>
+<script src="{{asset('static/admin/plugins/bower_components/styleswitcher/jQuery.style.switcher.js')}}"></script>
+<script>
+    $(function () {
+        $('#nav-eee').parents('a').addClass('active');
+    })
+    
+    $('#nav-index').on('click',function () {
+        $(this).addClass('active');
+        window.location.href= "{{url('/')}}";
+    })
+</script>
 </body>
-
-</html>
+@endsection

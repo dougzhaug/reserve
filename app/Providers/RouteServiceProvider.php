@@ -39,6 +39,10 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
+        $this->mapAdminRoutes();
+
+        $this->mapAgentRoutes();
+
         //
     }
 
@@ -51,9 +55,40 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        Route::middleware('web')
+        Route::domain('boiox.test')
+             ->middleware('web')
              ->namespace($this->namespace)
              ->group(base_path('routes/web.php'));
+    }
+
+    /**
+     * Define the "admin" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapAdminRoutes()
+    {
+        Route::domain('admin.boiox.test')
+            ->middleware('admin')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/admin.php'));
+    }
+
+    /**
+     * Define the "agent" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapAgentRoutes()
+    {
+        Route::domain('agent.boiox.test')
+            ->middleware('agent')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/agent.php'));
     }
 
     /**
