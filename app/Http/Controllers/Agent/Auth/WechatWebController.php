@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Agent\Auth;
 
+use App\Models\AgentWechatWeb;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
@@ -26,20 +27,22 @@ class WechatWebController extends Controller
      */
     public function handleProviderCallback()
     {
-        $user = Socialite::driver('weixinweb')->user();
+        $raw = Socialite::driver('weixinweb')->user();
+        //通过用户信息查询数据库信息
+        $agent_wechat = AgentWechatWeb::where('openid',$raw->id)->first();
+        if(!$agent_wechat){
 
-        dd($user);die;
-        // $user->token;
-    }
+            $user = $raw->user;
+            $user['refresh_token'] = $raw->refreshToken;
+            $user['privilege'] = json_encode($user['privilege']);
+            $user['expires'] = date('Y-m-d H:i:s',time()+config('services.sns_user_update_expires'));
+            $agent_wechat = AgentWechatWeb::create($user);
+        }
+        $agent_wechat->source = 1;
+        session('sns_agent', $agent_wechat);
 
-    /**
-     * autoLogin
-     *
-     * @param $user
-     */
-    protected function autoLogin($user)
-    {
-
+        $login = new SnsLoginController();
+        return $login->login($agent_wechat);
     }
 
 }

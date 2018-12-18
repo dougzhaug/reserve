@@ -15,12 +15,12 @@ class CreateAgentWechatWebsTable extends Migration
     {
         Schema::create('agent_wechat_webs', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('agents_id')->comment('agents表关联id');
+            $table->unsignedBigInteger('agents_id')->default(0)->comment('agents表关联id');
             $table->string('openid')->comment('微信openid');
             $table->string('nickname')->comment('昵称');
             $table->string('headimgurl')->comment('头像');
             $table->tinyInteger('sex')->comment('性别');
-            $table->string('language')->comment('语言');
+            $table->string('language')->default('')->comment('语言');
             $table->string('country')->comment('国家');
             $table->string('province')->comment('省份');
             $table->string('city')->comment('城市');
