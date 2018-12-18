@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
 
-class WeixinWebController extends Controller
+class WechatWebController extends Controller
 {
     //
     /**
@@ -28,6 +28,18 @@ class WeixinWebController extends Controller
     {
         $user = Socialite::driver('weixinweb')->user();
 
+        dd($user);die;
         // $user->token;
     }
+
+    /**
+     * autoLogin
+     *
+     * @param $user
+     */
+    protected function autoLogin($user)
+    {
+
+    }
+
 }

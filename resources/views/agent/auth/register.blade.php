@@ -1,77 +1,157 @@
 @extends('layouts.app')
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
+@section('head-link')
+    <!-- Bootstrap Core CSS -->
+    <link href="{{asset('static/admin/theme/min/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
+    <!-- animation CSS -->
+    <link href="{{asset('static/admin/theme/min/css/animate.css')}}" rel="stylesheet">
+    <!-- Wizard CSS -->
+    <link href="{{asset('static/admin/plugins/bower_components/register-steps/steps.css')}}" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{{asset('static/admin/theme/min/css/style.css')}}" rel="stylesheet">
+    <!-- color CSS -->
+    <link href="{{asset('static/admin/theme/min/css/colors/default.css')}}" id="theme" rel="stylesheet">
+@endsection
 
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('register') }}">
-                        {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Name</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
-
-                                @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
+@section('body')
+    <body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="cssload-speeding-wheel"></div>
+    </div>
+    <section id="wrapper" class="step-register">
+        <div class="register-box">
+            <div class="">
+                <a href="javascript:void(0)" class="text-center db m-b-40"><img src="{{asset('static/admin/plugins/images/admin-logo-dark.png')}}" alt="Home" /><br/><img src="{{asset('static/admin/plugins/images/admin-text-dark.png')}}" alt="Register" /></a>
+                <!-- multistep form -->
+                <div id="msform">
+                    <!-- progressbar -->
+                    <ul id="eliteregister">
+                        <li class="active">绑定手机号</li>
+                        <li class="active">公众号授权登录</li>
+                        <li>接入成功 </li>
+                    </ul>
+                    <!-- fieldsets -->
+                    <fieldset id="one">
+                        <h2 class="fs-title">绑定手机号</h2>
+                        <h3 class="fs-subtitle"></h3>
+                        <input type="text" name="phone" placeholder="手机号" />
+                        <div style="width: 100%;height:48px;margin-bottom: 18px;">
+                            <input type="text" name="code" placeholder="手机验证码" style="width: 60%; float:left;display:block;" />
+                            <button class="btn btn-info btn-lg" style="width: 30%; float:right;display:block;margin-top: 2px;">获取验证码</button>
                         </div>
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Register
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                        {{--<input type="input" name="cpass" placeholder="Confirm Password" />--}}
+                        <input type="button" name="next" class="next action-button" value="Next" />
+                    </fieldset>
+                    <fieldset id="two">
+                        <h2 class="fs-title">点击按钮进入微信公众平台官方授权</h2>
+                        <h3 class="fs-subtitle">Your presence on the social network</h3>
+                        <a class="btn btn-outline btn-success waves-effect waves-light btn-lg" style="width: 60%;margin-bottom: 15px;"><i class="fa fa-weixin m-r-5"></i> <span>微信公众号授权登录</span> </a>
+                        <p>授权之前，请确认</p>
+                        <p>1）您有一个正常使用的微信公众号</p>
+                        <p>2）已开启公众号安全助手(<a>如何开启？</a>)</p>
+                    </fieldset>
+                    <fieldset id="three">
+                        <h2 class="fs-title">Personal Details</h2>
+                        <h3 class="fs-subtitle">We will never sell it</h3>
+                        <input type="text" name="fname" placeholder="First Name" />
+                        <input type="text" name="lname" placeholder="Last Name" />
+                        <input type="text" name="phone" placeholder="Phone" />
+                        <textarea name="address" placeholder="Address"></textarea>
+                        <input type="button" name="previous" class="previous action-button" value="Previous" />
+                        <input type="submit" name="submit" class="submit action-button" value="Submit" />
+                    </fieldset>
                 </div>
+                <div class="clear"></div>
             </div>
         </div>
-    </div>
-</div>
+    </section>
+    <!-- jQuery -->
+    <script src="{{asset('static/admin/plugins/bower_components/jquery/dist/jquery.min.js')}}"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{{asset('static/admin/theme/min/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+    <!-- Menu Plugin JavaScript -->
+    <script src="{{asset('static/admin/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js')}}"></script>
+    <script src="{{asset('static/admin/plugins/bower_components/register-steps/jquery.easing.min.js')}}"></script>
+    <script src="{{asset('static/admin/plugins/bower_components/register-steps/register-init.js')}}"></script>
+    <!--slimscroll JavaScript -->
+    <script src="{{asset('static/admin/theme/min/js/jquery.slimscroll.js')}}"></script>
+    <!--Wave Effects -->
+    <script src="{{asset('static/admin/theme/min/js/waves.js')}}"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="{{asset('static/admin/theme/min/js/custom.min.js')}}"></script>
+    <!--Style Switcher -->
+    <script src="{{asset('static/admin/plugins/bower_components/styleswitcher/jQuery.style.switcher.js')}}"></script>
+    <script>
+        $(function () {
+            //初始显示那个元素
+            // autoload_next_fs = $('#two');
+            // //activate next step on progressbar using the index of next_fs
+            // $("#eliteregister li").eq($("fieldset").index(autoload_next_fs)).addClass("active");
+            // //show the next fieldset
+            // autoload_next_fs.show();
+
+            //重置next点击事件
+            $(".next").click(function(){
+                current_fs = $(this).parent();
+
+                buttonType = current_fs.attr('id');
+
+                if(buttonType = 'one'){     //绑定手机号
+                    bindPhone();
+                }
+
+                if(animating) return false;
+                animating = true;
+
+                next_fs = $(this).parent().next();
+
+                //activate next step on progressbar using the index of next_fs
+                $("#eliteregister li").eq($("fieldset").index(next_fs)).addClass("active");
+
+                //show the next fieldset
+                next_fs.show();
+                //hide the current fieldset with style
+                current_fs.animate({opacity: 0}, {
+                    step: function(now, mx) {
+                        //as the opacity of current_fs reduces to 0 - stored in "now"
+                        //1. scale current_fs down to 80%
+                        scale = 1 - (1 - now) * 0.2;
+                        //2. bring next_fs from the right(50%)
+                        left = (now * 50)+"%";
+                        //3. increase opacity of next_fs to 1 as it moves in
+                        opacity = 1 - now;
+                        current_fs.css({'transform': 'scale('+scale+')'});
+                        next_fs.css({'left': left, 'opacity': opacity});
+                    },
+                    duration: 800,
+                    complete: function(){
+                        current_fs.hide();
+                        animating = false;
+                    },
+                    //this comes from the custom easing plugin
+                    easing: 'easeInOutBack'
+                });
+            });
+        })
+        
+        function bindPhone() {
+            var phone = $('input[name="phone"]').val();
+            var code = $('input[name="code"]').val();
+            $.ajaxSetup({
+                headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' }
+            });
+            $.ajax({
+                url:"{{url('register')}}",
+                data:{phone:phone,code:code},
+                type:'post',
+                success:function (result) {
+                    alert(result);
+                }
+            })
+        }
+    </script>
+
+    </body>
 @endsection

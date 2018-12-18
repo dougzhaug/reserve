@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Agent\Auth;
 
-use App\User;
+use App\Models\Agent;
+use App\Rules\Phone;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -27,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -36,7 +37,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest:agent');
     }
 
     /**
@@ -48,8 +49,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'username' => 'required|unique:agents|string|max:255',
+            'nickname' => 'required|max:255',
+            'phone' => ['required','unique:agents',new Phone()],
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
@@ -62,10 +64,36 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+        //获取第三方授权的用户信息
+
+        return Agent::create([
+            'username' => $data['name'],
+            'nickname' => $data['email'],
+            'avatar' => '',
+            'sex' => '',
+            'source' => '',
+            'phone' => $data['phone'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        return view('agent.auth.register');
+    }
+
+    /**
+     * 重构认证驱动
+     *
+     * @return mixed
+     */
+    protected function guard()
+    {
+        return auth()->guard('agent');
     }
 }

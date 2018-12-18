@@ -16,7 +16,7 @@ class BaseController extends Controller
 
     public function __construct(Request $request)
     {
-//        $this->middleware('auth:agent');
+        $this->middleware('auth:agent');
         $this->autoLoad();
     }
 

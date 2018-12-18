@@ -75,7 +75,7 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
                             <div class="social">
-                                <a href="{{url('auth/weixin_web')}}" class="btn btn-success" data-toggle="tooltip"  title="微信登录">
+                                <a href="{{url('auth/wechat_web')}}" class="btn btn-success" data-toggle="tooltip"  title="微信登录">
                                     <i aria-hidden="true" class="fa fa-weixin"></i>
                                 </a>
                                 <a href="javascript:void(0)" class="btn btn-info" data-toggle="tooltip"  title="QQ登录">
