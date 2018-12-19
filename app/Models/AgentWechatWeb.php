@@ -25,6 +25,7 @@ class AgentWechatWeb extends Model
         'privilege',
         'unionid',
         'refresh_token',
-        'expires'
+        'expires',
+        'register_token'
     ];
 }

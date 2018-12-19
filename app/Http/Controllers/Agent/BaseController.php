@@ -2,21 +2,16 @@
 
 namespace App\Http\Controllers\Agent;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 
 class BaseController extends Controller
 {
-    //
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
+    public $error;
     public function __construct(Request $request)
     {
-        $this->middleware('auth:agent');
         $this->autoLoad();
     }
 
@@ -51,5 +46,17 @@ class BaseController extends Controller
         $layout = 'layouts.admin.' . $layoutName;
 
         View::share('layout',$layout);
+    }
+
+    /**
+     * @param $msg
+     * @param int $code
+     */
+    public function setError($msg,$code=0)
+    {
+        $this->error = [
+            'errcode' => $code,
+            'errmsg' => $msg
+        ];
     }
 }

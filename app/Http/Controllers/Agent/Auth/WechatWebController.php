@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Agent\Auth;
 
+use App\Http\Controllers\Agent\BaseController;
+use App\Models\Agent;
 use App\Models\AgentWechatWeb;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -28,21 +30,27 @@ class WechatWebController extends Controller
     public function handleProviderCallback()
     {
         $raw = Socialite::driver('weixinweb')->user();
+
         //通过用户信息查询数据库信息
         $agent_wechat = AgentWechatWeb::where('openid',$raw->id)->first();
-        if(!$agent_wechat){
 
+        if(!$agent_wechat){
             $user = $raw->user;
             $user['refresh_token'] = $raw->refreshToken;
             $user['privilege'] = json_encode($user['privilege']);
             $user['expires'] = date('Y-m-d H:i:s',time()+config('services.sns_user_update_expires'));
+            $user['register_token'] = bcrypt_random();
             $agent_wechat = AgentWechatWeb::create($user);
         }
-        $agent_wechat->source = 1;
-        session('sns_agent', $agent_wechat);
 
-        $login = new SnsLoginController();
-        return $login->login($agent_wechat);
+        //加agents表数据
+        $create_data = [
+            'source'=>1,
+            'username' => '随机'.str_random(6),
+            'avatar' => $agent_wechat['headimgurl'],
+            'password'=> bcrypt(config('services.sns_user_login_password')),
+        ];
+
+        return (new SnsLoginController())->login(array_merge($create_data,$agent_wechat->toArray()));
     }
-
 }

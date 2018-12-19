@@ -15,7 +15,6 @@ class CreateAgentWechatWebsTable extends Migration
     {
         Schema::create('agent_wechat_webs', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('agents_id')->default(0)->comment('agents表关联id');
             $table->string('openid')->comment('微信openid');
             $table->string('nickname')->comment('昵称');
             $table->string('headimgurl')->comment('头像');
@@ -28,6 +27,7 @@ class CreateAgentWechatWebsTable extends Migration
             $table->string('unionid')->default('')->comment('唯一识别号');
             $table->string('refresh_token')->comment('刷新token标识');
             $table->dateTime('expires')->comment('用户信息刷新标识（防止用户修改信息后没有及时更新）');
+            $table->dateTime('register_token')->default('')->comment('注册时使用的随机字符串');
             $table->timestamps();
 
             //索引

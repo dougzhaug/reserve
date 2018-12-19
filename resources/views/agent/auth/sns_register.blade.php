@@ -27,22 +27,12 @@
                 <div id="msform">
                     <!-- progressbar -->
                     <ul id="eliteregister">
-                        <li class="active">绑定手机号</li>
-                        <li class="@if (in_array(request()->input("register_step"),[2,3])) active @endif">公众号授权登录</li>
+                        <li class="active">管理员帐号登录</li>
+                        <li class="active">公众号授权登录</li>
                         <li class="@if (in_array(request()->input("register_step"),[3])) active @endif">接入成功</li>
                     </ul>
                     <!-- fieldsets -->
                     <fieldset id="one">
-                        <h2 class="fs-title">绑定手机号</h2>
-                        <h3 class="fs-subtitle"></h3>
-                        <input type="text" name="phone" placeholder="手机号" />
-                        <div style="width: 100%;height:48px;margin-bottom: 18px;">
-                            <input type="text" name="code" placeholder="手机验证码" style="width: 60%; float:left;display:block;" />
-                            <button class="btn btn-info btn-lg" style="width: 30%; float:right;display:block;margin-top: 2px;">获取验证码</button>
-                        </div>
-
-                        {{--<input type="input" name="cpass" placeholder="Confirm Password" />--}}
-                        <input type="button" name="next" class="next action-button" value="Next" />
                     </fieldset>
                     <fieldset id="two">
                         <h2 class="fs-title">点击按钮进入微信公众平台官方授权</h2>
@@ -89,10 +79,8 @@
             /******初始显示元素******/
             var step = "{{request()->input('register_step')}}";
 
-            var fs = '';
-            if(step == 2){
-                fs = '#two';
-            }else if(step == 3){
+            var fs = '#two';
+            if(step == 3){
                 fs = '#three';
             }
 
@@ -111,10 +99,7 @@
                 buttonType = current_fs.attr('id');
 
                 if(buttonType = 'one'){     //绑定手机号
-                    bindResult = bindPhone();
-                    if(bindResult){
 
-                    }
                 }
 
                 if(animating) return false;
@@ -150,26 +135,6 @@
                 });
             });
         })
-
-        function bindPhone() {
-            var phone = $('input[name="phone"]').val();
-            var code = $('input[name="code"]').val();
-            var source = "{{request()->input('source')}}";
-            var token = "{{request()->input('token')}}";
-
-            $.ajaxSetup({
-                headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' }
-            });
-
-            return $.ajax({
-                url:"{{url('register')}}",
-                data:{phone:phone,code:code,source:source,token:token},
-                type:'post',
-                success:function (result) {
-                    return result;
-                }
-            })
-        }
     </script>
 
     </body>
