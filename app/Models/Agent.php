@@ -26,4 +26,9 @@ class Agent extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function wechatMp()
+    {
+        return $this->hasOne('App\Models\WechatMp');
+    }
 }

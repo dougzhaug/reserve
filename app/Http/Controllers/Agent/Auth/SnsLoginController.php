@@ -33,7 +33,7 @@ class SnsLoginController extends Controller
                 }
             }
         }else{//注册
-            (new SnsRegisterController())->register($sns_agent);
+            return (new SnsRegisterController())->register($sns_agent);
         }
 
     }

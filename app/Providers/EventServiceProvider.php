@@ -18,7 +18,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         \SocialiteProviders\Manager\SocialiteWasCalled::class => [
             // add your listeners (aka providers) here
-            'SocialiteProviders\\WeixinWeb\\WeixinWebExtendSocialite@handle',
+            //第三方登录
+            'SocialiteProviders\\WeixinWeb\\WeixinWebExtendSocialite@handle',   //微信
+            'SocialiteProviders\QQ\QqExtendSocialite@handle',                   //QQ
+            'SocialiteProviders\Weibo\WeiboExtendSocialite@handle',             //微博
         ],
     ];
 

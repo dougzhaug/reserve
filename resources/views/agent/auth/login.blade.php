@@ -37,7 +37,7 @@
 
                     <div class="form-group m-t-20{{ $errors->has('phone') ? ' has-error' : '' }}">
                         <div class="col-xs-12">
-                            <label>手机号</label>
+                            {{--<label>手机号</label>--}}
                             <input class="form-control" id="phone" type="text" name="phone" value="{{ old('email') }}" placeholder="手机号" required autofocus>
                             @if ($errors->has('phone'))
                                 <span class="help-block">
@@ -49,7 +49,7 @@
 
                     <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
                         <div class="col-xs-12">
-                            <label>密码</label>
+                            {{--<label>密码</label>--}}
                             <input id="password" type="password" name="password" class="form-control" required placeholder="密码">
                             @if ($errors->has('password'))
                                 <span class="help-block">
@@ -78,10 +78,10 @@
                                 <a href="{{url('auth/wechat_web')}}" class="btn btn-success" data-toggle="tooltip"  title="微信登录">
                                     <i aria-hidden="true" class="fa fa-weixin"></i>
                                 </a>
-                                <a href="javascript:void(0)" class="btn btn-info" data-toggle="tooltip"  title="QQ登录">
+                                <a href="{{url('auth/qq')}}" class="btn btn-info" data-toggle="tooltip"  title="QQ登录">
                                     <i aria-hidden="true" class="fa fa-qq"></i>
                                 </a>
-                                <a href="javascript:void(0)" class="btn btn-googleplus" data-toggle="tooltip"  title="微博登录">
+                                <a href="{{url('auth/weibo')}}" class="btn btn-googleplus" data-toggle="tooltip"  title="微博登录">
                                     <i aria-hidden="true" class="fa fa-weibo"></i>
                                 </a>
                             </div>
@@ -89,7 +89,7 @@
                     </div>
                     <div class="form-group m-b-0">
                         <div class="col-sm-12 text-center">
-                            <p>还没有账号？<a href="register.html" class="text-primary m-l-5"><b>注册</b></a></p>
+                            <p>还没有账号？<a href="{{url('register')}}" class="text-primary m-l-5"><b>注册</b></a></p>
                         </div>
                     </div>
                 </form>

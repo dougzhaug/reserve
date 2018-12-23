@@ -182,6 +182,10 @@ return [
          */
 //        Laravel\Socialite\SocialiteServiceProvider::class,
         \SocialiteProviders\Manager\ServiceProvider::class,
+        Overtrue\LaravelWeChat\ServiceProvider::class,
+        Mews\Captcha\CaptchaServiceProvider::class,
+        Toplan\PhpSms\PhpSmsServiceProvider::class,
+        Toplan\Sms\SmsManagerServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -241,7 +245,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
-
+        'EasyWeChat' => Overtrue\LaravelWeChat\Facade::class,
+        'Captcha' => Mews\Captcha\Facades\Captcha::class,
+        'PhpSms' => Toplan\PhpSms\Facades\Sms::class,
+        'SmsManager' => Toplan\Sms\Facades\SmsManager::class,
     ],
 
 ];

@@ -10,8 +10,12 @@
         "laravel/framework": "5.5.*",
         "laravel/socialite": "^3.2",
         "laravel/tinker": "~1.0",
+        "mews/captcha": "^2.2",
         "overtrue/laravel-wechat": "~4.0",
-        "socialiteproviders/weixin-web": "^3.0"
+        "socialiteproviders/qq": "^3.0",
+        "socialiteproviders/weibo": "^3.0",
+        "socialiteproviders/weixin-web": "^3.0",
+        "toplan/laravel-sms": "~2.6"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

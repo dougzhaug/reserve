@@ -1909,7 +1909,7 @@ rangy.createModule("DomUtil", function(api, module) {
     <ul id="ul"><li id="a">| a </li><li id="b"> b |</li></ul>
 
     var range = document.selection.createRange();
-    alert(range.parentElement().id); // Should alert "ul" but alerts "b"
+    alert(range.parentElement().id); // Should alert "ul" but notification "b"
 
     This method returns the common ancestor node of the following:
     - the parentElement() of the textRange

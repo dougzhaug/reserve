@@ -19,7 +19,7 @@ class CreateAgentsTable extends Migration
             $table->string('openid')->unique()->comment('用户唯一标识');
             $table->string('nickname')->comment('昵称');
             $table->string('avatar')->comment('头像');
-            $table->string('phone')->unique()->default('')->comment('手机号');
+            $table->string('phone')->default('')->comment('手机号');
             $table->tinyInteger('sex')->default(0)->comment('性别 0:未知 1:男 2:女');
             $table->string('password')->comment('密码');
             $table->tinyInteger('source')->default(0)->comment('注册来源 0:手机注册 1:微信注册 2:QQ注册 3:微博注册');

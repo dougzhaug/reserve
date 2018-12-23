@@ -42,6 +42,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'sns_user_update_expires' => env('SNS_USER_UPDATE_EXPIRES',86400),
+
     /*
     |--------------------------------------------------------------------------
     | Third Party User Login Password
@@ -59,4 +60,15 @@ return [
         'client_secret' => env('WEIXINWEB_SECRET'),
         'redirect' => env('WEIXINWEB_REDIRECT_URI')
     ],
+    'qq' => [
+        'client_id' => env('QQ_KEY'),
+        'client_secret' => env('QQ_SECRET'),
+        'redirect' => env('QQ_REDIRECT_URI'),
+    ],
+    'weibo' => [
+        'client_id' => env('WEIBO_KEY'),
+        'client_secret' => env('WEIBO_SECRET'),
+        'redirect' => env('WEIBO_REDIRECT_URI'),
+    ],
+
 ];

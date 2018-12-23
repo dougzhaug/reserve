@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Agent\Auth;
 
 use App\Models\Agent;
 use App\Rules\Phone;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
@@ -41,6 +43,24 @@ class RegisterController extends Controller
     }
 
     /**
+     * (重构注册方法)Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
+
+        return $this->registered($request, $user)
+            ?: redirect($this->redirectPath());
+    }
+
+    /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
@@ -49,10 +69,10 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'username' => 'required|unique:agents|string|max:255',
-            'nickname' => 'required|max:255',
             'phone' => ['required','unique:agents',new Phone()],
+            'phone_captcha' => 'required|min:6',
             'password' => 'required|string|min:6|confirmed',
+            'captcha' => 'required|captcha',
         ]);
     }
 
@@ -64,14 +84,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        //获取第三方授权的用户信息
 
         return Agent::create([
-            'username' => $data['name'],
-            'nickname' => $data['email'],
+            'openid' => str_random(32),
+            'username' => 'B_' . str_random(8),
+            'nickname' => '',
             'avatar' => '',
-            'sex' => '',
-            'source' => '',
+            'sex' => 0,
+            'source' => 0,
             'phone' => $data['phone'],
             'password' => bcrypt($data['password']),
         ]);

@@ -10,9 +10,15 @@ use Illuminate\Support\Facades\Auth;
 class SnsRegisterController extends Controller
 {
     //
-    public function showRegistrationForm()
+    public function showRegistrationForm(Request $request)
     {
-        return view('agent.auth.sns_register');
+        $url = '';
+        if($request->register_step != 3){
+            $openPlatform = app('wechat.open_platform');
+            $url = $openPlatform->getPreAuthorizationUrl(url('open-platform/serve'));
+        }
+
+        return view('agent.auth.sns_register',['authorize_url'=>$url]);
     }
 
     public function register(array $data)

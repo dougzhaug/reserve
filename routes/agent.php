@@ -14,8 +14,22 @@ Route::namespace('Agent')->group(function () {
     //微信公众号授权
     Route::get('authorize', 'Auth\SnsRegisterController@showRegistrationForm');
 
+    /***** 第三方登录 *****/
+    //微信登录
     Route::get('auth/wechat_web', 'Auth\WechatWebController@redirectToProvider');
     Route::get('auth/wechat_web/callback', 'Auth\WechatWebController@handleProviderCallback');
+    //QQ登录
+    Route::get('auth/qq', 'Auth\QqController@redirectToProvider');
+    Route::get('auth/qq/callback', 'Auth\QqController@handleProviderCallback');
+    //微博登录
+    Route::get('auth/weibo', 'Auth\WeiBoController@redirectToProvider');
+    Route::get('auth/weibo/callback', 'Auth\WeiBoController@handleProviderCallback');
+
+    /***** 第三方登录（完） *****/
+
+    //微信开放平台授权
+    Route::any('open-platform/serve','OpenPlatformController@serve');
 
     Route::get('/','IndexController@index');
+    Route::get('test','IndexController@test');
 });
