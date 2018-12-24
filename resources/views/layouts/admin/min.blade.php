@@ -220,9 +220,9 @@
                         <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
                         <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
+                        <li><a href="#"><i class="ti-settings"></i> 设置</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{{route('logout')}}"><i class="fa fa-power-off"></i> Logout</a></li>
+                        <li><a href="{{route('logout')}}"><i class="fa fa-power-off"></i> 退出 </a></li>
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>

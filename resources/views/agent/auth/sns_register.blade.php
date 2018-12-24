@@ -44,14 +44,12 @@
                         <p>2）已开启公众号安全助手(<a>如何开启？</a>)</p>
                     </fieldset>
                     <fieldset id="three">
-                        <h2 class="fs-title">Personal Details</h2>
-                        <h3 class="fs-subtitle">We will never sell it</h3>
-                        <input type="text" name="fname" placeholder="First Name" />
-                        <input type="text" name="lname" placeholder="Last Name" />
-                        <input type="text" name="phone" placeholder="Phone" />
-                        <textarea name="address" placeholder="Address"></textarea>
-                        <input type="button" name="previous" class="previous action-button" value="Previous" />
-                        <input type="submit" name="submit" class="submit action-button" value="Submit" />
+                        <h2 class="fs-title" style="font-size: 30px;">授权成功</h2>
+                        <h3 class="fs-subtitle">Your presence on the social network</h3>
+                        <a href="{{url('/')}}" class="btn btn-outline btn-success waves-effect waves-light btn-lg" style="width: 40%;margin-bottom: 15px;"><span>进 入</span> </a>
+                        <p>欢迎加入!</p>
+                        <p>1）您有一个正常使用的微信公众号</p>
+                        <p>2）已开启公众号安全助手(<a>如何开启？</a>)</p>
                     </fieldset>
                 </div>
                 <div class="clear"></div>
