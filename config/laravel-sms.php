@@ -14,7 +14,7 @@ return [
     'route' => [
         'enable'     => true,
         'prefix'     => 'laravel-sms',
-        'middleware' => ['web'],
+        'middleware' => ['web','agent'],
     ],
 
     /*
@@ -65,7 +65,7 @@ return [
     |
     */
     'code' => [
-        'length'        => 5,
+        'length'        => 6,
         'validMinutes'  => 5,
         'repeatIfValid' => false,
         'maxAttempts'   => 0,
@@ -105,6 +105,7 @@ return [
     |
     */
     'templates' => [
+        'Qcloud'=>'94381',
     ],
 
     /*

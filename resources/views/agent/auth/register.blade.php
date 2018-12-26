@@ -51,8 +51,8 @@
                         <div class="col-xs-7">
                             <input name="phone_captcha" id="phone_captcha" value="{{old('phone_captcha')}}" class="form-control" type="text" required="" placeholder="手机验证码">
                         </div>
-                        <div class="col-xs-4">
-                            <button class=" btn btn-info text-uppercase form-control" style="text-align:right;"> 获取验证码 </button>
+                        <div class="col-xs-5">
+                            <button id="sendVerifySmsButton" class=" btn btn-info text-uppercase form-control" style="text-align:center"> 获取验证码 </button>
                         </div>
                         @if ($errors->has('phone_captcha'))
                             <div class="col-xs-12">
@@ -125,5 +125,24 @@
     <script src="{{asset('static/admin/theme/min/js/custom.min.js')}}"></script>
     <!--Style Switcher -->
     <script src="{{asset('static/admin/plugins/bower_components/styleswitcher/jQuery.style.switcher.js')}}"></script>
+    <script src="{{asset('static/admin/plugins/bower_components/laravel-sms/laravel-sms.js')}}"></script>
+    <script>
+        $('#sendVerifySmsButton').sms({
+            //laravel csrf token
+            token       : "{{csrf_token()}}",
+            //请求间隔时间
+            interval    : 60,
+            //请求参数
+            requestData : {
+                //手机号
+                mobile : function () {
+                    return $('input[name=phone]').val();
+                },
+                //手机号的检测规则
+                mobile_rule : 'mobile_required'
+            }
+        });
+    </script>
+
     </body>
 @endsection

@@ -22,6 +22,7 @@ return [
      *
      */
     'scheme' => [
+        'Qcloud',
         'Log',
     ],
 
@@ -183,8 +184,8 @@ return [
          * support template sms.
          */
         'Qcloud' => [
-            'appId'     => 'your_app_id',
-            'appKey'    => 'your_app_key',
+            'appId'     => env('SMS_QCLOUD_APP_ID',''),
+            'appKey'    => env('SMS_QCLOUD_APP_KEY',''),
         ],
 
         /*
