@@ -22,11 +22,7 @@ class SnsLoginController extends Controller
         if($agent){ //登录
             if (Auth::guard('agent')->attempt(['openid'=>$agent['openid'],'password'=>config('services.sns_user_login_password')])) {
                 if(!$agent['authorize_status']){    //公众号未授权
-                    try{
-                        return redirect()->action('Agent\Auth\SnsRegisterController@showRegistrationForm');
-                    }catch (\Exception $e){
-                        dd($e->getMessage());die;
-                    }
+                    return redirect()->action('Agent\Auth\SnsRegisterController@showRegistrationForm');
                 }else{
                     //跳转首页或来源页面
                     return redirect()->intended('dashboard');

@@ -52,7 +52,7 @@
                             <input name="phone_captcha" id="phone_captcha" value="{{old('phone_captcha')}}" class="form-control" type="text" required="" placeholder="手机验证码">
                         </div>
                         <div class="col-xs-5">
-                            <button id="sendVerifySmsButton" class=" btn btn-info text-uppercase form-control" style="text-align:center"> 获取验证码 </button>
+                            <button id="sendVerifySmsButton" class="btn btn-info btn-block text-uppercase form-control" style="text-align:center;color:#FFF;"> 获取验证码 </button>
                         </div>
                         @if ($errors->has('phone_captcha'))
                             <div class="col-xs-12">

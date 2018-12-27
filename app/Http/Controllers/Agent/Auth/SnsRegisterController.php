@@ -12,8 +12,14 @@ class SnsRegisterController extends Controller
     //
     public function showRegistrationForm(Request $request)
     {
+        //判断是否已经授权过了
+        if(Auth::guard('agent')->user()['authorize_status']){
+            return redirect('/');
+        }
+
         $url = '';
         if($request->register_step != 3){
+            //获取开放平台授权url
             $openPlatform = app('wechat.open_platform');
             $url = $openPlatform->getPreAuthorizationUrl(url('open-platform/serve'));
         }
