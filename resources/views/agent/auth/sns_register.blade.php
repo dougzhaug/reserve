@@ -36,7 +36,7 @@
                     <fieldset id="one">
                     </fieldset>
                     <fieldset id="two">
-                        <h2 class="fs-title" style="font-size: 18px;">点击按钮进入微信公众平台官方授权</h2>
+                        <h2 class="fs-title" style="font-size: 18px;"><b>点击按钮进入微信公众平台官方授权</b></h2>
                         <h3 class="fs-subtitle"></h3>
                         <a href="{{$authorize_url}}" class="btn btn-outline btn-success waves-effect waves-light btn-lg" style="width: 60%;margin-bottom: 15px;"><i class="fa fa-weixin m-r-5"></i> <span>微信公众号授权登录</span> </a>
                         <p>授权之前，请确认</p>
@@ -45,12 +45,12 @@
                         <p><a href="{{route('logout')}}">更换账号</a></p>
                     </fieldset>
                     <fieldset id="three">
-                        <h2 class="fs-title" style="font-size: 30px;">授权成功</h2>
-                        <h3 class="fs-subtitle">Your presence on the social network</h3>
-                        <a href="{{url('/')}}" class="btn btn-outline btn-success waves-effect waves-light btn-lg" style="width: 40%;margin-bottom: 15px;"><span>进 入</span> </a>
-                        <p>欢迎加入!</p>
-                        <p>1）您有一个正常使用的微信公众号</p>
-                        <p>2）已开启公众号安全助手(<a>如何开启？</a>)</p>
+                        <h2 class="fs-title" style="font-size: 22px;"><b>授权成功</b></h2>
+                        <h3 class="fs-subtitle"></h3>
+                        <a href="{{url('/')}}" class="btn btn-outline btn-success waves-effect waves-light btn-lg" style="width: 40%;margin-bottom: 15px;font-size: 26px;"><span>进 入</span> </a>
+                        <p style="font-size: 16px;">欢迎加入!</p>
+                        <p>开始精彩的旅程吧</p>
+                        <p>公众号<a href="">安全助手</a></p>
                     </fieldset>
                 </div>
                 <div class="clear"></div>
