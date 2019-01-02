@@ -11,6 +11,9 @@
     <link href="{{asset('static/admin/theme/min/css/style.css')}}" rel="stylesheet">
     <!-- color CSS -->
     <link href="{{asset('static/admin/theme/min/css/colors/blue-dark.css')}}" id="theme" rel="stylesheet">
+
+    @stack('link')
+
 @endsection
 
 @section('body')
@@ -242,7 +245,7 @@
             <div class="sidebar-head">
                 <h3><span class="fa-fw open-close"><i class="ti-menu hidden-xs"></i><i class="ti-close visible-xs"></i></span> <span class="hide-menu">Navigation</span></h3> </div>
             <ul class="nav" id="side-menu">
-                <li> <a href="javascript:void(0)" id="nav-index" class="waves-effect"><i  class="mdi mdi-settings fa-fw"></i> <span class="hide-menu">首页</span></a> </li>
+                <li> <a href="{{url('/index')}}" id="nav-index" class="waves-effect"><i  class="mdi mdi-settings fa-fw"></i> <span class="hide-menu">首页</span></a> </li>
                 <li class="user-pro">
                     <a href="#" class="waves-effect"><img src="{{asset('static/admin/plugins/images/users/varun.jpg')}}" alt="user-img" class="img-circle"> <span class="hide-menu"> Steve Gection<span class="fa arrow"></span></span>
                     </a>
@@ -256,10 +259,10 @@
                 </li>
                 <li> <a href="javascript:void(0)" class="waves-effect"><i class="mdi mdi-av-timer fa-fw" data-icon="v"></i> <span class="hide-menu"> Dashboard <span class="fa arrow"></span> <span class="label label-rouded label-inverse pull-right">4</span></span></a>
                     <ul class="nav nav-second-level">
-                        <li> <a href="#" class="nav-a"><i class=" fa-fw">1</i><span class="hide-menu">Dashboard 1</span></a> </li>
+                        <li> <a href="{{url('/agents')}}" class="nav-a waves-effect"><i class=" fa-fw">1</i><span class="hide-menu">Dashboard 1</span></a> </li>
                         <li> <a href="javascript:void(0)" class="waves-effect"><i class="mdi mdi-av-timer fa-fw" data-icon="v"></i><span class="hide-menu">Dashboard 2 <span class="fa arrow"></span></span></a>
                             <ul class="nav nav-second-level">
-                                <li> <a id="nav-eee" href="{{url('/admin')}}"><i class="fa-fw">P</i><span class="hide-menu">Products</span></a> </li>
+                                <li> <a href="#"><i class="fa-fw">P</i><span class="hide-menu">代理商管理</span></a> </li>
                                 <li> <a href="product-orders.html"><i class="fa-fw">PO</i><span class="hide-menu">Product Orders</span></a> </li>
                                 <li> <a href="product-detail.html"><i class="fa-fw">PD</i><span class="hide-menu">Product Details</span></a> </li>
                                 <li> <a href="product-edit.html"><i class="fa-fw">PE</i><span class="hide-menu">Product Edit</span></a> </li>
@@ -304,7 +307,7 @@
                         <li><a href="bootstrap.html"><i class="ti-rocket fa-fw"></i> <span class="hide-menu">Bootstrap UI</span></a></li>
                     </ul>
                 </li>
-                <li> <a href="#" class="waves-effect active"><i class="mdi mdi-content-copy fa-fw"></i> <span class="hide-menu">Sample Pages<span class="fa arrow"></span><span class="label label-rouded label-warning pull-right">30</span></span></a>
+                <li> <a href="#" class="waves-effect"><i class="mdi mdi-content-copy fa-fw"></i> <span class="hide-menu">Sample Pages<span class="fa arrow"></span><span class="label label-rouded label-warning pull-right">30</span></span></a>
                     <ul class="nav nav-second-level">
                         <li><a href="starter-page.html"><i class="ti-layout-width-default fa-fw"></i> <span class="hide-menu">Starter Page</span></a></li>
                         <li><a href="blank.html"><i class="ti-layout-sidebar-left fa-fw"></i> <span class="hide-menu">Blank Page</span></a></li>
@@ -437,7 +440,14 @@
                             <ul class="nav nav-third-level">
                                 <li> <a href="javascript:void(0)"><i class=" fa-fw">T</i><span class="hide-menu">Third Level Item</span></a> </li>
                                 <li> <a href="javascript:void(0)"><i class=" fa-fw">M</i><span class="hide-menu">Third Level Item</span></a> </li>
-                                <li> <a href="javascript:void(0)"><i class=" fa-fw">R</i><span class="hide-menu">Third Level Item</span></a> </li>
+                                <li> <a href="javascript:void(0)" class="waves-effect"><i data-icon="&#xe008;" class="linea-icon linea-basic fa-fw"></i><span class="hide-menu">Third Level </span><span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li> <a href="javascript:void(0)"><i class=" fa-fw">T</i><span class="hide-menu">Third Level Item</span></a> </li>
+                                        <li> <a href="#"><i class=" fa-fw">M</i><span class="hide-menu">Third Level Item</span></a> </li>
+                                        <li> <a href="javascript:void(0)"><i class=" fa-fw">R</i><span class="hide-menu">Third Level Item</span></a> </li>
+                                        <li> <a href="javascript:void(0)"><i class=" fa-fw">G</i><span class="hide-menu">Third Level Item</span></a> </li>
+                                    </ul>
+                                </li>
                                 <li> <a href="javascript:void(0)"><i class=" fa-fw">G</i><span class="hide-menu">Third Level Item</span></a> </li>
                             </ul>
                         </li>
@@ -569,18 +579,11 @@
 <!--Wave Effects -->
 <script src="{{asset('static/admin/theme/min/js/waves.js')}}"></script>
 <!-- Custom Theme JavaScript -->
-<script src="{{asset('static/admin/theme/min/js/custom.min.js')}}"></script>
+<script src="{{asset('static/admin/theme/min/js/custom.js')}}"></script>
 <!--Style Switcher -->
 <script src="{{asset('static/admin/plugins/bower_components/styleswitcher/jQuery.style.switcher.js')}}"></script>
-<script>
-    $(function () {
-        $('#nav-eee').parents('a').addClass('active');
-    })
-    
-    $('#nav-index').on('click',function () {
-        $(this).addClass('active');
-        window.location.href= "{{url('/')}}";
-    })
-</script>
+
+@stack('script')
+
 </body>
 @endsection

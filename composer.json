@@ -15,6 +15,7 @@
         "socialiteproviders/qq": "^3.0",
         "socialiteproviders/weibo": "^3.0",
         "socialiteproviders/weixin-web": "^3.0",
+        "spatie/laravel-permission": "^2.29",
         "toplan/laravel-sms": "~2.6"
     },
     "require-dev": {
