@@ -3,7 +3,7 @@
 namespace App\Models;
 
 
-class Admin extends Model
+class Permission extends Model
 {
     //
 }

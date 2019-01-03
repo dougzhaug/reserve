@@ -76,7 +76,11 @@ $(document).ready(function () {
             },
             url = window.location,
             element = $('ul.nav a').filter(function () {
-                return this.href === url || url.href.indexOf(this.href) === 0;
+                if(this.href.split("//")[1] === document.domain+'/'){
+                    return this.href == url;
+                }else{
+                    return this.href === url || url.href.indexOf(this.href) === 0;
+                }
             }).addClass('active').parent().parent().addClass('in').parent();
         addActive(element);
         $(window).ready(set);

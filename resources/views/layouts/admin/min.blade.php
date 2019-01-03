@@ -245,7 +245,7 @@
             <div class="sidebar-head">
                 <h3><span class="fa-fw open-close"><i class="ti-menu hidden-xs"></i><i class="ti-close visible-xs"></i></span> <span class="hide-menu">Navigation</span></h3> </div>
             <ul class="nav" id="side-menu">
-                <li> <a href="{{url('/index')}}" id="nav-index" class="waves-effect"><i  class="mdi mdi-settings fa-fw"></i> <span class="hide-menu">首页</span></a> </li>
+                <li> <a href="{{url('/')}}" id="nav-index" class="waves-effect"><i  class="fa fa-home fa-fw"></i> <span class="hide-menu">首页</span></a> </li>
                 <li class="user-pro">
                     <a href="#" class="waves-effect"><img src="{{asset('static/admin/plugins/images/users/varun.jpg')}}" alt="user-img" class="img-circle"> <span class="hide-menu"> Steve Gection<span class="fa arrow"></span></span>
                     </a>
@@ -273,12 +273,12 @@
                         <li> <a href="index3.html"><i class=" fa-fw">3</i><span class="hide-menu">Dashboard 3</span></a> </li>
                     </ul>
                 </li>
-                <li> <a href="{{url('/order')}}" class="waves-effect"><i class="mdi mdi-cart-outline fa-fw" data-icon="v"></i> <span class="hide-menu"> eCommerce <span class="fa arrow"></span> </span></a>
+                <li> <a href="javascript:void(0)" class="waves-effect"><i class="mdi mdi-cart-outline fa-fw" data-icon="v"></i> <span class="hide-menu"> eCommerce <span class="fa arrow"></span> </span></a>
                     <ul class="nav nav-second-level">
                         <li> <a href="{{url('/order/create')}}"><i class="fa-fw">P</i><span class="hide-menu">Products</span></a> </li>
                         <li> <a href="product-orders.html"><i class="fa-fw">PO</i><span class="hide-menu">Product Orders</span></a> </li>
                         <li> <a href="product-detail.html"><i class="fa-fw">PD</i><span class="hide-menu">Product Details</span></a> </li>
-                        <li> <a href="product-edit.html"><i class="fa-fw">PE</i><span class="hide-menu">Product Edit</span></a> </li>
+                        <li> <a href="{{url('/test')}}"><i class="fa-fw">PE</i><span class="hide-menu">Product Edit</span></a> </li>
                         <li> <a href="product-cart.html"><i class="fa-fw">PC</i><span class="hide-menu">Product Cart</span></a> </li>
                         <li> <a href="product-checkout.html"><i class="fa-fw">PC</i><span class="hide-menu">Product Checkout</span></a> </li>
                     </ul>

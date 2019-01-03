@@ -30,10 +30,15 @@ Route::namespace('Agent')->group(function () {
     //微信开放平台授权
     Route::any('open-platform/serve','OpenPlatformController@serve');
 
-    Route::get('/index','IndexController@index');
-    Route::get('test','IndexController@test');
+    Route::get('/','IndexController@index');
+    Route::get('test','IndexController@index');
+    Route::get('order/create','IndexController@index');
 
     //代理商管理
     Route::resource('agents', 'AgentsController');
     Route::post('agents', 'AgentsController@index');
+
+    //权限管理
+    Route::get('permissions/create/{pid?}', 'Rbac\PermissionsController@create');
+    Route::resource('permissions', 'Rbac\PermissionsController');
 });
