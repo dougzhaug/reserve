@@ -37,7 +37,7 @@ class PermissionsController extends AgentAuthController
         $permissions = make_tree_for_select($permission,$request->pid);
 
         $permissions = ['代理商管理'=>2,'管理员管理'=>3];
-        $permissions = [['name'=>'篮球','value'=>3],['name'=>'足球','value'=>5,'selected'=>true],['name'=>'乒乓球','value'=>10]];
+        $permissions = [['name'=>'篮球','value'=>3],['name'=>'足球','value'=>5],['name'=>'乒乓球','value'=>10]];
 
         return view('agent.rbac.permissions.create',['permission'=>$permissions]);
     }

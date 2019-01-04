@@ -1,8 +1,62 @@
 @extends($layout)
 
 @section('content')
-    <h3 class="box-title m-b-0">添加权限</h3>
-    <p class="text-muted m-b-30 font-13"> Use Bootstrap's predefined grid classes for horizontal form </p>
+    <h3 class="box-title m-b-0">DEMO</h3>
+    <p class="text-muted m-b-30 font-13"> 列表页面Demo </p>
+
+    {{-- 列表页面Demo --}}
+
+    <form action="" class="">
+        <div class="input-group m-b-10 col-sm-3">
+            <span class="input-group-btn">
+                <button class="btn btn-info" type="button">权限</button>
+            </span>
+            {{-- Select2 插件 --}}
+            @include('layouts.plugins.Select2',['name'=>'pid','options'=>['足球'=>1,'篮球'=>3,'乒乓球'=>5],'selected'=>[5]])
+        </div>
+
+        <div class="input-group m-b-10 col-sm-3">
+            @include('layouts.plugins.DropdownsInput',['name'=>'pid','dropdowns'=>[['name'=>'名称','value'=>'name'],['name'=>'联系电话','value'=>'phone']]])
+        </div>
+    </form>
+
+    <div class="table-responsive">
+        <table id="data-tables" class="table table-striped" data-url="{{url('agents')}}">
+            <thead>
+            <tr>
+                <th data-name="id" data-sort="true">ID</th>
+                <th data-name="username">用户名</th>
+                <th data-name="nickname" data-sort="true">昵称</th>
+                <th data-name="phone">手机号</th>
+                <th data-name="created_at">添加时间</th>
+                <th data-name="">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {{--DataTables插件--}}
+            @include('layouts.plugins.DataTables')
+
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>ID</th>
+                <th>用户名</th>
+                <th>昵称</th>
+                <th>手机号</th>
+                <th>添加时间</th>
+                <th>操作</th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    {{-- 列表页面Demo(完) --}}
+
+    <br><br>
+    <p class="text-muted m-b-30 font-13"> 表单页面Demo </p>
+
+    {{-- 表单页面Demo --}}
     <form class="form-horizontal" action="{{url('test')}}">
 
         <div class="form-group">
@@ -10,7 +64,7 @@
             <div class="col-sm-9">
 
                 {{-- Select2 下拉插件 --}}
-                @include('layouts.plugins.Select2',['name'=>'pid','options'=>$permission,'multiple'=>1,'selected'=>[5]])
+                @include('layouts.plugins.Select2',['name'=>'pid','options'=>[['name'=>'篮球','value'=>3],['name'=>'足球','value'=>5],['name'=>'乒乓球','value'=>10]],'multiple'=>0,'selected'=>[5]])
 
             </div>
         </div>
@@ -84,4 +138,41 @@
             </div>
         </div>
     </form>
+
+    {{-- 表单页面Demo(完) --}}
 @endsection
+
+@push('script')
+    <script>
+        /**
+         * DataTables 初始化
+         */
+        var tables = DataTableLoad();
+
+
+        /**
+         * 重构操作栏
+         *
+         * @param data
+         * @param type
+         * @param row
+         * @returns {string}
+         */
+        function getButton(data,type,row)
+        {
+            var html = '';
+            html += '<a href="{{url('admin/edit')}}/'+data.id+'" class="btn btn-primary btn-xs tables-edit"><span class="glyphicon glyphicon-edit"></span>编辑</a>';
+            html += '<a href="{{url('admin/destroy')}}/'+data.id+'" class="btn btn-danger btn-xs tables-delete"><span class="glyphicon glyphicon-trash"></span>删除</a>';
+            return html;
+        }
+
+        /**
+         * 删除 （自定义）
+         */
+        $('body').on('click','.tables-delete',function(){
+            if(!confirm('确认要删除吗')){
+                return false;
+            }
+        });
+    </script>
+@endpush

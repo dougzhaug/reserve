@@ -4,6 +4,21 @@
     <h3 class="box-title">Editable with Datatable</h3>
     <p class="text-muted">Just click on word which you want to change and enter</p>
 
+    <form action="" class="">
+        <div class="input-group m-b-10 col-sm-3">
+            <span class="input-group-btn">
+                <button class="btn btn-info" type="button">权限</button>
+            </span>
+            {{-- Select2 插件 --}}
+            @include('layouts.plugins.Select2',['name'=>'pid','options'=>['足球'=>1,'篮球'=>3,'乒乓球'=>5],'selected'=>[5]])
+            {{--<input class="form-control" placeholder="Search for...">--}}
+        </div>
+
+        <div class="input-group m-b-10 col-sm-3">
+            @include('layouts.plugins.DropdownsInput',['name'=>'pid','group'=>1,'dropdowns'=>[[['name'=>'名称','value'=>'name'],['name'=>'联系电话','value'=>'phone']]]])
+        </div>
+    </form>
+
     <div class="table-responsive">
         <table id="data-tables" class="table table-striped" data-url="{{url('agents')}}">
             <thead>

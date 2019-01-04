@@ -7,6 +7,8 @@
  */
 
 Route::namespace('Agent')->group(function () {
+    Route::get('demo', 'IndexController@demo');
+
     // 在 "App\Http\Controllers\Agent" 命名空间下的控制器
     Auth::routes();
     //登出

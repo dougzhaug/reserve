@@ -18,4 +18,9 @@ class IndexController extends AgentAuthController
     {
         return back()->withErrors(['查不到这个用户，请检查！'])->withInput();
     }
+
+    public function demo()
+    {
+        return view('layouts.demo');
+    }
 }
