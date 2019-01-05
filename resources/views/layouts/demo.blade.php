@@ -16,6 +16,39 @@
         </div>
 
         <div class="input-group m-b-10 col-sm-3">
+            <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+            </div>
+            {{-- Daterangepicker 时间插件 --}}
+            @include('layouts.plugins.Daterangepicker')
+        </div>
+
+        <div class="input-group m-b-10 col-sm-3">
+            <span class="input-group-btn">
+                <button class="btn btn-info" type="button">交易时间</button>
+            </span>
+            {{-- Daterangepicker 时间插件 --}}
+            @include('layouts.plugins.Daterangepicker')
+        </div>
+
+        <div class="input-group m-b-10 col-sm-3">
+            <div class="input-group">
+                {{-- Daterangepicker 时间插件 --}}
+                @include('layouts.plugins.Daterangepicker',['style'=>'btn'])
+            </div>
+        </div>
+
+        <div class="input-group m-b-10 col-sm-3">
+            <span class="input-group-btn">
+                <button class="btn btn-info" type="button">范围</button>
+            </span>
+            <div class="input-group">
+                {{-- Daterangepicker 时间插件 --}}
+                @include('layouts.plugins.Daterangepicker',['style'=>'btn','placeholder'=>'请选择时间'])
+            </div>
+        </div>
+
+        <div class="input-group m-b-10 col-sm-3">
             @include('layouts.plugins.DropdownsInput',['name'=>'pid','dropdowns'=>[['name'=>'名称','value'=>'name'],['name'=>'联系电话','value'=>'phone']]])
         </div>
     </form>
@@ -60,7 +93,7 @@
     <form class="form-horizontal" action="{{url('test')}}">
 
         <div class="form-group">
-            <label class="col-sm-2 control-label">父级</label>
+            <label class="col-sm-2 control-label">下拉框</label>
             <div class="col-sm-9">
 
                 {{-- Select2 下拉插件 --}}
@@ -84,7 +117,7 @@
             <div class="col-sm-9">
 
                 {{-- Checkbox 复选框插件 --}}
-                @include('layouts.plugins.Checkbox',['name'=>'kkie','style'=>'info','checkbox'=>[['name'=>'篮球','value'=>1],['name'=>'足球','value'=>5,'checked'=>true,'disabled'=>1],['name'=>'乒乓球','value'=>3,'checked'=>true]]])
+                @include('layouts.plugins.Checkbox',['name'=>'kkie','level'=>1,'style'=>'info','checkbox'=>[['name'=>'篮球','value'=>1],['name'=>'足球','value'=>5,'checked'=>true,'disabled'=>1],['name'=>'乒乓球','value'=>3,'checked'=>true]]])
 
             </div>
         </div>
@@ -94,10 +127,58 @@
             <div class="col-sm-9">
 
                 {{-- Radio 单选框插件 --}}
-                @include('layouts.plugins.Radio',['name'=>'kkie','radio'=>[['name'=>'篮球','value'=>1],['name'=>'足球','value'=>5],['name'=>'乒乓球','value'=>3]]])
+                @include('layouts.plugins.Radio',['name'=>'kkie','style'=>'info','level'=>1,'radio'=>[['name'=>'篮球','value'=>1],['name'=>'足球','value'=>5],['name'=>'乒乓球','value'=>3]]])
 
             </div>
         </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">时间选择器1</label>
+            <div class="col-sm-9">
+                {{-- Daterangepicker 时间插件 --}}
+                @include('layouts.plugins.Daterangepicker',['style'=>'single'])
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">时间选择器2</label>
+            <div class="col-sm-9">
+                {{-- Daterangepicker 时间插件 --}}
+                @include('layouts.plugins.Daterangepicker')
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputuname" class="col-sm-2 control-label">时间选择器3</label>
+            <div class="col-sm-9">
+                <div class="input-group">
+                    {{-- Daterangepicker 时间插件 --}}
+                    @include('layouts.plugins.Daterangepicker',['style'=>'reservation-time'])
+                    <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputuname" class="col-sm-2 control-label">时间选择器4</label>
+            <div class="col-sm-9">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                    {{-- Daterangepicker 时间插件 --}}
+                    @include('layouts.plugins.Daterangepicker')
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">时间选择器5</label>
+            <div class="col-sm-9">
+                {{-- Daterangepicker 时间插件 --}}
+                @include('layouts.plugins.Daterangepicker',['style'=>'btn'])
+            </div>
+        </div>
+
+
 
         <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">Username*</label>
