@@ -19,9 +19,8 @@ class PermissionsController extends AgentAuthController
     {
         $permissionsAll = Permission::orderBy('sort','desc')->get();
         $permissions = make_tree_to_array($permissionsAll);
-        dd($permissions);die;
 
-        return view('agent.rbac.permissions.index',['permissions'=>$a]);
+        return view('agent.rbac.permissions.index',['permissions'=>$permissions]);
     }
 
     /**
@@ -32,13 +31,26 @@ class PermissionsController extends AgentAuthController
      */
     public function create(Request $request)
     {
-        $permission = Permission::orderBy('sort','desc')->get();
+        $permission = Permission::select('id','alias as name', 'id as value','pid')->orderBy('sort','desc')->get();
+        $permissions = make_tree_to_array($permission);
+        array_unshift($permissions,['name'=>'请选择','value'=>0]);
 
-        $permissions = make_tree_for_select($permission,$request->pid);
+        return view('agent.rbac.permissions.create',['permission'=>$permissions,'selected'=>$request->id]);
+    }
 
-        $permissions = ['代理商管理'=>2,'管理员管理'=>3];
-        $permissions = [['name'=>'篮球','value'=>3],['name'=>'足球','value'=>5],['name'=>'乒乓球','value'=>10]];
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'name' => ['required','unique:permissions'],
+            'alias' => ['required','unique:permissions'],
+        ]);
 
-        return view('agent.rbac.permissions.create',['permission'=>$permissions]);
+        $permission = Permission::create($request->post());
+
+        if($permission){
+            return success('添加成功','permissions');
+        }else{
+            return error('网络异常');
+        }
     }
 }

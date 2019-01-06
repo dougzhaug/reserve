@@ -31,7 +31,8 @@ class OpenPlatformController extends AgentAuthController
         $old_mp = WechatMp::where('user_name',$authorizeInfo['authorizer_info']['user_name'])->first();
 
         if($old_mp){
-            return back()->withErrors(['该公众号已经被 [ ' . $old_mp->agent['nickname'] . ' ] 绑定！(如有疑问请联系客服)'])->withInput();
+            return error('该公众号已经被 [ ' . $old_mp->agent['nickname'] . ' ] 绑定！(如有疑问请联系客服)');
+//            return back()->withErrors(['该公众号已经被 [ ' . $old_mp->agent['nickname'] . ' ] 绑定！(如有疑问请联系客服)'])->withInput();
         }
 
         $create = array_merge($authorizeInfo['authorizer_info'],$authorizeInfo['authorization_info']);

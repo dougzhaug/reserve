@@ -6,10 +6,73 @@
  * Time: 11:17
  */
 
+if (! function_exists('success')) {
+    /**
+     * 成功提示信息
+     *
+     * @param $message
+     * @param bool $url
+     * @param int $expire
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    function success($message,$url=false,$expire=3)
+    {
+        $message = [$message,$expire * 1000];
+        if($url){
+            return redirect($url)->withErrors($message, 'success');
+        }else{
+            return back()->withErrors($message, 'success');
+        }
+    }
+}
+
+if (! function_exists('error')) {
+    /**
+     * 失败提示信息
+     *
+     * @param $message
+     * @param bool $url
+     * @param int $expire
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    function error($message,$url=false,$expire=3)
+    {
+        $message = [$message,$expire * 1000];
+        if($url){
+            return redirect($url)->withErrors($message, 'error');
+        }else{
+            return back()->withErrors($message, 'error');
+        }
+    }
+}
+
+if (! function_exists('warning')) {
+    /**
+     * 警告提示信息
+     *
+     * @param $message
+     * @param bool $url
+     * @param int $expire
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    function warning($message,$url=false,$expire=3)
+    {
+        $message = [$message,$expire * 1000];
+        if($url){
+            return redirect($url)->withErrors($message, 'warning');
+        }else{
+            return back()->withErrors($message, 'warning');
+        }
+    }
+}
+
 if (! function_exists('bcrypt_random')) {
     /**
+     * 随机字符串
+     *
      * @param bool $string
      * @param int $length
+     * @return string
      */
     function bcrypt_random($string=false,$length=16)
     {
@@ -27,7 +90,12 @@ if (! function_exists('bcrypt_random')) {
     }
 }
 
-//生成树状结构数据
+/**
+ * 生成树状结构数据
+ *
+ * @param $arr
+ * @return array
+ */
 function make_tree($arr) {
     if (!function_exists('makeTree')) {
 
@@ -49,7 +117,12 @@ function make_tree($arr) {
     return makeTree($arr);
 }
 
-//生成带前缀的树状结构数据
+/**
+ * 生成带前缀的树状结构数据
+ *
+ * @param $arr
+ * @return array
+ */
 function make_tree_with_name_pre($arr) {
     $arr = make_tree($arr);
     if (!function_exists('makeTreeWithNamePre')) {
@@ -84,47 +157,41 @@ function make_tree_with_name_pre($arr) {
     return makeTreeWithNamePre($arr);
 }
 
-function make_tree_to_array($tree) {
-    $tree = make_tree_with_name_pre($tree);
+/**
+ * 变成树状结构数组
+ *
+ * @param $arr
+ * @return array
+ */
+function make_tree_to_array($arr) {
+    $tree = make_tree_with_name_pre($arr);
     if (!function_exists('makeTreeToArray')) {
         function makeTreeToArray($tree){
-
-        }
-    }
-
-}
-
-function make_tree_for_select($arr, $default, $depth = 0) {
-    $arr = make_tree_with_name_pre($arr);
-    if (!function_exists('makeTreeForSelect')) {
-
-        function makeTreeForSelect($arr, $default, $depth, $recursion_count = 0, $ancestor_ids = '') {
-            $recursion_count++;
-            $str = '';
-            foreach ($arr as $v) {
-                $value = "";
-                if ($v->id == $default) {
-                    $value = "selected=selected";
-                }
-                $str .= "<option value='{$v->id}' data-depth='{$recursion_count}' data-ancestor_ids='" . ltrim($ancestor_ids, ',') . "' {$value}>{$v->name}</option>";
-                if ($v->pid == 0) {
-                    $recursion_count = 1;
-                }
-                if ($depth == 0 || $recursion_count < $depth) {
-                    $str .= makeTreeForSelect($v->children,$default, $depth, $recursion_count, $ancestor_ids . ',' . $v->id);
+            static $new_tree = [];
+            foreach ($tree as $key=>$val){
+                if (isset($val['children']) && $val['children']){
+                    $children = $val['children'];
+                    unset($val['children']);
+                    $new_tree[] = $val;
+                    makeTreeToArray($children);
+                }else{
+                    $new_tree[] = $val;
                 }
             }
-            return $str;
+            return $new_tree;
         }
-
     }
-    return makeTreeForSelect($arr, $default, $depth);
+    return makeTreeToArray($tree);
 }
 
-/**
- * 判断是否为索引数组
- */
-if (!function_exists('is_assoc')) {
+
+if (!function_exists('is_assoc')){
+    /**
+     * 判断是否为索引数组
+     *
+     * @param $arr
+     * @return bool
+     */
     function is_assoc($arr)
     {
         return array_keys($arr) !== range(0, count($arr) - 1);

@@ -19,7 +19,7 @@
     <div class="preloader">
         <div class="cssload-speeding-wheel"></div>
     </div>
-    @include('layouts.notification.alerts')
+    @include('layouts.notification.error')
     <section id="wrapper" class="step-register">
         <div class="register-box">
             <div class="">
