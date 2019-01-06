@@ -27,13 +27,14 @@
 
             //Date picker(1)
             $('.date-range-single').daterangepicker({
+                opens:"{{$opens or 'right'}}",
                 autoApply: true,
                 singleDatePicker: true,
                 showDropdowns: true,
                 autoUpdateInput: false,
                 timePicker24Hour : true,
                 timePicker : true,
-                timePickerIncrement: {{$time_picker_increment or 10}},                      //选择分钟的间隔
+                timePickerIncrement: {{$time_picker_increment or config('daterangepicker.time_increment')}},//选择分钟的间隔
                 locale: {
                     format: "{{$format or config('daterangepicker.format')}}",              //时间格式
                     applyLabel: "应用",
@@ -54,16 +55,17 @@
 
             //Date range picker(2)
             $('.date-range-reservation').daterangepicker({
-            autoApply: true,                                                                //自动确定
+                opens:"{{$opens or 'right'}}",
+                autoApply: true,                                                            //自动确定
                 startDate: start_date ? start_date : moment().startOf('day'),               //默认开始时间
                 endDate: end_date ? end_date : moment(),                                    //默认结束时间
                 minDate: {{$min_date or 'false'}},                                          //最小时间
                 maxDate: max_date ? max_date : moment(),                                    //最大时间
                 dateLimit: {
-                    days: {{$date_limit or 31}},                                            //起止时间的最大间隔
+                    days: {{$date_limit or config('daterangepicker.date_limit')}},          //起止时间的最大间隔
                 },
                 timePicker: {{$time_picker or 'false'}},                                    //是否小时分钟可选
-                timePickerIncrement: {{$time_picker_increment or 10}},                      //选择分钟的间隔
+                timePickerIncrement: {{$time_picker_increment or config('daterangepicker.time_increment')}},//选择分钟的间隔
                 timePicker12Hour: true,                                                     //开启24小时格式
                 showDropdowns: {{$show_dropdowns or 'false'}},                              //年份和月份是否可选
                 // applyClass : 'btn-small btn-primary blue',                               //样式
@@ -84,9 +86,13 @@
 
             //Date range picker with time picker(3)
             $('.date-range-reservation-time').daterangepicker({
-            autoApply: true,                                                                //自动确定
+                opens:"{{$opens or 'right'}}",
+                autoApply: true,                                                            //自动确定
                 timePicker: true,
-                timePickerIncrement: {{$time_picker_increment or 10}},                      //选择分钟的间隔
+                dateLimit: {
+                    days: {{$date_limit or config('daterangepicker.date_limit')}},          //起止时间的最大间隔
+                },
+                timePickerIncrement: {{$time_picker_increment or config('daterangepicker.time_increment')}},//选择分钟的间隔
                 locale: {
                     format: "{{$format or config('daterangepicker.format')}}",              //时间格式
                     separator: "{{$separator or config('daterangepicker.separator')}}",     //分隔符
@@ -100,16 +106,16 @@
             })
 
             //Date range as a button(4)
-            $('.date-range-btn').daterangepicker(
-                {
-                autoApply: true,                                                            //自动确定
+            $('.date-range-btn').daterangepicker({
+                    opens:"{{$opens or 'right'}}",
+                    autoApply: true,                                                        //自动确定
                     startDate: start_date ? start_date : moment().subtract(29, 'days'),     //默认开始时间
                     endDate: end_date ? end_date : moment(),                                //默认结束时间
                     minDate: {{$min_date or 'false'}},                                      //最小时间
                     maxDate: max_date ? max_date : moment(),                                //最大时间
 
                     timePicker12Hour: true,
-                    timePickerIncrement: {{$time_picker_increment or 10}},                  //选择分钟的间隔
+                    timePickerIncrement: {{$time_picker_increment or config('daterangepicker.time_increment')}},//选择分钟的间隔
                     timePicker: {{$time_picker or 'false'}},
                     showDropdowns : {{$show_dropdowns or 'false'}},                         //年份和月份是否可选
                     locale: {
@@ -140,3 +146,26 @@
         })
     </script>
 @endpush
+
+
+{{--  使用说明
+
+    必传参数
+    name = 'date_range'                             //daterangepicker时间选择器name     [String]
+
+    选传参数
+    value = ''                                      //时间框内默认值
+    style = 'reservation'                           //时间选择器样式 single | reservation | reservation-time | btn
+    opens = 'right'                                 //时间插件弹出位置 right | center | left
+    placeholder = ''                                //input框 placeholder 属性
+    start_date = ''                                 //默认开始时间
+    end_date = ''                                   //默认结束时间
+    max_date = ''                                   //可使用最晚时间 默认当天
+    min_date = ''                                   //可使用最早时间 默认 1970-01-01 08:00:00
+    date_limit = 36000                              //时间区间最大天数 默认不限制
+    format = 'YYYY-MM-DD HH:mm:ss'                  //时间格式
+    separator = '~'                                 //分隔符 (时间区间) [部分]
+    show_dropdowns = false                          //年 月 是否可选  false不可选(默认) true可选 [部分]
+    time_picker_increment = 10                      //分钟间隔 [部分]
+
+--}}

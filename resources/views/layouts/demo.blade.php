@@ -136,7 +136,7 @@
             <label for="inputEmail3" class="col-sm-2 control-label">时间选择器1</label>
             <div class="col-sm-9">
                 {{-- Daterangepicker 时间插件 --}}
-                @include('layouts.plugins.Daterangepicker',['style'=>'single'])
+                @include('layouts.plugins.Daterangepicker',['style'=>'single','opens'=>'left','value'=>'2018-12-20 12:02:22 ~ 2018-3-2'])
             </div>
         </div>
 
@@ -144,7 +144,7 @@
             <label for="inputEmail3" class="col-sm-2 control-label">时间选择器2</label>
             <div class="col-sm-9">
                 {{-- Daterangepicker 时间插件 --}}
-                @include('layouts.plugins.Daterangepicker')
+                @include('layouts.plugins.Daterangepicker',['time_picker'=>'true','show_dropdowns'=>'false'])
             </div>
         </div>
 
