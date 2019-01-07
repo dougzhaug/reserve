@@ -43,4 +43,5 @@ Route::namespace('Agent')->group(function () {
     //权限管理
     Route::get('permissions/create/{id?}', 'Rbac\PermissionsController@create');
     Route::resource('permissions', 'Rbac\PermissionsController');
+    Route::post('permissions/index', 'Rbac\PermissionsController@index');
 });

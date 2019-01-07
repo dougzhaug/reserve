@@ -31,14 +31,13 @@ class Permission extends \Spatie\Permission\Models\Permission
     }
 
     /**
-     * is_nav 访问器
+     * icon 修改器
      *
      * @param $value
-     * @return string
      */
-    public function getIsNavAttribute($value)
+    public function setIconAttribute($value)
     {
-        return $value ? 'on' : 'off';
+        $this->attributes['icon'] = $value ? : config('permission.icon');
     }
 
     /**
@@ -48,6 +47,21 @@ class Permission extends \Spatie\Permission\Models\Permission
      */
     public function setIsNavAttribute($value)
     {
-        $this->attributes['is_nav'] = $value == 'on' || $value ? 1 : 0;
+        $this->attributes['is_nav'] = $value == 'off' || !$value ? 0 : 1;
+    }
+
+    public static function getSelectArray($id=false)
+    {
+        $permission = self::select('id','alias as name', 'id as value','pid')->orderBy('sort','desc')->get();
+        if($id){
+            foreach ($permission as $key=>$val){
+                if($val['value'] == $id) $permission[$key]['selected'] = true;
+            }
+        }
+
+        $permissions = make_tree_to_array($permission);
+        array_unshift($permissions,['name'=>'请选择','value'=>0]);
+
+        return $permissions;
     }
 }

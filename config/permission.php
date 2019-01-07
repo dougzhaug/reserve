@@ -124,4 +124,6 @@ return [
          */
         'store' => 'default',
     ],
+
+    'icon' => 'fa fa-puzzle-piece',
 ];

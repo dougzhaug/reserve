@@ -6,7 +6,7 @@
 <input type="checkbox"
        class="js-switch"
        name="{{$name or 'switch'}}"
-       @if(isset($checked) && $checked) checked @endif
+       @if((isset($checked) && $checked) || old($name) == 'on') checked @endif
        @if(isset($disabled) && $disabled) disabled @endif
        data-color="{{$color or '#13dafe'}}"
        data-secondary-color="{{$secondary_color or ''}}"

@@ -52,7 +52,7 @@
                     headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' },
                 },
                 columns: column,                    //列表的展示字段
-                paging: true,                       //是否分页
+                paging: "{{$paging or true}}",        //是否分页
                 lengthChange: true,                 //每页显示多少条
                 searching: false,                   //搜索
                 ordering: true,                     //排序

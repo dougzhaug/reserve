@@ -1,17 +1,18 @@
 @extends($layout)
 
 @section('content')
-    <h3 class="box-title m-b-0">添加权限</h3>
+    <h3 class="box-title m-b-0">编辑权限</h3>
     <p class="text-muted m-b-30 font-13"> Use Bootstrap's predefined grid classes for horizontal form </p>
-    <form class="form-horizontal" action="{{url('permissions')}}" method="post">
+    <form class="form-horizontal" action="{{url('permissions/'.$permission['id'])}}" method="post">
         {{ csrf_field() }}
+        {{ method_field('PATCH')}}
 
         <div class="form-group">
             <label class="col-sm-2 control-label">父级</label>
             <div class="col-sm-9">
 
                 {{-- Select2 下拉插件 --}}
-                @include('layouts.plugins.Select2',['name'=>'pid','options'=>$permission_select,'selected'=>$selected??0])
+                @include('layouts.plugins.Select2',['name'=>'pid','options'=>$permission_select])
 
             </div>
         </div>
@@ -19,7 +20,7 @@
         <div class="form-group {{ $errors->has('alias') ? ' has-error' : '' }}">
             <label for="inputAlias" class="col-sm-2 control-label">名称*</label>
             <div class="col-sm-9">
-                <input name="alias" type="text" value="{{ old('alias') }}" class="form-control" id="inputAlias" placeholder="名称">
+                <input name="alias" type="text" value="{{$permission['alias'] or old('alias') }}" class="form-control" id="inputAlias" placeholder="名称">
                 @if ($errors->has('alias'))
                     <span class="help-block">{{$errors->first('alias')}}</span>
                 @endif
@@ -28,7 +29,7 @@
         <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">
             <label for="inputName" class="col-sm-2 control-label">权限规则*</label>
             <div class="col-sm-9">
-                <input name="name" type="text" value="{{ old('name') }}" class="form-control" id="inputName" placeholder="权限规则">
+                <input name="name" type="text" value="{{$permission['name'] or old('name') }}" class="form-control" id="inputName" placeholder="权限规则">
                 @if ($errors->has('name'))
                     <span class="help-block">{{$errors->first('name')}}</span>
                 @endif
@@ -37,30 +38,30 @@
         <div class="form-group">
             <label for="inputUrl" class="col-sm-2 control-label">Url</label>
             <div class="col-sm-9">
-                <input name="url" type="text" class="form-control" id="inputUrl" placeholder="Url"> </div>
+                <input name="url" type="text" value="{{$permission['url'] or old('url') }}" class="form-control" id="inputUrl" placeholder="Url"> </div>
         </div>
         <div class="form-group">
             <label for="inputSort" class="col-sm-2 control-label">排序</label>
             <div class="col-sm-9">
-                <input name="sort" type="text" class="form-control" id="inputSort" placeholder="排序"> </div>
+                <input name="sort" type="text" value="{{$permission['sort'] or old('sort') }}" class="form-control" id="inputSort" placeholder="排序"> </div>
         </div>
         <div class="form-group">
             <label for="inputIcon" class="col-sm-2 control-label">Icon</label>
             <div class="col-sm-9">
-                <input name="icon" type="text" class="form-control" id="inputIcon" placeholder="Icon"> </div>
+                <input name="icon" type="text" value="{{$permission['icon'] or old('icon') }}" class="form-control" id="inputIcon" placeholder="Icon"> </div>
         </div>
 
         <div class="form-group">
             <label for="inputRemark" class="col-sm-2 control-label">备注</label>
             <div class="col-sm-9">
-                <input name="remark" type="text" class="form-control" id="inputRemark" placeholder="备注"> </div>
+                <input name="remark" type="text" value="{{$permission['remark'] or old('remark') }}" class="form-control" id="inputRemark" placeholder="备注"> </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">导航模式</label>
             <div class="col-sm-9">
 
                 {{-- Switchery 开关插件 --}}
-                @include('layouts.plugins.Switchery',['name'=>'is_nav'])
+                @include('layouts.plugins.Switchery',['name'=>'is_nav','checked'=>$permission['is_nav']])
 
             </div>
         </div>

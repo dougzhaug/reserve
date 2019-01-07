@@ -52,9 +52,9 @@
     name = 'select_name'                            //select下拉框name     [String]
     options = []                                    //select下拉选项信息支持以下形式    [Array]
         ['足球'=>1,'篮球'=>2,'乒乓球'=>3]
-        [['name'=>'足球','value'=>1],['name'=>'篮球','value'=>2],['name'=>'乒乓球','value'=>3]]
+        [['name'=>'足球','value'=>1],['name'=>'篮球','value'=>2,'selected'=>true],['name'=>'乒乓球','value'=>3]]
         ['爱好'=>['足球'=>1,'篮球'=>2,'乒乓球'=>3],'特长'=>['头发特长'=>4,'指甲特长'=>5]]
-        ['爱好'=>[['name'=>'足球','value'=>1],['name'=>'篮球','value'=>2],['name'=>'乒乓球','value'=>3]],'特长'=>[['name'=>'头发特长','value'=>4],['name'=>'指甲特长','value'=>5]]]
+        ['爱好'=>[['name'=>'足球','value'=>1,'selected'=>true],['name'=>'篮球','value'=>2],['name'=>'乒乓球','value'=>3]],'特长'=>[['name'=>'头发特长','value'=>4],['name'=>'指甲特长','value'=>5]]]
 
 
     选传参数
