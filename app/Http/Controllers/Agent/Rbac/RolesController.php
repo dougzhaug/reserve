@@ -41,10 +41,6 @@ class RolesController extends AgentAuthController
 
             $data = $builder->offset($request->start)->take($request->length)->get()->toArray();
 
-            foreach ($data as $key=>$val){
-                $data[$key]['status'] = $val['status'] ? '<button class="btn btn-info btn-xs"> 启用 </button>' : '<button class="btn btn-danger btn-xs"> 禁用 </button>';
-            }
-
             return [
                 'draw' => intval($request->draw),
                 'recordsTotal' => $total,

@@ -52,25 +52,14 @@
                     headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' },
                 },
                 columns: column,                    //列表的展示字段
-                paging: "{{$paging or true}}",        //是否分页
+                paging: "{{$paging or true}}",      //是否分页
                 lengthChange: true,                 //每页显示多少条
                 searching: false,                   //搜索
                 ordering: true,                     //排序
                 info: true,                         //左下角信息
                 autoWidth: false,                   //宽度自适应
                 aaSorting: [ defaultSort ],         //默认排序
-                aoColumnDefs: [
-                    {
-                        "bSortable": false,
-                        "aTargets": target              //禁止那些列不可以排序
-                    },
-                    {
-                        "targets": -1,
-                        "render": function (data,type,row){
-                            return getButton(data,type,row);
-                        }
-                    }
-                ],
+                aoColumnDefs: aoColumnDefs(target),
                 language: {
                     processing: "数据加载中...",
                     info: "显示第 _START_ 至 _END_ 条，共 _TOTAL_ 条记录",
@@ -86,6 +75,30 @@
                 }
 
             })
+        }
+
+        function aoColumnDefs(target) {
+            return [
+                {
+                    "bSortable": false,
+                    "aTargets": target              //禁止那些列不可以排序
+                },
+                {
+                    "targets": -1,
+                    "render": function (data,type,row){
+                        return getButton(data,type,row);
+                    }
+                }
+            ].concat(decorateColumn());
+        }
+
+        /**
+         * 列的美化处理 （需重构）
+         *
+         */
+        function decorateColumn()
+        {
+            return [];
         }
 
         /**
@@ -139,21 +152,24 @@
          * @returns {boolean}
          */
         function tablesDelete(that) {
-            if(!confirm('确定要删除吗？')) return false;
+            sweetConfirm('确定要删除吗？',function (isConfirm) {
+                if(!isConfirm) return false;
 
-            var url = $(that).data('url');
-            $.ajax({
-                url:url,
-                data:{'_token':'{{csrf_token()}}'},
-                type: "DELETE",
-                success:function (result) {
-                    console.log(result);
-                    alert(result.message);
-                    if(!result.errorCode){
-                        window.location.reload()
+                $.ajax({
+                    url:$(that).data('url'),
+                    data:{'_token':'{{csrf_token()}}'},
+                    type: "DELETE",
+                    success:function (result) {
+                        if(!result.errorCode){
+                            swal({'title':result.message,'type':'success'},function () {
+                                window.location.reload();
+                            });
+                        }else{
+                            swal(result.message,'阿里斯顿开放','error');
+                        }
                     }
-                }
-            })
+                })
+            });
         }
     </script>
 @endpush

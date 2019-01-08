@@ -53,6 +53,22 @@
          */
         var tables = DataTableLoad();
 
+        /**
+         * 列美化
+         *
+         */
+        function decorateColumn()
+        {
+            return [
+                {
+                    "targets": 3,   //状态
+                    "render": function (data,type,row){
+                        return row.status ? `<button type="button" class="btn btn-info btn-circle"><i class="fa fa-check"></i></button>`
+                            : `<button type="button" class="btn btn-danger btn-circle"><i class="fa fa-times"></i> </button>`;
+                    }
+                },
+            ];
+        }
 
         /**
          * 重构操作栏
@@ -70,10 +86,5 @@
             return html;
         }
 
-        $(function () {
-            sweetConfirm(function (isConfirm) {
-                alert(isConfirm);
-            });
-        })
     </script>
 @endpush

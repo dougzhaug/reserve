@@ -24,7 +24,7 @@
                 <th data-name="rule">规则</th>
                 <th data-name="pid">Pid</th>
                 <th data-name="url">Url</th>
-                <th data-name="sort">排序</th>
+                <th data-name="sort" style="width: 80px;">排序</th>
                 <th data-name="remark">备注</th>
                 <th data-name="icon">Icon</th>
                 <th data-name="is_nav">导航模式</th>
@@ -64,6 +64,40 @@
          */
         var tables = DataTableLoad();
 
+
+        /**
+         * 列美化
+         */
+        function decorateColumn()
+        {
+            return [
+                {
+                    "targets": 5,   //排序
+                    "render": function (data,type,row){
+                        var sort = row.sort ? row.sort : 0;
+                        return `<div class="input-group input-group-sm col-sm-12">
+                                    <input type="text" class="form-control " value="` + sort + `">
+                                    <span class="input-group-btn">
+                                    <button type="button" class="btn btn-info btn-flat edit-sort" data-old="` + sort + `" data-id="` + row.id + `">Go!</button>
+                                    </span>
+                                </div>`;
+                    }
+                },
+                {
+                    "targets": 7,   //icon
+                    "render": function (data,type,row){
+                        return `<i style="font-size:18px;" class="` + row.icon + `"></i> ` + row.icon;
+                    }
+                },
+                {
+                    "targets": 8,   //导航模式
+                    "render": function (data,type,row){
+                        return row.is_nav ? `<button type="button" class="btn btn-info btn-circle"><i class="fa fa-check"></i></button>`
+                                          : `<button type="button" class="btn btn-danger btn-circle"><i class="fa fa-times"></i> </button>`;
+                    }
+                },
+            ];
+        }
 
         /**
          * 重构操作栏
