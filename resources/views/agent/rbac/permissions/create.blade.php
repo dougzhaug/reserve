@@ -11,7 +11,7 @@
             <div class="col-sm-9">
 
                 {{-- Select2 下拉插件 --}}
-                @include('layouts.plugins.Select2',['name'=>'pid','options'=>$permission_select,'selected'=>$selected??0])
+                @include('layouts.plugins.Select2',['name'=>'pid','options'=>$permission_select])
 
             </div>
         </div>

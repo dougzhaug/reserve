@@ -3,8 +3,14 @@
 namespace App\Models;
 
 
-class Permission extends \Spatie\Permission\Models\Permission
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Permission\Models\Permission as SpatiePermission;
+
+class Permission extends SpatiePermission
 {
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
+
     //
     /**
      * 默认权限
@@ -50,6 +56,12 @@ class Permission extends \Spatie\Permission\Models\Permission
         $this->attributes['is_nav'] = $value == 'off' || !$value ? 0 : 1;
     }
 
+    /**
+     * 获取下拉菜单数据
+     *
+     * @param bool $id
+     * @return array
+     */
     public static function getSelectArray($id=false)
     {
         $permission = self::select('id','alias as name', 'id as value','pid')->orderBy('sort','desc')->get();

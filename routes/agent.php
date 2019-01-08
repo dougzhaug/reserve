@@ -41,7 +41,13 @@ Route::namespace('Agent')->group(function () {
     Route::post('agents', 'AgentsController@index');
 
     //权限管理
-    Route::get('permissions/create/{id?}', 'Rbac\PermissionsController@create');
     Route::resource('permissions', 'Rbac\PermissionsController');
+    Route::get('permissions/create/{id?}', 'Rbac\PermissionsController@create');
     Route::post('permissions/index', 'Rbac\PermissionsController@index');
+
+
+    //角色管理
+    Route::resource('roles', 'Rbac\RolesController');
+    Route::post('roles/index', 'Rbac\RolesController@index');
+    Route::post('roles/permission_tree/{role?}', 'Rbac\RolesController@permission_tree');
 });

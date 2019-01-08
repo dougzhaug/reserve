@@ -11,7 +11,7 @@
         </form>
     </div>
     <div class="box-label">
-        <a href="{{url('permissions/create')}}" class="btn btn-info">添加</a>
+        <a href="{{url('permissions/create')}}" class="btn btn-info">添加权限</a>
     </div>
 
 
@@ -76,18 +76,10 @@
         function getButton(data,type,row)
         {
             var html = '';
+            html += '<a href="permissions/create/'+data.id+'" class="btn btn-success btn-xs tables-add"><span class="glyphicon glyphicon-plus"></span>添加</a>';
             html += '<a href="permissions/'+data.id+'/edit" class="btn btn-info btn-xs tables-edit"><span class="glyphicon glyphicon-edit"></span>编辑</a>';
-            html += '<a href="{{url('admin/destroy')}}/'+data.id+'" class="btn btn-danger btn-xs tables-delete"><span class="glyphicon glyphicon-trash"></span>删除</a>';
+            html += '<button data-url="permissions/'+data.id+'" onclick="tablesDelete(this)" class="btn btn-danger btn-xs tables-delete"><span class="glyphicon glyphicon-trash"></span>删除</button>';
             return html;
         }
-
-        /**
-         * 删除 （自定义）
-         */
-        $('body').on('click','.tables-delete',function(){
-            if(!confirm('确认要删除吗')){
-                return false;
-            }
-        });
     </script>
 @endpush

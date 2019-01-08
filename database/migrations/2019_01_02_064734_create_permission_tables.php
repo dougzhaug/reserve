@@ -21,12 +21,13 @@ class CreatePermissionTables extends Migration
             $table->string('name')->comment('权限规则');
             $table->string('guard_name');
             $table->integer('pid')->default(0)->comment('父id');
-            $table->string('url')->default('')->comment('导航跳转地址')->nullable();
+            $table->string('url')->default('')->nullable()->comment('导航跳转地址');
             $table->string('alias')->default('')->comment('名称');
-            $table->integer('sort')->default(0)->comment('排序')->nullable();
-            $table->string('remark')->default('')->comment('备注')->nullable();
-            $table->string('icon')->default('fa fa-info-circle')->comment('导航icon')->nullable();
-            $table->tinyInteger('is_nav')->comment('是否为导航，0否 1是');
+            $table->integer('sort')->default(0)->nullable()->comment('排序');
+            $table->string('remark')->default('')->nullable()->comment('备注');
+            $table->string('icon')->default('fa fa-info-circle')->nullable()->comment('导航icon');
+            $table->tinyInteger('is_nav')->default(1)->nullable()->comment('是否为导航，0否 1是');
+            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -35,6 +36,7 @@ class CreatePermissionTables extends Migration
             $table->string('name');
             $table->string('guard_name');
             $table->string('depict')->comment('描述');
+            $table->tinyInteger('status')->default(1)->nullable()->comment('状态 0禁用 1启用');
             $table->text('js_tree_ids')->comment('存储生成jsTree结构的数据');
             $table->timestamps();
         });

@@ -235,3 +235,32 @@ function addActive(element,tag) {
         addActive(element,true)
     }
 }
+
+/**
+ * sweet版确认框
+ *
+ * @param message
+ * @param callback
+ */
+function sweetConfirm(message,callback) {
+
+    if(typeof(message) == 'string'){
+        var swal_title = message;
+    }else if(typeof(message) == 'object'){
+        var swal_title = message.title
+        var swal_text = message.text
+        var swal_type = message.type
+    }else if(typeof(message) == 'function'){
+        callback = message;
+    }
+
+    swal({
+        title: swal_title ? swal_title : '警告',
+        text: swal_text ? swal_text : '',
+        type: swal_type ? swal_type :"warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+    },callback);
+}

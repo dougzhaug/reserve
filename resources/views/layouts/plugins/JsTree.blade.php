@@ -39,8 +39,6 @@
                 },
                 "plugins" : [ "checkbox","types"]
             });
-
-            getPermissions();
         });
 
         /**
@@ -53,11 +51,11 @@
         });
 
         /**
-         * 获取所有选中项的id并赋值给隐藏域
+         * 获取包含半选状态的所有id并赋值给隐藏域
          *
          * @returns {boolean}
          */
-        function getPermissions() {
+        function getContainUndetermined() {
             var permission = $('#js-tree').jstree(true).get_selected(false);
             var permissions = permission.toString();
             permissions = getUnd(permissions);

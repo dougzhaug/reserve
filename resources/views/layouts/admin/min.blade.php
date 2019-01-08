@@ -7,6 +7,8 @@
     <link href="{{asset('static/admin/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css')}}" rel="stylesheet">
     <!-- animation CSS -->
     <link href="{{asset('static/admin/theme/min/css/animate.css')}}" rel="stylesheet">
+    <!--alerts CSS -->
+    <link href="{{asset('static/admin/plugins/bower_components/sweetalert/sweetalert.css')}}" rel="stylesheet" type="text/css">
     <!-- Custom CSS -->
     <link href="{{asset('static/admin/theme/min/css/style.css')}}" rel="stylesheet">
     <!-- color CSS -->
@@ -583,6 +585,9 @@
 <script src="{{asset('static/admin/theme/min/js/jquery.slimscroll.js')}}"></script>
 <!--Wave Effects -->
 <script src="{{asset('static/admin/theme/min/js/waves.js')}}"></script>
+<!-- Sweet-Alert  -->
+<script src="{{asset('static/admin/plugins/bower_components/sweetalert/sweetalert.min.js')}}"></script>
+<script src="{{asset('static/admin/plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js')}}"></script>
 <!-- Custom Theme JavaScript -->
 <script src="{{asset('static/admin/theme/min/js/custom.js')}}"></script>
 <!--Style Switcher -->

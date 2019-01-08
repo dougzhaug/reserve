@@ -5,46 +5,39 @@ namespace App\Http\Controllers\Agent\Rbac;
 use App\Http\Controllers\Agent\AgentAuthController;
 use App\Models\Permission;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Spatie\Permission\Guard;
 
 class PermissionsController extends AgentAuthController
 {
-    //
+
     /**
-     * list
+     * 权限列表
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Request $request
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
     {
         if($request->isMethod('post')){
 
-            $columns = $request->columns;
-
-            $builder = Permission::select(['id','name as rule','pid','url','alias as name','sort','remark','icon','is_nav','created_at']);
+            $builder = Permission::where('guard_name',Guard::getDefaultName(static::class))
+                ->select(['id','name as rule','pid','url','alias as name','sort','remark','icon','is_nav','created_at']);
 
             /* where start*/
-
             if($request->keyword){
                 $builder->where($request->action_field,'like','%'.$request->keyword.'%');
             }
-
             /* where end */
 
-            //获取总条数
+            //count
             $total = $builder->count();
 
             /* order start */
-
             if($request->order){
-                $order = $request->order[0];
-                $order_column = $columns[$order['column']]['data'];
-                $order_dir = $order['dir'];
-                $builder->orderBy($order_column,$order_dir);
+                $builder->orderBy($request->columns[$request->order[0]['column']]['data'],$request->order[0]['dir']);
             }else{
-                $builder->orderBy('sort','asc');
+                $builder->orderBy('sort','desc');
             }
-
             /* order end */
 
             $data = $builder->get();
@@ -71,8 +64,7 @@ class PermissionsController extends AgentAuthController
     public function create(Request $request)
     {
         return view('agent.rbac.permissions.create',[
-            'permission_select'=>Permission::getSelectArray(),
-            'selected'=>$request->id
+            'permission_select'=>Permission::getSelectArray($request->id),
         ]);
     }
 
@@ -124,12 +116,29 @@ class PermissionsController extends AgentAuthController
             'alias' => ['required'],
         ]);
 
-        $result = $permission::update($request->post());
+        $result = $permission->update($request->post());
 
         if($result){
             return success('添加成功','permissions');
         }else{
             return error('网络异常');
+        }
+    }
+
+    /**
+     * 删除
+     *
+     * @param Permission $permission
+     * @return array
+     * @throws \Exception
+     */
+    public function destroy(Permission $permission)
+    {
+        $permission = $permission->delete();
+        if($permission){
+            return ['errorCode'=>0,'message'=>'成功'];
+        }else{
+            return ['errorCode'=>1,'message'=>'网络异常'];
         }
     }
 

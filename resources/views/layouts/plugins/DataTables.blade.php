@@ -144,9 +144,11 @@
             var url = $(that).data('url');
             $.ajax({
                 url:url,
-                type: "delete",
+                data:{'_token':'{{csrf_token()}}'},
+                type: "DELETE",
                 success:function (result) {
-                    alert(result.errorMessage);
+                    console.log(result);
+                    alert(result.message);
                     if(!result.errorCode){
                         window.location.reload()
                     }
