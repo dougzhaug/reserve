@@ -35,8 +35,6 @@ class PermissionsController extends AgentAuthController
             /* order start */
             if($request->order){
                 $builder->orderBy($request->columns[$request->order[0]['column']]['data'],$request->order[0]['dir']);
-            }else{
-                $builder->orderBy('sort','desc');
             }
             /* order end */
 
@@ -137,6 +135,40 @@ class PermissionsController extends AgentAuthController
         $permission = $permission->delete();
         if($permission){
             return ['errorCode'=>0,'message'=>'成功'];
+        }else{
+            return ['errorCode'=>1,'message'=>'网络异常'];
+        }
+    }
+
+    /**
+     * 排序
+     *
+     * @param Permission $permission
+     * @param Request $request
+     * @return array
+     */
+    public function sort(Permission $permission,Request $request)
+    {
+        $result = $permission->update(['sort'=>$request->sort]);
+        if($result){
+            return ['errorCode'=>0,'message'=>'修改成功'];
+        }else{
+            return ['errorCode'=>1,'message'=>'网络异常'];
+        }
+    }
+
+    /**
+     * 导航模式切换
+     *
+     * @param Permission $permission
+     * @param Request $request
+     * @return array
+     */
+    public function toggle_nav(Permission $permission,Request $request)
+    {
+        $result = $permission->update(['is_nav'=>$request->nav ? 0 : 1]);
+        if($result){
+            return ['errorCode'=>0,'message'=>'修改成功'];
         }else{
             return ['errorCode'=>1,'message'=>'网络异常'];
         }

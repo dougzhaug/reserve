@@ -34,8 +34,6 @@ class RolesController extends AgentAuthController
             /* order start */
             if($request->order){
                 $builder->orderBy($request->columns[$request->order[0]['column']]['data'],$request->order[0]['dir']);
-            }else{
-                $builder->orderBy('id','desc');
             }
             /* order end */
 

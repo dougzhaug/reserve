@@ -44,6 +44,8 @@ Route::namespace('Agent')->group(function () {
     Route::resource('permissions', 'Rbac\PermissionsController');
     Route::get('permissions/create/{id?}', 'Rbac\PermissionsController@create');
     Route::post('permissions/index', 'Rbac\PermissionsController@index');
+    Route::post('permissions/sort/{permission}', 'Rbac\PermissionsController@sort');
+    Route::post('permissions/toggle_nav/{permission}', 'Rbac\PermissionsController@toggle_nav');
 
 
     //角色管理

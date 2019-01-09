@@ -3,6 +3,12 @@
     <!-- Editable CSS -->
     <link href="{{asset('static/admin/plugins/bower_components/datatables/jquery.dataTables.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        /*处理操作框内的按钮*/
+        .tables-console {margin: 3px 0 0 5px;}
+        .tables-console span {margin-right: 3px;}
+    </style>
 @endpush
 
 @push('script')
@@ -139,9 +145,9 @@
         function getButton(data,type,row)
         {
             var html = '';
-            html += '<a href="{{url('role/create')}}" class="btn btn-success btn-xs tables-create"><span class="glyphicon glyphicon-plus"></span>添加</a>';
-            html += '<a href="{{url('role/edit')}}/'+data.id+'" class="btn btn-primary btn-xs tables-edit"><span class="glyphicon glyphicon-edit"></span>编辑</a>';
-            html += '<a href="{{url('role/destroy')}}/'+data.id+'" class="btn btn-danger btn-xs tables-delete"><span class="glyphicon glyphicon-trash"></span>删除</a>';
+            html += '<a href="{{url('role/create')}}" class="btn btn-success btn-xs tables-console tables-create"><span class="glyphicon glyphicon-plus"></span>添加</a>';
+            html += '<a href="{{url('role/edit')}}/'+data.id+'" class="btn btn-primary btn-xs tables-console tables-edit"><span class="glyphicon glyphicon-edit"></span>编辑</a>';
+            html += '<a href="{{url('role/destroy')}}/'+data.id+'" class="btn btn-danger btn-xs tables-console tables-delete"><span class="glyphicon glyphicon-trash"></span>删除</a>';
             return html;
         }
 
@@ -165,7 +171,7 @@
                                 window.location.reload();
                             });
                         }else{
-                            swal(result.message,'阿里斯顿开放','error');
+                            swal(result.message,'','error');
                         }
                     }
                 })
