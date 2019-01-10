@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Agent\Rbac;
 
-use App\Http\Controllers\Agent\AgentAuthController;
+use App\Http\Controllers\Agent\AuthController;
 use App\Models\Permission;
 use Illuminate\Http\Request;
 use Spatie\Permission\Guard;
 
-class PermissionsController extends AgentAuthController
+class PermissionsController extends AuthController
 {
 
     /**
-     * 权限列表
+     * 列表
      *
      * @param Request $request
      * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -89,7 +89,7 @@ class PermissionsController extends AgentAuthController
     }
 
     /**
-     * 编辑
+     * 编辑页面
      *
      * @param Permission $permission
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -103,6 +103,8 @@ class PermissionsController extends AgentAuthController
     }
 
     /**
+     * 编辑
+     *
      * @param Permission $permission
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector

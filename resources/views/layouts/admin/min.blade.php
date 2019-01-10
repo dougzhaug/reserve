@@ -11,6 +11,7 @@
     <link href="{{asset('static/admin/plugins/bower_components/sweetalert/sweetalert.css')}}" rel="stylesheet" type="text/css">
     <!-- Custom CSS -->
     <link href="{{asset('static/admin/theme/min/css/style.css')}}" rel="stylesheet">
+    <link href="{{asset('static/admin/theme/min/css/spinners.css')}}" rel="stylesheet">
     <!-- color CSS -->
     <link href="{{asset('static/admin/theme/min/css/colors/blue-dark.css')}}" id="theme" rel="stylesheet">
 

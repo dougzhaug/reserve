@@ -27,7 +27,7 @@ class SnsRegisterController extends Controller
 
             //获取开放平台授权url
             $openPlatform = app('wechat.open_platform');
-            $url = $openPlatform->getPreAuthorizationUrl(url('open-platform/serve'));
+            $url = $openPlatform->getPreAuthorizationUrl(url('open-platform/callback'));
         }
 
         return view('agent.auth.sns_register',['authorize_url'=>$url]);

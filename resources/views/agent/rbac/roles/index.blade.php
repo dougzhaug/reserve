@@ -62,9 +62,11 @@
             return [
                 {
                     "targets": 3,   //状态
+                    "className": 'td-center',
                     "render": function (data,type,row){
-                        return row.status ? `<button type="button" class="btn btn-info btn-circle"><i class="fa fa-check"></i></button>`
-                            : `<button type="button" class="btn btn-danger btn-circle"><i class="fa fa-times"></i> </button>`;
+                        var btn = row.status ? 'info' : 'danger';
+                        var i = row.status ? 'check' : 'times';
+                        return `<button type="button" onclick="toggleStatus(this)" data-url="{{url('roles/status')}}`+`/` + row.id + `" data-status="` + row.status + `" class="btn btn-` + btn +` btn-circle"><i class="fa fa-` + i + `"></i> </button>`;
                     }
                 },
             ];
@@ -84,6 +86,31 @@
             html += '<a href="roles/'+data.id+'/edit" class="btn btn-info btn-xs tables-console tables-edit"><span class="glyphicon glyphicon-edit"></span>编辑</a>';
             html += '<button data-url="roles/'+data.id+'" onclick="tablesDelete(this)" class="btn btn-danger btn-xs tables-console tables-delete"><span class="glyphicon glyphicon-trash"></span>删除</button>';
             return html;
+        }
+
+        /**
+         * 状态切换
+         * @param that
+         */
+        function toggleStatus(that) {
+            sweetConfirm('确定修改状态吗？',function (isConfirm) {
+                if(!isConfirm) return false;
+
+                $.ajax({
+                    url:$(that).data('url'),
+                    data:{'status':$(that).data('status'),'_token':'{{csrf_token()}}'},
+                    type:'POST',
+                    success:function(result){
+                        if(!result.errorCode){
+                            swal({'title':result.message,'type':'success'},function () {
+                                window.location.reload();
+                            });
+                        }else{
+                            swal(result.message,'','error');
+                        }
+                    }
+                });
+            });
         }
 
     </script>

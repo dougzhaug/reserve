@@ -31,6 +31,7 @@ Route::namespace('Agent')->group(function () {
 
     //微信开放平台授权
     Route::any('open-platform/serve','OpenPlatformController@serve');
+    Route::any('open-platform/callback','OpenPlatformController@callback');
 
     Route::get('/','IndexController@index');
     Route::get('test','IndexController@index');
@@ -52,4 +53,5 @@ Route::namespace('Agent')->group(function () {
     Route::resource('roles', 'Rbac\RolesController');
     Route::post('roles/index', 'Rbac\RolesController@index');
     Route::post('roles/permission_tree/{role?}', 'Rbac\RolesController@permission_tree');
+    Route::post('roles/status/{role?}', 'Rbac\RolesController@status');
 });

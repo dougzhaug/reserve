@@ -22,7 +22,6 @@
                 <th data-name="id" data-sort="true">ID</th>
                 <th data-name="name">名称</th>
                 <th data-name="rule">规则</th>
-                <th data-name="pid">Pid</th>
                 <th data-name="url">Url</th>
                 <th data-name="sort" data-sort="true" data-default-sort="desc" style="width: 80px;">排序</th>
                 <th data-name="remark">备注</th>
@@ -43,7 +42,6 @@
                 <th>ID</th>
                 <th>名称</th>
                 <th>规则</th>
-                <th>Pid</th>
                 <th>Url</th>
                 <th>排序</th>
                 <th>备注</th>
@@ -72,7 +70,7 @@
         {
             return [
                 {
-                    "targets": 5,   //排序
+                    "targets": 4,   //排序
                     "render": function (data,type,row){
                         var sort = row.sort ? row.sort : 0;
                         return `<div class="input-group input-group-sm col-sm-12">
@@ -84,16 +82,18 @@
                     }
                 },
                 {
-                    "targets": 7,   //icon
+                    "targets": 6,   //icon
                     "render": function (data,type,row){
                         return `<i style="font-size:18px;" class="` + row.icon + `"></i> ` + row.icon;
                     }
                 },
                 {
-                    "targets": 8,   //导航模式
+                    "targets": 7,   //导航模式
+                    className : 'td-center',
                     "render": function (data,type,row){
-                        return row.is_nav ? `<button type="button" onclick="toggleNav(this)" data-url="{{url('permissions/toggle_nav')}}`+`/` + row.id + `" data-nav="` + row.is_nav + `" class="btn btn-info btn-circle"><i class="fa fa-check"></i></button>`
-                                          : `<button type="button" onclick="toggleNav(this)" data-url="{{url('permissions/toggle_nav')}}`+`/` + row.id + `" data-nav="` + row.is_nav + `" class="btn btn-danger btn-circle"><i class="fa fa-times"></i></button>`;
+                        var btn = row.is_nav ? 'info' : 'danger';
+                        var i = row.is_nav ? 'check' : 'times';
+                        return `<button type="button" onclick="toggleNav(this)" data-url="{{url('permissions/toggle_nav')}}`+`/` + row.id + `" data-nav="` + row.is_nav + `" class="btn btn-` + btn + ` btn-circle" style="text-align: center;"><i class="fa fa-` + i + `"></i></button>`;
                     }
                 },
             ];

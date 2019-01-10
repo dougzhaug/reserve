@@ -8,6 +8,15 @@
         /*处理操作框内的按钮*/
         .tables-console {margin: 3px 0 0 5px;}
         .tables-console span {margin-right: 3px;}
+
+        /*某一列居中展示*/
+        .td-center {text-align:center;}
+
+        /*某一列居左展示*/
+        .td-left {text-align:left;}
+
+        /*某一列居右展示*/
+        .td-right {text-align:right;}
     </style>
 @endpush
 
@@ -27,7 +36,7 @@
             url = url ? url : $(tableName).data('url');
 
             var column = [];
-            var defaultSort = [0,'desc'];       //没有默认排序字段时，取第一个
+            var defaultSort = [0,'desc'];           //没有默认排序字段时，取第一个
             var target = [];
             $(tableName).children('thead').children('tr').children().map(function (k,v) {
                 /*处理显示字段信息*/
@@ -91,6 +100,7 @@
                 },
                 {
                     "targets": -1,
+                    "className": 'td-center',
                     "render": function (data,type,row){
                         return getButton(data,type,row);
                     }

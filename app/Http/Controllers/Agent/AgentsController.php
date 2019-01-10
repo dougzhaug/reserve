@@ -6,7 +6,7 @@ use App\Models\Agent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class AgentsController extends AgentAuthController
+class AgentsController extends AuthController
 {
     /**
      * 首页

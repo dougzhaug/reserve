@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Agent\Rbac;
 
-use App\Http\Controllers\Agent\AgentAuthController;
+use App\Http\Controllers\Agent\AuthController;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Spatie\Permission\Guard;
 
-class RolesController extends AgentAuthController
+class RolesController extends AuthController
 {
 
     /**
+     * 列表
+     *
      * @param Request $request
      * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -94,11 +96,24 @@ class RolesController extends AgentAuthController
         }
     }
 
+    /**
+     * 编辑页面
+     *
+     * @param Role $role
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit(Role $role)
     {
         return view('agent.rbac.roles.edit',['role'=>$role]);
     }
 
+    /**
+     * 编辑
+     *
+     * @param Request $request
+     * @param Role $role
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function update(Request $request, Role $role)
     {
         //
@@ -130,6 +145,23 @@ class RolesController extends AgentAuthController
             return success('编辑成功','roles');
         }else{
             return error('网络异常');
+        }
+    }
+
+    /**
+     * 删除
+     *
+     * @param Role $role
+     * @return array
+     * @throws \Exception
+     */
+    public function destroy(Role $role)
+    {
+        $permission = $role->delete();
+        if($permission){
+            return ['errorCode'=>0,'message'=>'成功'];
+        }else{
+            return ['errorCode'=>1,'message'=>'网络异常'];
         }
     }
 
@@ -168,6 +200,23 @@ class RolesController extends AgentAuthController
 
             $permissions = make_tree($permissionAll);
             return $permissions;
+        }
+    }
+
+    /**
+     * 状态切换
+     *
+     * @param Role $role
+     * @param Request $request
+     * @return array
+     */
+    public function status(Role $role,Request $request)
+    {
+        $result = $role->update(['status'=>$request->status ? 0 : 1]);
+        if($result){
+            return ['errorCode'=>0,'message'=>'修改成功'];
+        }else{
+            return ['errorCode'=>1,'message'=>'网络异常'];
         }
     }
 }

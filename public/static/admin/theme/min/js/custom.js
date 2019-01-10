@@ -264,6 +264,6 @@ function sweetConfirm(message,callback) {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         closeOnConfirm: false,
-        closeOnCancel: false
+        closeOnCancel: true
     },callback);
 }
