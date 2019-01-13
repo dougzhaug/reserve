@@ -21,11 +21,11 @@ class PermissionsController extends AuthController
         if($request->isMethod('post')){
 
             $builder = Permission::where('guard_name',Guard::getDefaultName(static::class))
-                ->select(['id','name as rule','pid','url','alias as name','sort','remark','icon','is_nav','created_at']);
+                ->select(['id','name as rule','pid','url','title as name','sort','remark','icon','is_nav','created_at']);
 
             /* where start*/
             if($request->keyword){
-                $builder->where($request->action_field,'like','%'.$request->keyword.'%');
+                $builder->where($request->current_field,'like','%'.$request->keyword.'%');
             }
             /* where end */
 
@@ -76,7 +76,7 @@ class PermissionsController extends AuthController
     {
         $this->validate($request, [
             'name' => ['required','unique:permissions'],
-            'alias' => ['required','unique:permissions'],
+            'title' => ['required','unique:permissions'],
         ]);
 
         $permission = Permission::create($request->post());
@@ -113,7 +113,7 @@ class PermissionsController extends AuthController
     {
         $this->validate($request, [
             'name' => ['required'],
-            'alias' => ['required'],
+            'title' => ['required'],
         ]);
 
         $result = $permission->update($request->post());

@@ -27,6 +27,7 @@
                     <th data-name="username">用户名</th>
                     <th data-name="nickname" data-sort="true">昵称</th>
                     <th data-name="phone">手机号</th>
+                    <th data-name="status">状态</th>
                     <th data-name="created_at">添加时间</th>
                     <th data-name="">操作</th>
                 </tr>
@@ -43,6 +44,7 @@
                     <th>用户名</th>
                     <th>昵称</th>
                     <th>手机号</th>
+                    <th>状态</th>
                     <th>添加时间</th>
                     <th>操作</th>
                 </tr>
@@ -60,6 +62,25 @@
 
 
         /**
+         * 列美化
+         *
+         */
+        function decorateColumn()
+        {
+            return [
+                {
+                    "targets": 4,   //状态
+                    "className": 'td-center',
+                    "render": function (data,type,row){
+                        var btn = row.status ? 'info' : 'danger';
+                        var i = row.status ? 'check' : 'times';
+                        return `<button type="button" onclick="toggleStatus(this)" data-url="{{url('roles/status')}}`+`/` + row.id + `" data-status="` + row.status + `" class="btn btn-` + btn +` btn-circle"><i class="fa fa-` + i + `"></i> </button>`;
+                    }
+                },
+            ];
+        }
+
+        /**
          * 重构操作栏
          *
          * @param data
@@ -70,8 +91,8 @@
         function getButton(data,type,row)
         {
             var html = '';
-            html += '<a href="{{url('admin/edit')}}/'+data.id+'" class="btn btn-primary btn-xs tables-edit"><span class="glyphicon glyphicon-edit"></span>编辑</a>';
-            html += '<a href="{{url('admin/destroy')}}/'+data.id+'" class="btn btn-danger btn-xs tables-delete"><span class="glyphicon glyphicon-trash"></span>删除</a>';
+            html += '<a href="agents/'+data.id+'/edit" class="btn btn-primary btn-xs tables-console tables-edit"><span class="glyphicon glyphicon-edit"></span>编辑</a>';
+            html += '<a href="{{url('admin/destroy')}}/'+data.id+'" class="btn btn-danger btn-xs tables-console tables-delete"><span class="glyphicon glyphicon-trash"></span>删除</a>';
             return html;
         }
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Agent;
 
 use App\Models\Agent;
+use App\Models\Role;
+use App\Rules\Phone;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -19,7 +21,7 @@ class AgentsController extends AuthController
 
             $columns = $request->columns;
 
-            $builder = Agent::select(['id','openid','username','sex','avatar','phone','nickname','authorize_status','source','created_at']);
+            $builder = Agent::select(['id','openid','username','sex','avatar','phone','nickname','authorize_status','status','source','created_at']);
 
             /* where start*/
 
@@ -62,7 +64,7 @@ class AgentsController extends AuthController
     public function create()
     {
         $roles = Role::all();
-        return view('admin.admin.create',['roles'=>$roles]);
+        return view('agent.agents.create',['roles'=>$roles]);
     }
 
     public function store(Request $request)
@@ -91,7 +93,7 @@ class AgentsController extends AuthController
         $result = $admin->assignRole($request->permissions);
 
         if($result){
-            return success('添加成功','admin');
+            return success('添加成功','agents');
         }else{
             return error('网络异常');
         }
@@ -110,51 +112,48 @@ class AgentsController extends AuthController
     }
 
     /**
-     * @param Admin $admin
+     * 编辑页面
+     *
+     * @param Agent $agent
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(Admin $admin)
+    public function edit(Agent $agent)
     {
         //
-        $roles = Role::all();
-        $admin_roles = array_column($admin->roles->toArray(),'id') ? : [];  //获取当前用户的角色
-        return view('admin.admin.edit',['admin'=>$admin,'roles'=>$roles,'admin_roles'=>$admin_roles]);
+        $roles = Role::where('status',1)->select('id','id as value','name')->get()->toArray();
+        $agent_roles = array_column($agent->roles->toArray(),'id') ? : [];  //获取当前用户的角色
+        return view('agent.agents.edit',['agent'=>$agent,'roles'=>$roles,'agent_roles'=>$agent_roles]);
     }
 
     /**
+     * 编辑
+     *
      * @param Request $request
-     * @param Admin $admin
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Agent $agent
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, Admin $admin)
+    public function update(Request $request, Agent $agent)
     {
         //
         $this->validator($request->all(),[
-            'name' => 'required|string|max:255',
-            'phone' => ['required',new phone()],
-            'email' => 'nullable|string|email|max:255',
-            'password' => 'nullable|string|min:6',
-            'permissions' => 'required',
+            'username' => 'required|string|max:255',
+            'roles' => 'required',
         ]);
 
         $update = [
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'email' => $request->email,
+            'username' => $request->username,
+            'nickname' => $request->nickname,
+            'status' => $request->status,
         ];
 
-        if($request->password) $update['password'] = bcrypt($request->password);
-
-        $admin_result = $admin->update($update);
-
-        if(!$admin_result){
+        $agent_result = $agent->update($update);
+        if(!$agent_result){
             return error('网络异常');
         }
 
-        $result = $admin->syncRoles($request->permissions);
-
+        $result = $agent->syncRoles($request->roles);
         if($result){
-            return success('编辑成功','admin');
+            return success('编辑成功','agents');
         }else{
             return error('网络异常');
         }
@@ -167,9 +166,9 @@ class AgentsController extends AuthController
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy(Admin $admin)
+    public function destroy(Agent $agent)
     {
-        $result = $admin->delete();
+        $result = $agent->delete();
         if($result){
             return success('删除成功','role');
         }else{

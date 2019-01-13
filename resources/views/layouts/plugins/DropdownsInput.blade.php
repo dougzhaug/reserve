@@ -52,13 +52,9 @@
                     {{key($dropdowns)}}
                 @else
                    @if(is_array($reset = reset($drop_reset)))
-                        @if(is_assoc($reset))
-                            {{key(reset($drop_reset))}}
-                        @else
-                            {{key($reset)}}
-                        @endif
+                        @if(is_assoc($reset)) {{key(reset($drop_reset))}} @else {{key($reset)}} @endif
                    @else
-                        {{key($drop_reset)}}
+                        @if(isset($group) && $group) {{key($drop_reset)}} @else {{$drop_reset['value'] or 'keyword'}} @endif
                    @endif
                 @endif
             @else

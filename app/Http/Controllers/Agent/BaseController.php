@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Agent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Validator;
 
 class BaseController extends Controller
 {
@@ -58,5 +59,17 @@ class BaseController extends Controller
             'errcode' => $code,
             'errmsg' => $msg
         ];
+    }
+
+    /**
+     * 验证器
+     *
+     * @param $data
+     * @param $rule
+     * @return mixed
+     */
+    protected function validator($data,$rule)
+    {
+        return Validator::make($data, $rule)->validate();
     }
 }

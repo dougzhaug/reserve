@@ -6,7 +6,11 @@
     <div class="box-body">
         <form id="formSearch" class="form-horizontal" method="POST" action="{{url('permissions/index')}}">
             <div class="input-group m-b-10 col-sm-3">
-                @include('layouts.plugins.DropdownsInput',['name'=>'pid','dropdowns'=>[['name'=>'名称','value'=>'name'],['name'=>'联系电话','value'=>'phone']]])
+                @include('layouts.plugins.DropdownsInput',['group'=>0,'dropdowns'=>[['name'=>'名称','value'=>'title'],['name'=>'电话','value'=>'phone']]])
+            </div>
+
+            <div class="search-input col-sm-1">
+                <button type="button" onclick="doSearch()" id="searchBtn" class="btn btn-block btn-info" value="查询">查询</button>
             </div>
         </form>
     </div>

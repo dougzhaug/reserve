@@ -175,7 +175,7 @@ class RolesController extends AuthController
     public function permission_tree(Request $request,Role $role)
     {
         if($request->ajax()){
-            $permissionAll = Permission::where('is_nav',1)->get(['id','alias as text','pid','icon']);
+            $permissionAll = Permission::where(['guard_name'=>Guard::getDefaultName(static::class)])->get(['id','title as text','pid','icon']);
 
 //            //处理系统中必须的权限（例如，消息提示页面）
 //            foreach ($permissionAll as $key=>$val){

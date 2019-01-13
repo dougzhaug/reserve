@@ -248,6 +248,9 @@
             <div class="sidebar-head">
                 <h3><span class="fa-fw open-close"><i class="ti-menu hidden-xs"></i><i class="ti-close visible-xs"></i></span> <span class="hide-menu">Navigation</span></h3> </div>
             <ul class="nav" id="side-menu">
+                @isset($menu)
+                    {!! $menu !!}
+                @endisset
                 <li> <a href="{{url('/')}}" id="nav-index" class="waves-effect"><i  class="fa fa-home fa-fw"></i> <span class="hide-menu">首页</span></a> </li>
                 <li class="user-pro">
                     <a href="#" class="waves-effect"><img src="{{asset('static/admin/plugins/images/users/varun.jpg')}}" alt="user-img" class="img-circle"> <span class="hide-menu"> Steve Gection<span class="fa arrow"></span></span>

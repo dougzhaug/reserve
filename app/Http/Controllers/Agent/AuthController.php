@@ -18,6 +18,8 @@ class AuthController extends BaseController
     {
         parent::__construct($request);
         $this->middleware('auth:agent');
+        $this->middleware('permission:agent');
+        $this->middleware('menu:agent');
     }
 
 

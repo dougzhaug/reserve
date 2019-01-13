@@ -33,7 +33,7 @@ Route::namespace('Agent')->group(function () {
     Route::any('open-platform/serve','OpenPlatformController@serve');
     Route::any('open-platform/callback','OpenPlatformController@callback');
 
-    Route::get('/','IndexController@index');
+    Route::get('/','IndexController@index')->name('index');
     Route::get('test','IndexController@index');
     Route::get('order/create','IndexController@index');
 

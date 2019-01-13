@@ -22,7 +22,7 @@ class CreatePermissionTables extends Migration
             $table->string('guard_name');
             $table->integer('pid')->default(0)->comment('父id');
             $table->string('url')->default('')->nullable()->comment('导航跳转地址');
-            $table->string('alias')->default('')->comment('名称');
+            $table->string('title')->default('')->comment('名称');
             $table->integer('sort')->default(0)->nullable()->comment('排序');
             $table->string('remark')->default('')->nullable()->comment('备注');
             $table->string('icon')->default('fa fa-info-circle')->nullable()->comment('导航icon');

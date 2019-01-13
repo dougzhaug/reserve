@@ -197,3 +197,27 @@ if (!function_exists('is_assoc')){
         return array_keys($arr) !== range(0, count($arr) - 1);
     }
 }
+
+function make_menu($arr) {
+    $tree = make_tree($arr);//dd($tree);die;
+    if (!function_exists('makeTreeToArray')) {
+        function makeMenu($tree){
+            $menu = '';
+            foreach ($tree as $key=>$val){
+                if(!$val['is_nav']){
+                    continue;
+                }
+
+                if(empty($val['children'])){
+                    $menu .= '<li> <a href="'. route($val['name']) .'" id="nav-index" class="waves-effect"><i  class="'. $val['icon'] .' fa-fw"></i> <span class="hide-menu"> ' . $val['title'] . ' </span></a> </li>';
+                }else{
+                    $menu .= '<li> <a href="javascript:void(0)" class="waves-effect"><i class="' . $val['icon'] . ' fa-fw" data-icon="v"></i> <span class="hide-menu"> ' . $val['title'] . ' <span class="fa arrow"></span> </span></a><ul class="nav nav-second-level">';
+                    $menu .= makeMenu($val['children']);
+                    $menu .= '</ul></li>';
+                }
+            }
+            return $menu;
+        }
+    }
+    return makeMenu($tree);
+}

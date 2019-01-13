@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class Agent extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -15,7 +16,7 @@ class Agent extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'openid', 'nickname' , 'phone', 'password', 'avatar', 'sex', 'source',
+        'username', 'openid', 'nickname' , 'phone', 'password', 'avatar', 'sex', 'source','status',
     ];
 
     /**
@@ -30,5 +31,15 @@ class Agent extends Authenticatable
     public function wechatMp()
     {
         return $this->hasOne('App\Models\WechatMp');
+    }
+
+    /**
+     * is_nav 修改器
+     *
+     * @param $value
+     */
+    public function setStatusAttribute($value)
+    {
+        $this->attributes['status'] = $value == 'off' || !$value ? 0 : 1;
     }
 }
