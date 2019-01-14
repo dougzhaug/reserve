@@ -51,7 +51,7 @@ class WeiBoController extends Controller
         //加agents表数据
         $create_data = [
             'source'=> self::USER_SOURCE,
-            'username' => 'B_' . str_random(8),
+            'username' => make_username(),
             'nickname' => $raw->nickname,
             'sex' => $agent_weibo['gender'] ? $agent_weibo['gender']=='m' ? 1 : 2 : 0,
             'avatar' => $agent_weibo['avatar_large'],

@@ -20,9 +20,8 @@ class VerifyPermission
     {
         if (Auth::guard($guard)->check()) {
             $user = Auth::user();
-            $permission = $request->path();
             $route = Request::route()->getName();  //获取当前路由别名
-            if(!$user->can($route)){
+            if(!$user->can($route)){                //注：未定义路由别名的将不受权限管理
                 return response()->view('403', [], 403);
             }
         }

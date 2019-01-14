@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Rules\Phone;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Spatie\Permission\Guard;
 
 class AgentsController extends AuthController
 {
@@ -63,7 +64,8 @@ class AgentsController extends AuthController
 
     public function create()
     {
-        $roles = Role::all();
+        $roles = Role::where(['status'=>1,'guard_name'=>Guard::getDefaultName(static::class)])
+            ->select('id','id as value','name')->get()->toArray();
         return view('agent.agents.create',['roles'=>$roles]);
     }
 
@@ -119,8 +121,8 @@ class AgentsController extends AuthController
      */
     public function edit(Agent $agent)
     {
-        //
-        $roles = Role::where('status',1)->select('id','id as value','name')->get()->toArray();
+        $roles = Role::where(['status'=>1,'guard_name'=>Guard::getDefaultName(static::class)])
+            ->select('id','id as value','name')->get()->toArray();
         $agent_roles = array_column($agent->roles->toArray(),'id') ? : [];  //获取当前用户的角色
         return view('agent.agents.edit',['agent'=>$agent,'roles'=>$roles,'agent_roles'=>$agent_roles]);
     }
@@ -134,7 +136,6 @@ class AgentsController extends AuthController
      */
     public function update(Request $request, Agent $agent)
     {
-        //
         $this->validator($request->all(),[
             'username' => 'required|string|max:255',
             'roles' => 'required',
@@ -173,6 +174,23 @@ class AgentsController extends AuthController
             return success('删除成功','role');
         }else{
             return error('网络异常');
+        }
+    }
+
+    /**
+     * 状态切换
+     *
+     * @param Agent $agent
+     * @param Request $request
+     * @return array
+     */
+    public function status(Agent $agent,Request $request)
+    {
+        $result = $agent->update(['status'=>$request->status ? 0 : 1]);
+        if($result){
+            return ['errorCode'=>0,'message'=>'修改成功'];
+        }else{
+            return ['errorCode'=>1,'message'=>'网络异常'];
         }
     }
 }

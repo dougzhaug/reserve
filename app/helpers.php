@@ -6,6 +6,20 @@
  * Time: 11:17
  */
 
+if (! function_exists('make_username')) {
+    /**
+     * 生成用户名
+     *
+     * @param int $length
+     * @param bool $prefix
+     * @return string
+     */
+    function make_username($length=12,$prefix=false)
+    {
+        return $prefix ? : 'B_' . str_random($length);
+    }
+}
+
 if (! function_exists('success')) {
     /**
      * 成功提示信息
@@ -97,8 +111,8 @@ if (! function_exists('bcrypt_random')) {
  * @return array
  */
 function make_tree($arr) {
-    if (!function_exists('makeTree')) {
 
+    if (!function_exists('makeTree')) {
         function makeTree($arr, $parent_id = 0) {
             $new_arr = array();
             foreach ($arr as $k => $v) {
@@ -125,8 +139,8 @@ function make_tree($arr) {
  */
 function make_tree_with_name_pre($arr) {
     $arr = make_tree($arr);
-    if (!function_exists('makeTreeWithNamePre')) {
 
+    if (!function_exists('makeTreeWithNamePre')) {
         function makeTreeWithNamePre($arr, $prestr = '') {
             $new_arr = array();
             foreach ($arr as $v) {
@@ -165,6 +179,7 @@ function make_tree_with_name_pre($arr) {
  */
 function make_tree_to_array($arr) {
     $tree = make_tree_with_name_pre($arr);
+
     if (!function_exists('makeTreeToArray')) {
         function makeTreeToArray($tree){
             static $new_tree = [];
@@ -198,8 +213,15 @@ if (!function_exists('is_assoc')){
     }
 }
 
+/**
+ * 生成左侧菜单HTML
+ *
+ * @param $arr
+ * @return string
+ */
 function make_menu($arr) {
-    $tree = make_tree($arr);//dd($tree);die;
+    $tree = make_tree($arr);
+
     if (!function_exists('makeTreeToArray')) {
         function makeMenu($tree){
             $menu = '';
@@ -208,8 +230,14 @@ function make_menu($arr) {
                     continue;
                 }
 
+                try{
+                    $href= route($val['name']);
+                }catch (Exception $e){
+                    $href = url($val['url']??'/');
+                }
+
                 if(empty($val['children'])){
-                    $menu .= '<li> <a href="'. route($val['name']) .'" id="nav-index" class="waves-effect"><i  class="'. $val['icon'] .' fa-fw"></i> <span class="hide-menu"> ' . $val['title'] . ' </span></a> </li>';
+                    $menu .= '<li> <a href="'. $href .'" id="nav-index" class="waves-effect"><i  class="'. $val['icon'] .' fa-fw"></i> <span class="hide-menu"> ' . $val['title'] . ' </span></a> </li>';
                 }else{
                     $menu .= '<li> <a href="javascript:void(0)" class="waves-effect"><i class="' . $val['icon'] . ' fa-fw" data-icon="v"></i> <span class="hide-menu"> ' . $val['title'] . ' <span class="fa arrow"></span> </span></a><ul class="nav nav-second-level">';
                     $menu .= makeMenu($val['children']);

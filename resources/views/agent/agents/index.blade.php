@@ -74,7 +74,7 @@
                     "render": function (data,type,row){
                         var btn = row.status ? 'info' : 'danger';
                         var i = row.status ? 'check' : 'times';
-                        return `<button type="button" onclick="toggleStatus(this)" data-url="{{url('roles/status')}}`+`/` + row.id + `" data-status="` + row.status + `" class="btn btn-` + btn +` btn-circle"><i class="fa fa-` + i + `"></i> </button>`;
+                        return `<button type="button" onclick="toggleStatus(this)" data-url="{{url('agents/status')}}`+`/` + row.id + `" data-status="` + row.status + `" class="btn btn-` + btn +` btn-circle"><i class="fa fa-` + i + `"></i> </button>`;
                     }
                 },
             ];
@@ -97,12 +97,28 @@
         }
 
         /**
-         * 删除 （自定义）
+         * 状态切换
+         * @param that
          */
-        $('body').on('click','.tables-delete',function(){
-            if(!confirm('确认要删除吗')){
-                return false;
-            }
-        });
+        function toggleStatus(that) {
+            sweetConfirm('确定修改状态吗？',function (isConfirm) {
+                if(!isConfirm) return false;
+
+                $.ajax({
+                    url:$(that).data('url'),
+                    data:{'status':$(that).data('status'),'_token':'{{csrf_token()}}'},
+                    type:'POST',
+                    success:function(result){
+                        if(!result.errorCode){
+                            swal({'title':result.message,'type':'success'},function () {
+                                window.location.reload();
+                            });
+                        }else{
+                            swal(result.message,'','error');
+                        }
+                    }
+                });
+            });
+        }
     </script>
 @endpush

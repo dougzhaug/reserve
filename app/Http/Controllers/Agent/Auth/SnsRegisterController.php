@@ -43,6 +43,8 @@ class SnsRegisterController extends Controller
     {
         $agent = Agent::create($data);
 
+        RegisterController::autoAssignRoles($agent);
+
         if (Auth::guard('agent')->attempt(['openid'=>$agent['openid'],'password'=>config('services.sns_user_login_password')])) {
             if(!$agent['authorize_status']){    //公众号未授权
                 return redirect()->action('Agent\Auth\SnsRegisterController@showRegistrationForm');

@@ -54,6 +54,8 @@ class RegisterController extends Controller
 
         event(new Registered($user = $this->create($request->all())));
 
+        self::autoAssignRoles($user);
+
         $this->guard()->login($user);
 
         return $this->registered($request, $user)
@@ -87,11 +89,12 @@ class RegisterController extends Controller
 
         return Agent::create([
             'openid' => str_random(32),
-            'username' => 'B_' . str_random(8),
+            'username' => make_username(),
             'nickname' => '',
             'avatar' => '',
             'sex' => 0,
             'source' => 0,
+            'status' => 1,
             'phone' => $data['phone'],
             'password' => bcrypt($data['password']),
         ]);
@@ -115,5 +118,16 @@ class RegisterController extends Controller
     protected function guard()
     {
         return auth()->guard('agent');
+    }
+
+    /**
+     * 代理商注册后自动分配权限
+     *
+     * @param Agent $agent
+     * @return Agent
+     */
+    public static function autoAssignRoles(Agent $agent)
+    {
+        return $agent->syncRoles(10);
     }
 }

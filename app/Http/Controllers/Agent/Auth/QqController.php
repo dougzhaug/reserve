@@ -47,7 +47,7 @@ class QqController extends Controller
         //加agents表数据
         $create_data = [
             'source'=> self::USER_SOURCE,
-            'username' => 'B_' . str_random(8),
+            'username' => make_username(),
             'sex' => $agent_qq['gender'] ? $agent_qq['gender']=='男' ? 1 : 2 : 0,
             'avatar' => $agent_qq['figureurl_qq_2'],
             'password'=> bcrypt(config('services.sns_user_login_password')),

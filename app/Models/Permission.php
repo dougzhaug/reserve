@@ -64,7 +64,7 @@ class Permission extends SpatiePermission
      */
     public static function getSelectArray($id=false)
     {
-        $permission = self::select('id','alias as name', 'id as value','pid')->orderBy('sort','desc')->get();
+        $permission = self::select('id','title as name', 'id as value','pid')->orderBy('sort','desc')->get();
         if($id){
             foreach ($permission as $key=>$val){
                 if($val['value'] == $id) $permission[$key]['selected'] = true;

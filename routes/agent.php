@@ -7,9 +7,11 @@
  */
 
 Route::namespace('Agent')->group(function () {
+    // 在 "App\Http\Controllers\Agent" 命名空间下的控制器
+
+    Route::get('/','IndexController@index');
     Route::get('demo', 'IndexController@demo');
 
-    // 在 "App\Http\Controllers\Agent" 命名空间下的控制器
     Auth::routes();
     //登出
     Route::get('logout', 'Auth\LoginController@logout')->name('logout');
@@ -33,13 +35,10 @@ Route::namespace('Agent')->group(function () {
     Route::any('open-platform/serve','OpenPlatformController@serve');
     Route::any('open-platform/callback','OpenPlatformController@callback');
 
-    Route::get('/','IndexController@index')->name('index');
-    Route::get('test','IndexController@index');
-    Route::get('order/create','IndexController@index');
-
     //代理商管理
     Route::resource('agents', 'AgentsController');
     Route::post('agents', 'AgentsController@index');
+    Route::post('agents/status/{agent?}', 'AgentsController@status');
 
     //权限管理
     Route::resource('permissions', 'Rbac\PermissionsController');
@@ -47,7 +46,6 @@ Route::namespace('Agent')->group(function () {
     Route::post('permissions/index', 'Rbac\PermissionsController@index');
     Route::post('permissions/sort/{permission}', 'Rbac\PermissionsController@sort');
     Route::post('permissions/toggle_nav/{permission}', 'Rbac\PermissionsController@toggle_nav');
-
 
     //角色管理
     Route::resource('roles', 'Rbac\RolesController');

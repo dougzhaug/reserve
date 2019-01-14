@@ -44,7 +44,7 @@ class WechatWebController extends Controller
         //加agents表数据
         $create_data = [
             'source'=> self::USER_SOURCE,
-            'username' => 'B_' . str_random(8),
+            'username' => make_username(),
             'avatar' => $agent_wechat['headimgurl'],
             'password'=> bcrypt(config('services.sns_user_login_password')),
         ];
