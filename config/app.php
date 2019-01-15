@@ -186,6 +186,7 @@ return [
         Mews\Captcha\CaptchaServiceProvider::class,
         Toplan\PhpSms\PhpSmsServiceProvider::class,
         Toplan\Sms\SmsManagerServiceProvider::class,
+        SunnyShift\Uploader\UploaderServiceProvider::class,
 
         /*
          * Application Service Providers...

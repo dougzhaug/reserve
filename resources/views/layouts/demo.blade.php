@@ -178,7 +178,15 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <label class="col-sm-2 control-label">上传</label>
+            <div class="col-sm-9">
 
+                {{-- 上传 --}}
+                @uploader('assets')
+                @uploader(['name' => 'avatar', 'max' => 100, 'accept' => 'jpg,png,gif,pdf'])
+            </div>
+        </div>
 
         <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">Username*</label>

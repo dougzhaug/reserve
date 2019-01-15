@@ -45,7 +45,7 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => storage_path('app/upload'),
         ],
 
         'public' => [
@@ -61,6 +61,14 @@ return [
             'secret' => env('AWS_SECRET_ACCESS_KEY'),
             'region' => env('AWS_DEFAULT_REGION'),
             'bucket' => env('AWS_BUCKET'),
+        ],
+        
+        'qiniu' => [
+            'driver'     => 'qiniu',
+            'access_key' => 'xxxxxxxxxxxxxxxxxx',
+            'secret_key' => 'xxxxxxxxxxxxxxxxxx',
+            'bucket'     => 'xxxxxxxxxxxxxxxxxx',
+            'domain'     => 'xxxxxxxxxxx'
         ],
 
     ],

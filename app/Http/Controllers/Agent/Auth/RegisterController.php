@@ -90,7 +90,7 @@ class RegisterController extends Controller
         return Agent::create([
             'openid' => str_random(32),
             'username' => make_username(),
-            'nickname' => '',
+            'nickname' => 'B_'.str_random(6).$data['phone'],
             'avatar' => '',
             'sex' => 0,
             'source' => 0,
