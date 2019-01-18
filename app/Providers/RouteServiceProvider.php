@@ -86,7 +86,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapAgentRoutes()
     {
 
-        Route::domain('dev.' . config('app.tld'))
+        Route::domain('agent.' . config('app.tld'))
             ->middleware('agent')
             ->namespace($this->namespace)
             ->group(base_path('routes/agent.php'));
@@ -101,7 +101,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-        Route::prefix('api')
+        Route::domain('api.' . config('app.tld'))
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
