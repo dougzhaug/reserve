@@ -184,7 +184,7 @@
 
                 {{-- 上传 --}}
                 @uploader('assets')
-                @uploader(['name' => 'avatar', 'max' => 100, 'accept' => 'jpg,png,gif,pdf'])
+                @uploader(['name' => 'avatar', 'max' => 100, 'accept' => 'jpg,png,gif,pdf,txt'])
             </div>
         </div>
 

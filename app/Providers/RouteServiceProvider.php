@@ -85,7 +85,6 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapAgentRoutes()
     {
-
         Route::domain('agent.' . config('app.tld'))
             ->middleware('agent')
             ->namespace($this->namespace)
