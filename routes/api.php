@@ -16,7 +16,7 @@ $api = app('Dingo\Api\Routing\Router');
 $api->version('v1',function ($api){
     $api->group(['namespace' => 'App\Http\Controllers\Api'],function ($api) {
         $api->get('/login','Auth\LoginController@login');
-        $api->get('/authorized/callback','Auth\LoginController@callback');
+        $api->get('/get_authorized_url','Auth\LoginController@getOpenAuthorizeUrl');
    });
 });
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
