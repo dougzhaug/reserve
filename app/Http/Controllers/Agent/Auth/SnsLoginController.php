@@ -25,7 +25,7 @@ class SnsLoginController extends Controller
                     return redirect()->action('Agent\Auth\SnsRegisterController@showRegistrationForm');
                 }else{
                     //跳转首页或来源页面
-                    return redirect()->intended('dashboard');
+                    return redirect()->intended('/');
                 }
             }
         }else{//注册

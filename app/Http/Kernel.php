@@ -78,5 +78,6 @@ class Kernel extends HttpKernel
         'menu' => \App\Http\Middleware\MakeMenu::class,
         'permission' => \App\Http\Middleware\VerifyPermission::class,
         'wechat.oauth' => \Overtrue\LaravelWeChat\Middleware\OAuthAuthenticate::class,
+        'api.checkOrigin' => \App\Http\Middleware\Api\CheckOrigin::class,
     ];
 }
