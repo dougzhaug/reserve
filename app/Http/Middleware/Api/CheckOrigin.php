@@ -19,14 +19,12 @@ class CheckOrigin
         try{
             preg_match("#http://(.*?)\.#i",$_SERVER['HTTP_ORIGIN'],$origin);    //暂无https
             $mp = WechatMp::where('authorizer_appid',$origin[1])->first();
-            if(!$mp){
-                throw new \Dingo\Api\Exception\ResourceException('公众号信息异常');
-            }
+            if(!$mp) throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException('AccessDenied(Permission denied)');
         }catch (\Exception $e){
-            throw new \Dingo\Api\Exception\ResourceException('数据异常('.$e->getMessage().')');
+            throw new \Dingo\Api\Exception\ResourceException('ResourceException('.$e->getMessage().')');
         }
 
-        header("Access-Control-Allow-Origin:" . $_SERVER['HTTP_ORIGIN'] . "");
+        header("Access-Control-Allow-Origin:" . $_SERVER['HTTP_ORIGIN']);
 
         $request->mp = $mp;
 
