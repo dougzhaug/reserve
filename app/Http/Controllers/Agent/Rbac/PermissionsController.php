@@ -166,7 +166,7 @@ class PermissionsController extends AuthController
      * @param Request $request
      * @return array
      */
-    public function toggle_nav(Permission $permission,Request $request)
+    public function toggleNav(Permission $permission,Request $request)
     {
         $result = $permission->update(['is_nav'=>$request->nav ? 0 : 1]);
         if($result){

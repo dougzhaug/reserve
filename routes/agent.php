@@ -45,11 +45,11 @@ Route::namespace('Agent')->group(function () {
     Route::get('permissions/create/{id?}', 'Rbac\PermissionsController@create');
     Route::post('permissions/index', 'Rbac\PermissionsController@index');
     Route::post('permissions/sort/{permission}', 'Rbac\PermissionsController@sort');
-    Route::post('permissions/toggle_nav/{permission}', 'Rbac\PermissionsController@toggle_nav');
+    Route::post('permissions/toggle_nav/{permission}', 'Rbac\PermissionsController@toggleNav');
 
     //角色管理
     Route::resource('roles', 'Rbac\RolesController');
     Route::post('roles/index', 'Rbac\RolesController@index');
-    Route::post('roles/permission_tree/{role?}', 'Rbac\RolesController@permission_tree');
+    Route::post('roles/permission_tree/{role?}', 'Rbac\RolesController@permissionTree');
     Route::post('roles/status/{role?}', 'Rbac\RolesController@status');
 });

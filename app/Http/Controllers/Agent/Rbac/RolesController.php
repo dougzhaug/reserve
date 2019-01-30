@@ -172,7 +172,7 @@ class RolesController extends AuthController
      * @param Role $role
      * @return array
      */
-    public function permission_tree(Request $request,Role $role)
+    public function permissionTree(Request $request,Role $role)
     {
         if($request->ajax()){
             $permissionAll = Permission::where(['guard_name'=>Guard::getDefaultName(static::class)])->get(['id','title as text','pid','icon']);
