@@ -90,7 +90,7 @@ function Uploader(selector) {
                     _this.selector.find('.picker').before(Utils.printf(_li, file.id, src));
                 }, 75, 75);
             }else{
-                var _li = '<div id="{0}" class="img-item"><p>{1}</p><div class="wrapper">0%</div></div>';
+                var _li = '<div id="{0}" class="img-item"><div class="delete"></div><p>{1}</p><div class="wrapper">0%</div></div>';
                 _this.selector.find('.picker').before(Utils.printf(_li, file.id, file.ext.toUpperCase()));
             }
         });

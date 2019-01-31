@@ -4,7 +4,7 @@
 @endpush
 
 @if(isset($style) && $style == 'btn')
-    <button type="button" class="btn btn-default pull-right date-range-btn" style="padding:8px 12px;">
+    <button type="button" class="btn btn-default pull-{{$opens or 'left'}} date-range-btn" style="padding:8px 12px;">
         <span name="{{$name or 'date_range'}}">
           <i class="fa fa-calendar"></i> {{$placeholder or '时间范围'}}
         </span>

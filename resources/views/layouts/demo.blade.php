@@ -174,7 +174,7 @@
             <label for="inputEmail3" class="col-sm-2 control-label">时间选择器5</label>
             <div class="col-sm-9">
                 {{-- Daterangepicker 时间插件 --}}
-                @include('layouts.plugins.Daterangepicker',['style'=>'btn'])
+                @include('layouts.plugins.Daterangepicker',['style'=>'btn','opens'=>'left'])
             </div>
         </div>
 
@@ -184,7 +184,14 @@
 
                 {{-- 上传 --}}
                 @uploader('assets')
-                @uploader(['name' => 'avatar', 'max' => 100, 'accept' => 'jpg,png,gif,pdf,txt'])
+                @uploader(['name' => 'avatar', 'max' => 100, 'accept' => 'jpg,png,gif,pdf,txt,csv'])
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">标签输入框</label>
+            <div class="col-sm-9">
+                @include('layouts.plugins.TagsInput',['name'=>'tag','value'=>'角色,卡死了'])
             </div>
         </div>
 
