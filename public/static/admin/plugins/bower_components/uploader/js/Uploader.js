@@ -18,12 +18,14 @@ function Uploader(selector) {
 
     this.uploader = null;
 
-    this.currentQty = 0;
+    this.currentQty = this.selector.find(".img-item").length-1;
 
     this.init = function () {
+        WebUploader.Mediator.currentQty = this.currentQty;
         WebUploader.Mediator.installTo(this);
         this.create();
         this.bind();
+        this.trigger('qtyChanged');
     };
 
     this.create = function () {
@@ -83,6 +85,7 @@ function Uploader(selector) {
             }
         });
         this.uploader.on('fileQueued', function(file) {
+            console.log(file);
             if (Utils.startsWith('image', file.type)){
                 var _li = '<div id="{0}" class="img-item"><div class="delete"></div><img class="img" src="{1}"><div class="wrapper">0%</div></div>';
                 _this.uploader.makeThumb(file, function(error, src) {

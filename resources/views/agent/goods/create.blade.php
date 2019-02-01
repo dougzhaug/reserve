@@ -44,7 +44,9 @@
             <div class="col-sm-9">
                 {{-- 文件上传 --}}
                 @uploader('assets')
-                @uploader(['name' => 'images', 'max' => 3, 'accept' => 'jpg,png,gif'])
+                {{--@uploader(['name' => 'images', 'max' => 3, 'accept' => 'jpg,png,gif','src'=>['2019-02-01/jIKu8eixHquaKorJjoqDG4MRExwmz3csKZo75Ve9.jpg','2019-02-01/NgrvNVDBUjD8Urt2ITCmu4ihYQZTyVeLZooTsg18.jpg','2019-02-01/cAcfwkM4rQOtporY27m3BI2cXVCPj664AJf3hKP4.jpg']])--}}
+                @uploader(['name' => 'images', 'max' => 3, 'accept' => 'jpg,png,gif','src'=>['2019-02-01/jIKu8eixHquaKorJjoqDG4MRExwmz3csKZo75Ve9.jpg','2019-02-01/NgrvNVDBUjD8Urt2ITCmu4ihYQZTyVeLZooTsg18.jpg']])
+                {{--@uploader(['name' => 'images', 'max' => 3, 'accept' => 'jpg,png,gif'])--}}
                 <span> 600 * 600  - | - 720*1280 - | - 1280*720</span>
                 @if ($errors->has('images'))
                     <span class="help-block">{{$errors->first('images')}}</span>

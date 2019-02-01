@@ -19,11 +19,12 @@
     </div>
 
     <div class="table-responsive">
-        <table id="data-tables" class="table table-striped table-bordered" data-url="{{url('goods/index')}}">
+        <table id="data-tables" class="table table-striped product-overview" data-url="{{url('goods/index')}}">
             <thead>
             <tr>
                 <th data-name="id" data-sort="true">ID</th>
                 <th data-name="name">名称</th>
+                <th data-name="images">缩略图</th>
                 <th data-name="author">作者</th>
                 <th data-name="price">价格</th>
                 <th data-name="status">状态</th>
@@ -41,6 +42,7 @@
             <tr>
                 <th>ID</th>
                 <th>名称</th>
+                <th>缩略图</th>
                 <th>作者</th>
                 <th>价格</th>
                 <th>状态</th>
@@ -67,7 +69,13 @@
         {
             return [
                 {
-                    "targets": 4,   //导航模式
+                    "targets": 2,   //icon
+                    "render": function (data,type,row){
+                        return `<img src="storage/uploads/`+row.images[0]+`" alt="iMac" width="80">`;
+                    }
+                },
+                {
+                    "targets": 5,   //导航模式
                     className : 'td-center',
                     "render": function (data,type,row){
                         var btn = row.is_nav ? 'info' : 'danger';
