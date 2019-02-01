@@ -19,7 +19,7 @@
         <div class="form-group {{ $errors->has('title') ? ' has-error' : '' }}">
             <label for="inputAlias" class="col-sm-2 control-label">名称*</label>
             <div class="col-sm-9">
-                <input name="alias" type="text" value="{{ old('title') }}" class="form-control" id="inputAlias" placeholder="名称">
+                <input name="title" type="text" value="{{ old('title') }}" class="form-control" id="inputAlias" placeholder="名称">
                 @if ($errors->has('title'))
                     <span class="help-block">{{$errors->first('title')}}</span>
                 @endif

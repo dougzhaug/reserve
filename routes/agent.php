@@ -52,4 +52,9 @@ Route::namespace('Agent')->group(function () {
     Route::post('roles/index', 'Rbac\RolesController@index');
     Route::post('roles/permission_tree/{role?}', 'Rbac\RolesController@permissionTree');
     Route::post('roles/status/{role?}', 'Rbac\RolesController@status');
+
+
+    //商品管理
+    Route::resource('goods', 'GoodsController');
+    Route::post('goods/index', 'GoodsController@index');
 });

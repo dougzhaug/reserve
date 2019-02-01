@@ -79,7 +79,10 @@ class PermissionsController extends AuthController
             'title' => ['required','unique:permissions'],
         ]);
 
-        $permission = Permission::create($request->post());
+        $create = $request->post();
+        $create['is_nav'] = $create['is_nav'] ?? 0;
+
+        $permission = Permission::create($create);
 
         if($permission){
             return success('添加成功','permissions');
@@ -116,7 +119,10 @@ class PermissionsController extends AuthController
             'title' => ['required'],
         ]);
 
-        $result = $permission->update($request->post());
+        $update = $request->post();
+        $update['is_nav'] = $update['is_nav'] ?? 0;
+
+        $result = $permission->update($update);
 
         if($result){
             return success('添加成功','permissions');

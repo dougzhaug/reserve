@@ -20,11 +20,28 @@ class VerifyPermission
     {
         if (Auth::guard($guard)->check()) {
             $user = Auth::user();
-            $route = Request::route()->getName();  //获取当前路由别名
-            if(!$user->can($route)){                //注：未定义路由别名的将不受权限管理
+            if(!$user->can($this->getRouteName())){                //注：未定义路由别名的将不受权限管理
                 return response()->view('403', [], 403);
             }
+            $request->user = $user;     //统一获取用户信息
         }
         return $next($request);
+    }
+
+    private function getRouteName()
+    {
+        $route = Request::route()->getName();  //获取当前路由别名
+        $routeArr = explode('.',$route);
+        $last = array_pop($routeArr);
+        if($last == 'store'){
+            $routeArr[] = 'create';
+            $route = implode('.',$routeArr);
+        }
+        if($last == 'update'){
+            $routeArr[] = 'edit';
+            $route = implode('.',$routeArr);
+        }
+
+        return $route;
     }
 }

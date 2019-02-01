@@ -116,13 +116,13 @@ function make_tree($arr) {
         function makeTree($arr, $parent_id = 0) {
             $new_arr = array();
             foreach ($arr as $k => $v) {
-                if ($v->pid == $parent_id) {
+                if ($v['pid'] == $parent_id) {
                     $new_arr[] = $v;
                     unset($arr[$k]);
                 }
             }
             foreach ($new_arr as &$a) {
-                $a->children = makeTree($arr, $a->id);
+                $a['children'] = makeTree($arr, $a['id']);
             }
             return $new_arr;
         }

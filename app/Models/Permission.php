@@ -4,6 +4,7 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Permission\Guard;
 use Spatie\Permission\Models\Permission as SpatiePermission;
 
 class Permission extends SpatiePermission
@@ -53,7 +54,7 @@ class Permission extends SpatiePermission
      */
     public function setIsNavAttribute($value)
     {
-        $this->attributes['is_nav'] = $value == 'off' || !$value ? 0 : 1;
+        $this->attributes['is_nav'] = !isset($value) || $value == 'off' || !$value ? 0 : 1;
     }
 
     /**
@@ -64,7 +65,7 @@ class Permission extends SpatiePermission
      */
     public static function getSelectArray($id=false)
     {
-        $permission = self::select('id','title as name', 'id as value','pid')->orderBy('sort','desc')->get();
+        $permission = self::where('guard_name',Guard::getDefaultName(static::class))->select('id','title as name', 'id as value','pid')->orderBy('sort','desc')->get();
         if($id){
             foreach ($permission as $key=>$val){
                 if($val['value'] == $id) $permission[$key]['selected'] = true;

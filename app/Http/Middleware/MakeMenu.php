@@ -20,7 +20,8 @@ class MakeMenu
     {
         if (Auth::guard($guard)->check()) {
             $user = Auth::user();
-            $permissions = $user->getAllPermissions();
+            $permissions = $user->getAllPermissions()->toArray();
+            array_multisort(array_column($permissions,'sort'), SORT_DESC, $permissions);
             $menu = [];
             foreach ($permissions as $value){
                 if($value['is_nav']) $menu[] = $value;
