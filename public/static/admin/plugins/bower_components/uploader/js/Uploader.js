@@ -21,11 +21,10 @@ function Uploader(selector) {
     this.currentQty = this.selector.find(".img-item").length-1;
 
     this.init = function () {
-        WebUploader.Mediator.currentQty = this.currentQty;
         WebUploader.Mediator.installTo(this);
         this.create();
         this.bind();
-        this.trigger('qtyChanged');
+        this.trigger('qtyChanged'); //解决初始化时，达到文件个数上限时自动隐藏添加按钮功能
     };
 
     this.create = function () {
@@ -51,18 +50,25 @@ function Uploader(selector) {
         });
     };
 
-    this.bind = function () {
+    this.bind = function (reload) {
         var _this = this;
         this.on('qtyChanged', function () {
             var picker = $('.picker');
             this.currentQty < this.max ? picker.show() : picker.hide();
         });
+        if(!reload){    //如果是重载将不重新加载该方法
+            $('.uploader-list').on('click', '.delete', function () {
 
-        $('.uploader-list').on('click', '.delete', function () {
-            $(this).parent().remove();
-            _this.currentQty--;
-            _this.trigger('qtyChanged');
-        });
+                _this.create();     //重新加载
+                _this.bind(true);   //重新加载
+
+                $(this).parent().remove();
+                _this.currentQty--;
+                _this.trigger('qtyChanged');
+                console.log(_this.currentQty);
+
+            });
+        }
         this.uploader.on( 'uploadBeforeSend', function( block, data, headers ) {
             var file = block.file;
             var params = _this.options.params;
@@ -85,7 +91,6 @@ function Uploader(selector) {
             }
         });
         this.uploader.on('fileQueued', function(file) {
-            console.log(file);
             if (Utils.startsWith('image', file.type)){
                 var _li = '<div id="{0}" class="img-item"><div class="delete"></div><img class="img" src="{1}"><div class="wrapper">0%</div></div>';
                 _this.uploader.makeThumb(file, function(error, src) {
@@ -137,9 +142,13 @@ function Uploader(selector) {
     }
 }
 
-var ups = $("div[id^='uploader_']");
-for (var i = 0; i < ups.length; i++){
-    var uploader = new Uploader($('#'+ups[i].id));
-    uploader.init();
+reload();
+
+function reload() {
+    var ups = $("div[id^='uploader_']");
+    for (var i = 0; i < ups.length; i++){
+        var uploader = new Uploader($('#'+ups[i].id));
+        uploader.init();
+    }
 }
 

@@ -14,7 +14,7 @@ class GoodsController extends AuthController
 
             $columns = $request->columns;
 
-            $builder = Goods::select(['id','name','author','images','category','price','status','created_at']);
+            $builder = Goods::where('agent_id',$request->user['id'])->select(['id','name','author','images','category','price','status','created_at']);
 
             /* where start*/
 
@@ -33,10 +33,7 @@ class GoodsController extends AuthController
 
             /* order start */
             if($request->order){
-                $order = $request->order[0];
-                $order_column = $columns[$order['column']]['data'];
-                $order_dir = $order['dir'];
-                $builder->orderBy($order_column,$order_dir);
+                $builder->orderBy($request->columns[$request->order[0]['column']]['data'],$request->order[0]['dir']);
             }
             /* order end */
 
@@ -73,9 +70,9 @@ class GoodsController extends AuthController
         $create = $request->post();
         $create['agent_id'] = $request->user['id'];
 
-        $permission = Goods::create($create);
+        $result = Goods::create($create);
 
-        if($permission){
+        if($result){
             return success('添加成功','goods');
         }else{
             return error('网络异常');
@@ -87,20 +84,49 @@ class GoodsController extends AuthController
 
     }
 
-    public function edit()
+    /**
+     * @param Goods $goods
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit(Goods $goods)
     {
         return view('agent.goods.edit',[
+            'goods'=>$goods,
             'category'=>[['name'=>'请选择','value'=>''],['name'=>'图集','value'=>1]]
         ]);
     }
 
-    public function update()
+    public function update(Request $request, Goods $goods)
     {
+        if($goods['agent_id'] != $request->user['id']) return error('请求异常');
 
+        $this->validate($request, [
+            'category' => ['required'],
+            'name' => ['required'],
+            'price' => ['required'],
+            'images' => ['required','array','between:3,3'],
+        ]);
+
+        $update = $request->post();
+
+        $result = $goods->update($update);
+
+        if($result){
+            return success('编辑成功','goods');
+        }else{
+            return error('网络异常');
+        }
     }
 
-    public function destroy()
+    public function destroy(Request $request, Goods $goods)
     {
+        if($goods['agent_id'] != $request->user['id']) return ['errorCode'=>1,'message'=>'请求异常'];
 
+        $result = $goods->delete();
+        if($result){
+            return ['errorCode'=>0,'message'=>'成功'];
+        }else{
+            return ['errorCode'=>1,'message'=>'网络异常'];
+        }
     }
 }

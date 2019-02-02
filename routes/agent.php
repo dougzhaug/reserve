@@ -55,6 +55,10 @@ Route::namespace('Agent')->group(function () {
 
 
     //商品管理
+    Route::get('goods/{goods}/edit', 'GoodsController@edit')->name('goods.edit');       //重置路由-资源路由查不到数据
+    Route::patch('goods/{goods}', 'GoodsController@update')->name('goods.edit');        //重置路由-资源路由查不到数据
+    Route::delete('goods/{goods}', 'GoodsController@destroy')->name('goods.destroy');   //重置路由-资源路由查不到数据
     Route::resource('goods', 'GoodsController');
     Route::post('goods/index', 'GoodsController@index');
+
 });

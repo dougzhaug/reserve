@@ -69,18 +69,36 @@
         {
             return [
                 {
-                    "targets": 2,   //icon
+                    "targets": 2,   //缩略图
                     "render": function (data,type,row){
-                        return `<img src="storage/uploads/`+row.images[0]+`" alt="iMac" width="80">`;
+                        return `<img src="/storage/uploads/`+row.images[0]+`" alt="iMac" width="50">`;
                     }
                 },
                 {
-                    "targets": 5,   //导航模式
+                    "targets": 5,   //状态
                     className : 'td-center',
                     "render": function (data,type,row){
-                        var btn = row.is_nav ? 'info' : 'danger';
-                        var i = row.is_nav ? 'check' : 'times';
-                        return `<button type="button" onclick="toggleNav(this)" data-url="{{url('permissions/toggle_nav')}}`+`/` + row.id + `" data-nav="` + row.is_nav + `" class="btn btn-` + btn + ` btn-circle" style="text-align: center;"><i class="fa fa-` + i + `"></i></button>`;
+                        var btn = '';
+                        var msg = '';
+                        switch(row.status){
+                            case -1:
+                                btn = 'danger'; msg = '未通过';
+                                break;
+                            case 0:
+                                btn = 'warning'; msg = '审核中';
+                                break;
+                            case 1:
+                                btn = 'info'; msg = '已通过';
+                                break;
+                            case 2:
+                                btn = 'success'; msg = '上架';
+                                break;
+                            case 3:
+                                btn = 'danger'; msg = '下架';
+                                break;
+                        }
+                        {{--return `<button type="button" onclick="toggleNav(this)" data-url="{{url('permissions/toggle_nav')}}`+`/` + row.id + `" data-nav="` + row.is_nav + `" class="btn btn-` + btn + ` btn-circle" style="text-align: center;"><i class="fa fa-` + i + `"></i></button>`;--}}
+                        return `<span class="label label-` + btn + ` font-weight-100">` + msg + `</span>`;
                     }
                 },
             ];
@@ -100,63 +118,6 @@
             html += '<a href="goods/'+data.id+'/edit" class="btn btn-info btn-xs tables-console tables-edit"><span class="glyphicon glyphicon-edit"></span>编辑</a>';
             html += '<button data-url="goods/'+data.id+'" onclick="tablesDelete(this)" class="btn btn-danger btn-xs tables-console tables-delete"><span class="glyphicon glyphicon-trash"></span>删除</button>';
             return html;
-        }
-
-        /**
-         * 修改排序请求
-         */
-        function permissionSort(that){
-            var id = $(that).data('id');
-            var old = $(that).data('old');
-            var now = $(that).parent().prev('input').val();
-            if(old == now){
-                return false;
-            }
-
-            sweetConfirm('确定要修改吗？',function (isConfirm) {
-                if(!isConfirm) return false;
-
-                $.ajax({
-                    url:"{{url('permissions/sort')}}"+'/'+id,
-                    data:{sort:now,'_token':'{{csrf_token()}}'},
-                    type:'POST',
-                    success:function(result){
-                        if(!result.errorCode){
-                            swal({'title':result.message,'type':'success'},function () {
-                                window.location.reload();
-                            });
-                        }else{
-                            swal(result.message,'','error');
-                        }
-                    }
-                });
-            });
-        }
-
-        /**
-         * 导航模式切换
-         *
-         * @param that
-         */
-        function toggleNav(that) {
-            sweetConfirm('确定修改导航模式吗？',function (isConfirm) {
-                if(!isConfirm) return false;
-
-                $.ajax({
-                    url:$(that).data('url'),
-                    data:{'nav':$(that).data('nav'),'_token':'{{csrf_token()}}'},
-                    type:'POST',
-                    success:function(result){
-                        if(!result.errorCode){
-                            swal({'title':result.message,'type':'success'},function () {
-                                window.location.reload();
-                            });
-                        }else{
-                            swal(result.message,'','error');
-                        }
-                    }
-                });
-            });
         }
     </script>
 @endpush
