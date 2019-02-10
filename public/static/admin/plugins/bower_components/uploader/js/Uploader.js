@@ -79,8 +79,10 @@ function Uploader(selector) {
                     var guid = WebUploader.Base.guid();
                     data[k] = params[k].toString().replace('{s_filename}', guid + '.' + file.ext);
 
-                    if (params[k].toString().indexOf('{s_filename}') !== -1){
-                        _this.options.params[k] = data[k];
+                    if (params[k].toString().indexOf('{s_filename}') !== -1 || k === 'key'){
+                        var file_path = data[k].split('/');
+                        file_path[1] = file_path[1].replace('.',_this.currentQty+'.')
+                        _this.options.params[k] = file_path.join('/');
                     }
                 }
             }
