@@ -6,7 +6,6 @@ use App\Models\Agent;
 use App\Models\Role;
 use App\Rules\Phone;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Spatie\Permission\Guard;
 
 class AgentsController extends AuthController
@@ -20,20 +19,16 @@ class AgentsController extends AuthController
     {
         if($request->isMethod('post')){
 
-            $columns = $request->columns;
-
             $builder = Agent::select(['id','openid','username','sex','avatar','phone','nickname','authorize_status','status','source','created_at']);
 
             /* where start*/
-
             if($request->keyword){
-                $builder->where($request->action_field,'like','%'.$request->keyword.'%');
+                $builder->where($request->current_field,'like','%'.$request->keyword.'%');
             }
 
             if($request->date_range){
                 $builder->whereBetween('created_at',[$request->start_date,$request->end_date]);
             }
-
             /* where end */
 
             //获取总条数
@@ -41,10 +36,7 @@ class AgentsController extends AuthController
 
             /* order start */
             if($request->order){
-                $order = $request->order[0];
-                $order_column = $columns[$order['column']]['data'];
-                $order_dir = $order['dir'];
-                $builder->orderBy($order_column,$order_dir);
+                $builder->orderBy($request->columns[$request->order[0]['column']]['data'],$request->order[0]['dir']);
             }
             /* order end */
 
@@ -58,8 +50,8 @@ class AgentsController extends AuthController
             ];
         }
 
-        $actionField = ['name'=>'姓名','phone'=>'手机号','email'=>'邮箱'];
-        return view('agent.agents.index',['actionField'=>$actionField]);
+        $dropdowns = ['name'=>'姓名','phone'=>'手机号','email'=>'邮箱'];
+        return view('agent.agents.index',['dropdowns'=>$dropdowns]);
     }
 
     public function create()

@@ -21,6 +21,7 @@ class CreateChaptersTable extends Migration
             $table->tinyInteger('charge')->default(1)->comment('0免费/试看 1收费');
             $table->string('files')->comment('上传的文件');
             $table->string('file_format')->default('')->comment('上传文件格式（小写）');
+            $table->integer('sort')->default(0)->nullable()->comment('排序');
             $table->timestamps();
         });
     }

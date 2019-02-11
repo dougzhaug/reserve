@@ -1,26 +1,28 @@
 @extends($layout)
 
 @section('content')
-    <h3 class="box-title">Editable with Datatable</h3>
-    <p class="text-muted">Just click on word which you want to change and enter</p>
+    <div class="box-body">
+        <form id="formSearch" class="form-horizontal form-search" method="POST" action="{{url('agents')}}">
+            <div class="input-group m-b-10 m-r-10 col-sm-3">
+                <span class="input-group-btn">
+                    <button class="btn btn-info" type="button">权限</button>
+                </span>
+                {{-- Select2 插件 --}}
+                @include('layouts.plugins.Select2',['name'=>'pid','options'=>['足球'=>1,'篮球'=>3,'乒乓球'=>5],'selected'=>[5]])
+            </div>
 
-    <form action="" class="">
-        <div class="input-group m-b-10 col-sm-3">
-            <span class="input-group-btn">
-                <button class="btn btn-info" type="button">权限</button>
-            </span>
-            {{-- Select2 插件 --}}
-            @include('layouts.plugins.Select2',['name'=>'pid','options'=>['足球'=>1,'篮球'=>3,'乒乓球'=>5],'selected'=>[5]])
-            {{--<input class="form-control" placeholder="Search for...">--}}
-        </div>
+            <div class="input-group m-b-10 m-r-10 col-sm-3">
+                @include('layouts.plugins.DropdownsInput',['name'=>'pid','dropdowns'=>$dropdowns])
+            </div>
 
-        <div class="input-group m-b-10 col-sm-3">
-            @include('layouts.plugins.DropdownsInput',['name'=>'pid','group'=>1,'dropdowns'=>[[['name'=>'名称','value'=>'name'],['name'=>'联系电话','value'=>'phone']]]])
-        </div>
-    </form>
+            <div class="search-input col-sm-1">
+                <button type="button" onclick="doSearch()" id="searchBtn" class="btn btn-block btn-info">查询</button>
+            </div>
+        </form>
+    </div>
 
     <div class="table-responsive">
-        <table id="data-tables" class="table table-striped" data-url="{{url('agents')}}">
+        <table id="data-tables" class="table table-striped product-overview" data-url="{{url('agents')}}">
             <thead>
                 <tr>
                     <th data-name="id" data-sort="true">ID</th>
@@ -59,7 +61,6 @@
          * DataTables 初始化
          */
         var tables = DataTableLoad();
-
 
         /**
          * 列美化

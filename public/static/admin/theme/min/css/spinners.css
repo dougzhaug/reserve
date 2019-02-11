@@ -65,3 +65,9 @@
     stroke: #ffa700;
   }
 }
+
+.form-search{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}

@@ -26,7 +26,7 @@ class RolesController extends AuthController
 
             /* where start*/
             if($request->keyword){
-                $builder->where($request->action_field,'like','%'.$request->keyword.'%');
+                $builder->where($request->current_field,'like','%'.$request->keyword.'%');
             }
             /* where end */
 

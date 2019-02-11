@@ -12,7 +12,7 @@
             <div class="col-sm-9">
 
                 {{-- Select2 下拉插件 --}}
-                @include('layouts.plugins.Select2',['name'=>'category','options'=>$category])
+                @include('layouts.plugins.Select2',['name'=>'category','options'=>$category,'selected'=>old('category')])
 
                 @if ($errors->has('category'))
                     <span class="help-block">{{$errors->first('category')}}</span>
@@ -65,6 +65,13 @@
             <label for="inputSort" class="col-sm-2 control-label">简介</label>
             <div class="col-sm-9">
                 <textarea name="summary" class="form-control" rows="5" placeholder="商品简介">{{$goods['summary'] or old('summary') }}</textarea> </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">标签</label>
+            <div class="col-sm-9">
+                @include('layouts.plugins.TagsInput',['name'=>'tags','value'=>$goods['tags'] ?? old('tags')])
+            </div>
         </div>
 
         <div class="form-group m-b-0">

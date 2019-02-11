@@ -249,3 +249,26 @@ function make_menu($arr) {
     }
     return makeMenu($tree);
 }
+
+if (!function_exists('img_path')){
+    /**
+     * 获取图片路径
+     *
+     * @param bool $source
+     * @return \Illuminate\Config\Repository|mixed
+     */
+    function img_path($source=false)
+    {
+        switch ($source){
+            case 'local':
+                return '/storage/uploads/';
+                break;
+            case 'qiniu':
+                return config('filesystems.disks.qiniu.domain') . '/';
+                break;
+            default:
+                return config('filesystems.disks.qiniu.domain') . '/';
+                break;
+        }
+    }
+}

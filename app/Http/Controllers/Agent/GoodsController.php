@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Agent;
 
 use App\Models\Goods;
+use App\Models\GoodsTag;
 use Illuminate\Http\Request;
 
 class GoodsController extends AuthController
@@ -12,20 +13,16 @@ class GoodsController extends AuthController
     {
         if($request->isMethod('post')){
 
-            $columns = $request->columns;
-
             $builder = Goods::where('agent_id',$request->user['id'])->select(['id','name','author','images','category','price','status','created_at']);
 
             /* where start*/
-
             if($request->keyword){
-                $builder->where($request->action_field,'like','%'.$request->keyword.'%');
+                $builder->where($request->current_field,'like','%'.$request->keyword.'%');
             }
 
             if($request->date_range){
                 $builder->whereBetween('created_at',[$request->start_date,$request->end_date]);
             }
-
             /* where end */
 
             //获取总条数
@@ -47,14 +44,14 @@ class GoodsController extends AuthController
             ];
         }
 
-        $actionField = ['name'=>'姓名','phone'=>'手机号','email'=>'邮箱'];
-        return view('agent.goods.index',['actionField'=>$actionField]);
+        $dropdowns = ['name'=>'名称','author'=>'作者'];
+        return view('agent.goods.index',['dropdowns'=>$dropdowns]);
     }
 
     public function create()
     {
         return view('agent.goods.create',[
-            'category'=>[['name'=>'请选择','value'=>''],['name'=>'图集','value'=>1]]
+            'category'=>Goods::getCategorySelect()
         ]);
     }
 
@@ -73,15 +70,20 @@ class GoodsController extends AuthController
         $result = Goods::create($create);
 
         if($result){
+            GoodsTag::makeTag($result,$request['tags']);
             return success('添加成功','goods');
         }else{
             return error('网络异常');
         }
     }
 
-    public function show()
+    public function show(Request $request, Goods $goods)
     {
+        if($goods['agent_id'] != $request->user['id']) return error('请求异常');
 
+        return view('agent.goods.show',[
+            'goods' => $goods
+        ]);
     }
 
     /**
@@ -90,9 +92,10 @@ class GoodsController extends AuthController
      */
     public function edit(Goods $goods)
     {
+        $goods['tags'] = implode(',',array_column($goods->tags->toArray(),'name'));
         return view('agent.goods.edit',[
             'goods'=>$goods,
-            'category'=>[['name'=>'请选择','value'=>''],['name'=>'图集','value'=>1]]
+            'category'=>Goods::getCategorySelect($goods['category'])
         ]);
     }
 
@@ -112,6 +115,7 @@ class GoodsController extends AuthController
         $result = $goods->update($update);
 
         if($result){
+            GoodsTag::makeTag($goods,$request['tags']);
             return success('编辑成功','goods');
         }else{
             return error('网络异常');

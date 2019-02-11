@@ -1,21 +1,19 @@
 @extends($layout)
 
 @section('content')
-    <h3 class="box-title">Editable with Datatable</h3>
-    <p class="text-muted">Just click on word which you want to change and enter</p>
     <div class="box-body">
-        <form id="formSearch" class="form-horizontal" method="POST" action="{{url('roles/index')}}">
-            <div class="input-group m-b-10 col-sm-3">
+        <form id="formSearch" class="form-horizontal form-search" method="POST" action="{{url('roles/index')}}">
+            <div class="input-group m-b-10 m-r-10 col-sm-3">
                 @include('layouts.plugins.DropdownsInput',['name'=>'pid','dropdowns'=>[['name'=>'名称','value'=>'name'],['name'=>'联系电话','value'=>'phone']]])
             </div>
         </form>
     </div>
-    <div class="box-label">
+    <div class="box-label m-t-10 m-b-20">
         <a href="{{url('roles/create')}}" class="btn btn-info">添加角色</a>
     </div>
 
     <div class="table-responsive">
-        <table id="data-tables" class="table table-striped table-bordered" data-url="{{url('roles/index')}}">
+        <table id="data-tables" class="table table-striped table-bordered product-overview" data-url="{{url('roles/index')}}">
             <thead>
             <tr>
                 <th data-name="id" data-sort="true">ID</th>

@@ -53,12 +53,15 @@ Route::namespace('Agent')->group(function () {
     Route::post('roles/permission_tree/{role?}', 'Rbac\RolesController@permissionTree');
     Route::post('roles/status/{role?}', 'Rbac\RolesController@status');
 
-
     //商品管理
     Route::get('goods/{goods}/edit', 'GoodsController@edit')->name('goods.edit');       //重置路由-资源路由查不到数据
     Route::patch('goods/{goods}', 'GoodsController@update')->name('goods.edit');        //重置路由-资源路由查不到数据
     Route::delete('goods/{goods}', 'GoodsController@destroy')->name('goods.destroy');   //重置路由-资源路由查不到数据
     Route::resource('goods', 'GoodsController');
     Route::post('goods/index', 'GoodsController@index');
+
+    //章节管理
+    Route::get('chapters/index/{goods_id}', 'ChaptersController@index')->name('chapters.index');
+    Route::post('chapters/index/{goods_id}', 'ChaptersController@index')->name('chapters.index');
 
 });

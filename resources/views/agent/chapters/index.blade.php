@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="box-body">
-        <form id="formSearch" class="form-horizontal form-search" method="POST" action="{{url('goods/index')}}">
+        <form id="formSearch" class="form-horizontal form-search" method="POST" action="{{url('chapters/index/'.request('goods_id'))}}">
             <div class="input-group m-b-10 m-r-10 col-sm-3">
                 @include('layouts.plugins.DropdownsInput',['group'=>0,'dropdowns'=>$dropdowns])
             </div>
@@ -13,19 +13,15 @@
         </form>
     </div>
     <div class="box-label m-t-10 m-b-20">
-        <a href="{{url('goods/create')}}" class="btn btn-info">添加商品</a>
+        <a href="{{url('chapters/create/'.request('goods_id'))}}" class="btn btn-info">添加章节</a>
     </div>
 
     <div class="table-responsive">
-        <table id="data-tables" class="table table-striped product-overview" data-url="{{url('goods/index')}}">
+        <table id="data-tables" class="table table-striped product-overview" data-url="{{url('chapters/index/'.request('goods_id'))}}">
             <thead>
             <tr>
                 <th data-name="id" data-sort="true">ID</th>
                 <th data-name="name">名称</th>
-                <th data-name="images">缩略图</th>
-                <th data-name="author">作者</th>
-                <th data-name="price">价格</th>
-                <th data-name="status">状态</th>
                 <th data-name="created_at">添加时间</th>
                 <th data-name="">操作</th>
             </tr>
@@ -40,10 +36,6 @@
             <tr>
                 <th>ID</th>
                 <th>名称</th>
-                <th>缩略图</th>
-                <th>作者</th>
-                <th>价格</th>
-                <th>状态</th>
                 <th>添加时间</th>
                 <th>操作</th>
             </tr>
