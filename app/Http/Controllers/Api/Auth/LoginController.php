@@ -16,12 +16,12 @@ class LoginController extends BaseController
      */
     public function login(Request $request)
     {
-        if(!$request->code || !$request->appid){
+        if(!$request->code){
             throw new \Symfony\Component\HttpKernel\Exception\PreconditionRequiredHttpException('数据异常');
         }
 
         $openPlatform = app('wechat.open_platform');
-        $app = $openPlatform->officialAccount($request->appid);
+        $app = $openPlatform->officialAccount($request->mp['authorizer_appid']);
         $user = $app->oauth->user();
         $userModel = User::where('openid',$user->getId())->first();
         if(!$userModel){

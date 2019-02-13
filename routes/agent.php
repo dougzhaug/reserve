@@ -61,7 +61,13 @@ Route::namespace('Agent')->group(function () {
     Route::post('goods/index', 'GoodsController@index');
 
     //章节管理
-    Route::get('chapters/index/{goods_id}', 'ChaptersController@index')->name('chapters.index');
+    Route::get('chapters/{goods_id}', 'ChaptersController@index')->name('chapters.index');
     Route::post('chapters/index/{goods_id}', 'ChaptersController@index')->name('chapters.index');
+    Route::get('chapters/create/{goods_id}', 'ChaptersController@create')->name('chapters.create');
+    Route::post('chapters/{goods_id}', 'ChaptersController@store')->name('chapters.create');
+    Route::get('chapters/{chapter}/edit', 'ChaptersController@edit')->name('chapters.edit');
+    Route::patch('chapters/{chapter}', 'ChaptersController@update')->name('chapters.edit');
+    Route::delete('chapters/{chapter}', 'ChaptersController@destroy')->name('chapters.destroy');
+    Route::post('chapters/sort/{chapter}', 'ChaptersController@sort');
 
 });

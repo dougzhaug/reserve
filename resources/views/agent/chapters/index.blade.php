@@ -1,6 +1,9 @@
 @extends($layout)
 
 @section('content')
+    <h3 class="box-title m-b-0">#{{$goods['name']}}# 的章节管理</h3>
+    <p class="text-muted m-b-30 font-13"> {{$goods['summary']}} </p>
+
     <div class="box-body">
         <form id="formSearch" class="form-horizontal form-search" method="POST" action="{{url('chapters/index/'.request('goods_id'))}}">
             <div class="input-group m-b-10 m-r-10 col-sm-3">
@@ -22,6 +25,8 @@
             <tr>
                 <th data-name="id" data-sort="true">ID</th>
                 <th data-name="name">名称</th>
+                <th data-name="sort" data-sort="true" data-default-sort="desc" style="width: 80px;">排序</th>
+                <th data-name="charge">模式</th>
                 <th data-name="created_at">添加时间</th>
                 <th data-name="">操作</th>
             </tr>
@@ -36,6 +41,8 @@
             <tr>
                 <th>ID</th>
                 <th>名称</th>
+                <th>排序</th>
+                <th>模式</th>
                 <th>添加时间</th>
                 <th>操作</th>
             </tr>
@@ -59,37 +66,33 @@
         {
             return [
                 {
-                    "targets": 2,   //缩略图
+                    "targets": 2,   //排序
                     "render": function (data,type,row){
-                        return `<img src="{{img_path()}}`+row.images[0]+`" alt="Boiox" width="50">`;
+                        var sort = row.sort ? row.sort : 0;
+                        return `<div class="input-group input-group-sm col-sm-12">
+                                    <input type="text" class="form-control " value="` + sort + `">
+                                    <span class="input-group-btn">
+                                    <button type="button" onclick="chapterSort(this)" class="btn btn-info btn-flat" data-old="` + sort + `" data-id="` + row.id + `">Go!</button>
+                                    </span>
+                                </div>`;
                     }
                 },
                 {
-                    "targets": 5,   //状态
+                    "targets": 3,   //模式
                     className : 'td-center',
                     "render": function (data,type,row){
-                        var btn = '';
-                        var msg = '';
-                        switch(row.status){
-                            case -1:
-                                btn = 'danger'; msg = '未通过';
-                                break;
+                        var btn = ''; var msg = '';
+                        switch(row.charge){
                             case 0:
-                                btn = 'warning'; msg = '审核中';
+                                btn = 'success'; msg = '免费';
                                 break;
                             case 1:
-                                btn = 'info'; msg = '已通过';
-                                break;
-                            case 2:
-                                btn = 'success'; msg = '上架';
-                                break;
-                            case 3:
-                                btn = 'danger'; msg = '下架';
+                                btn = 'info'; msg = '收费';
                                 break;
                         }
                         return `<span class="label label-` + btn + ` font-weight-100">` + msg + `</span>`;
                     }
-                },
+                }
             ];
         }
 
@@ -104,10 +107,43 @@
         function getButton(data,type,row)
         {
             var html = '';
-            html += '<a href="chapters/index/'+data.id+'" class="btn btn-success btn-xs tables-console tables-show"><span class="fa fa-file-text-o"></span>章节管理</a>';
-            html += '<a href="goods/'+data.id+'/edit" class="btn btn-info btn-xs tables-console tables-edit"><span class="glyphicon glyphicon-edit"></span>编辑</a>';
-            html += '<button data-url="goods/'+data.id+'" onclick="tablesDelete(this)" class="btn btn-danger btn-xs tables-console tables-delete"><span class="glyphicon glyphicon-trash"></span>删除</button>';
+            html += '<a href="/chapters/'+data.id+'/edit" class="btn btn-info btn-xs tables-console tables-edit"><span class="glyphicon glyphicon-edit"></span>编辑</a>';
+            html += '<button data-url="chapters/'+data.id+'" onclick="tablesDelete(this)" class="btn btn-danger btn-xs tables-console tables-delete"><span class="glyphicon glyphicon-trash"></span>删除</button>';
             return html;
+        }
+
+        /**
+         * 修改排序请求
+         */
+        function chapterSort(that){
+            var id = $(that).data('id');
+            var old = $(that).data('old');
+            var now = $(that).parent().prev('input').val();
+            if(old == now){
+                return false;
+            }
+
+            sweetConfirm('确定要修改吗？',function (isConfirm) {
+                if(!isConfirm) return false;
+
+                $.ajax({
+                    url:"{{url('chapters/sort')}}"+'/'+id,
+                    data:{sort:now,'_token':'{{csrf_token()}}'},
+                    type:'POST',
+                    success:function(result){
+                        if(!result.errorCode){
+                            swal({'title':result.message,'type':'success'},function () {
+                                window.location.reload();
+                            });
+                        }else{
+                            swal(result.message,'','error');
+                        }
+                    },
+                    error:function (err) {
+                        swal(err.status + ' ' + err.statusText,'','error');
+                    }
+                });
+            });
         }
     </script>
 @endpush

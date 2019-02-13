@@ -272,3 +272,53 @@ if (!function_exists('img_path')){
         }
     }
 }
+
+if (!function_exists('file_format')) {
+    /**
+     * 获取文件格式
+     *
+     * @param $str
+     * @return string
+     */
+    function file_format($str)
+    {
+        // 取文件后缀名
+        $str = strtolower(pathinfo($str, PATHINFO_EXTENSION));
+        // 图片格式
+        $image = array('webp', 'jpg', 'png', 'ico', 'bmp', 'gif', 'tif', 'pcx', 'tga', 'bmp', 'pxc', 'tiff', 'jpeg', 'exif', 'fpx', 'svg', 'psd', 'cdr', 'pcd', 'dxf', 'ufo', 'eps', 'ai', 'hdri');
+        // 音频格式
+        $audio = array('mp3');
+        // 视频格式
+        $video = array('mp4', 'avi', '3gp', 'rmvb', 'gif', 'wmv', 'mkv', 'mpg', 'vob', 'mov', 'flv', 'swf', 'ape', 'wma', 'aac', 'mmf', 'amr', 'm4a', 'm4r', 'ogg', 'wav', 'wavpack');
+        // 压缩格式
+        $zip = array('rar', 'zip', 'tar', 'cab', 'uue', 'jar', 'iso', 'z', '7-zip', 'ace', 'lzh', 'arj', 'gzip', 'bz2', 'tz');
+        // Pdf格式
+        $pdf = array('pdf');
+        // 文档格式
+        $text = array('exe', 'doc', 'ppt', 'xls', 'wps', 'txt', 'lrc', 'wfs', 'torrent', 'html', 'htm', 'java', 'js', 'css', 'less', 'php', 'pps', 'host', 'box', 'docx', 'word', 'perfect', 'dot', 'dsf', 'efe', 'ini', 'json', 'lnk', 'log', 'msi', 'ost', 'pcs', 'tmp', 'xlsb');
+        // 匹配不同的结果
+        switch ($str) {
+            case in_array($str, $image):
+                return 'image';
+                break;
+            case in_array($str, $audio):
+                return 'audio';
+                break;
+            case in_array($str, $video):
+                return 'video';
+                break;
+            case in_array($str, $zip):
+                return 'zip';
+                break;
+            case in_array($str, $pdf):
+                return 'pdf';
+                break;
+            case in_array($str, $text):
+                return 'text';
+                break;
+            default:
+                return false;
+                break;
+        }
+    }
+}

@@ -183,6 +183,9 @@
                         }else{
                             swal(result.message,'','error');
                         }
+                    },
+                    error:function (err) {
+                        swal(err.status + ' ' + err.statusText,'','error');
                     }
                 })
             });
