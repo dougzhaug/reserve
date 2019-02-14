@@ -44,7 +44,7 @@ class LoginController extends BaseController
     {
         return (new WechatOpenServiceController)
                 ->setAppId($request->mp['authorizer_appid'])
-                ->setRedirectUri('http://'.$request->mp['authorizer_appid'].'.mp.loveliyuan.com')
+                ->setRedirectUri('http://'.$request->mp['authorizer_appid'].'.mp.loveliyuan.com/login')
                 ->setScope('snsapi_userinfo')
                 ->makeWebAuthorizationUrl();
     }
