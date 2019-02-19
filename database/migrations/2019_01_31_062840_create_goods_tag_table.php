@@ -16,6 +16,8 @@ class CreateGoodsTagTable extends Migration
         Schema::create('goods_tag', function (Blueprint $table) {
             $table->unsignedInteger('goods_id');
             $table->unsignedInteger('tag_id');
+
+            $table->primary(['goods_id', 'tag_id']);
         });
     }
 

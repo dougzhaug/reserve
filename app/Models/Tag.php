@@ -48,4 +48,13 @@ class Tag extends Model
         return true;
     }
 
+    /**
+     * 多对多-商品
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function goods()
+    {
+        return $this->belongsToMany('App\Models\Goods');
+    }
 }

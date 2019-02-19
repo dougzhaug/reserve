@@ -70,4 +70,7 @@ Route::namespace('Agent')->group(function () {
     Route::delete('chapters/{chapter}', 'ChaptersController@destroy')->name('chapters.destroy');
     Route::post('chapters/sort/{chapter}', 'ChaptersController@sort');
 
+    //购物中心
+    Route::get('malls', 'MallsController@index');
+
 });

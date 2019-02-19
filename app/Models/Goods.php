@@ -94,8 +94,23 @@ class Goods extends Model
         return $category;
     }
 
+    /**
+     * 多对多-商品标签
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function tags()
     {
         return $this->belongsToMany('App\Models\Tag');
+    }
+
+    /**
+     * 多对多-代理商
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function agents()
+    {
+        return $this->belongsToMany('App\Models\Agent');
     }
 }

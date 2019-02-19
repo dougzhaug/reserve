@@ -28,6 +28,11 @@ class Agent extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * 一对一 微信公众号
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function wechatMp()
     {
         return $this->hasOne('App\Models\WechatMp');
@@ -41,5 +46,15 @@ class Agent extends Authenticatable
     public function setStatusAttribute($value)
     {
         $this->attributes['status'] = $value == 'off' || !$value ? 0 : 1;
+    }
+
+    /**
+     * 多对多-商品
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function goods()
+    {
+        return $this->belongsToMany('App\Models\Goods');
     }
 }
