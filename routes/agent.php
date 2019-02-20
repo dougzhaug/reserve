@@ -71,6 +71,9 @@ Route::namespace('Agent')->group(function () {
     Route::post('chapters/sort/{chapter}', 'ChaptersController@sort');
 
     //购物中心
-    Route::get('malls', 'MallsController@index');
-
+    Route::get('malls', 'MallsController@index')->name('malls.index');
+    Route::post('malls', 'MallsController@getGoods');
+    Route::get('malls/purchased', 'MallsController@purchased')->name('malls.purchased');
+    Route::post('malls/purchased', 'MallsController@purchased')->name('malls.purchased');
+    Route::get('malls/{goods}', 'MallsController@show')->name('malls.show');
 });

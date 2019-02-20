@@ -1,17 +1,12 @@
 @extends($layout)
 
-<style>
-    .flying{display: block;width: 50px;height: 50px;border-radius: 50px;position: fixed;z-index: 9999;}
-</style>
-
 @section('pageTitle')
     <div class="row bg-title">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
             <h4 class="page-title">Starter Page</h4> </div>
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-            {{--<button class="right-side-toggle waves-effect waves-light btn-info btn-circle pull-right m-l-20"><i class="ti-settings text-white"></i></button>--}}
-            <a href="javascript: void(0);" target="_blank" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">购物车 <i class="ti-shopping-cart" id="shopping-cart" style="font-size: 16px;"></i></a>
-            <a href="{{url('malls/purchased')}}" class="btn btn-success pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">已购买的</a>
+            <a href="{{url('malls')}}" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">购物车 <i class="ti-shopping-cart" id="shopping-cart" style="font-size: 16px;"></i></a>
+            <a href="javascript: void(0);" class="btn btn-success pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">已购买的</a>
             <ol class="breadcrumb">
                 <li><a href="#">Dashboard</a></li>
                 <li class="active">Starter Page</li>
@@ -31,37 +26,12 @@
 @endsection
 
 @push('script')
-    <script src="{{asset('static/admin/plugins/bower_components/jquery-fly/jquery.fly.min.js')}}"></script>
     <script>
         var loading = false;  //防止重复加载
 
         $(function () {
             //初始化获取商品信息
             getGoods();
-
-            //添加购物车飞行样式
-            var offset = $("#shopping-cart").offset();
-            $(".add-shopping-cart").on('click',function(event){
-                var img = $(this).parent().parent().find('img').attr('src');
-                var flying = $('<img class="flying" src="'+img+'">');
-                flying.fly({
-                    start: {
-                        left: event.clientX-20,     //开始位置（必填）#fly元素会被设置成position: fixed
-                        top: event.clientY-20       //开始位置（必填）
-                    },
-                    end: {
-                        left: offset.left+10,       //结束位置（必填）
-                        top: offset.top+10,         //结束位置（必填）
-                        width: 0,                   //结束时宽度
-                        height: 0                   //结束时高度
-                    },
-                    onEnd: function(){              //结束回调
-                        // alert('完成')
-                    }
-                });
-            });
-
-
         })
 
         //监控下拉事件
@@ -88,7 +58,7 @@
 
             $.ajax({
                 headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' },
-                url: '/malls',
+                url: '/malls/purchased',
                 data: {'page':page},
                 type: 'POST',
                 async:false,
@@ -123,7 +93,6 @@
                             <div class="product-img">
                                 <img src="{{img_path()}}` + v.images[0] + `" height="200" />
                                 <div class="pro-img-overlay">
-                                    <a href="javascript:void(0)" class="bg-info add-shopping-cart"><i class="ti-shopping-cart"></i></a>
                                     <a href="/malls/`+ v.id +`" class="bg-danger"><i class="ti-eye"></i></a>
                                 </div>
                             </div>

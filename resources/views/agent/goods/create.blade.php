@@ -42,13 +42,11 @@
         <div class="form-group {{ $errors->has('images') ? ' has-error' : '' }}">
             <label class="col-sm-2 control-label">展示图集*</label>
             <div class="col-sm-9">
-                {{--@uploader(['name' => 'images', 'max' => 3, 'accept' => 'jpg,png,gif','src'=>['2019-02-01/jIKu8eixHquaKorJjoqDG4MRExwmz3csKZo75Ve9.jpg','2019-02-01/NgrvNVDBUjD8Urt2ITCmu4ihYQZTyVeLZooTsg18.jpg','2019-02-01/cAcfwkM4rQOtporY27m3BI2cXVCPj664AJf3hKP4.jpg']])--}}
-                {{--@uploader(['name' => 'images', 'max' => 3, 'accept' => 'jpg,png,gif','src'=>["2019-02-02/M9Kv7SmN00EtZaa4Z3BzH3AIDqat96GeUx0ju9Sm.png","2019-02-02/dEVsrweO9jinQInXmSrNoOSB6hD4TNWoNDD7rBnz.png","2019-02-02/YMlOKxd4YdQSz7rhznSIhJgJHv7e0ynW7iZ0EY80.png"]])--}}
 
-                {{--@uploader(['name' => 'images', 'max' => 3, 'accept' => 'jpg,png,gif','src'=>['2019-02-01/jIKu8eixHquaKorJjoqDG4MRExwmz3csKZo75Ve9.jpg','2019-02-01/NgrvNVDBUjD8Urt2ITCmu4ihYQZTyVeLZooTsg18.jpg']])--}}
-                @uploader(['name' => 'images', 'max' => 3, 'accept' => 'jpg,png,gif'])
                 {{-- 文件上传 --}}
+                @uploader(['name' => 'images', 'max' => 3, 'accept' => 'jpg,jpeg,png,gif'])
                 @uploader('assets')
+
                 <span> 600 * 600  - | - 720*1280 - | - 1280*720</span>
                 @if ($errors->has('images'))
                     <span class="help-block">{{$errors->first('images')}}</span>

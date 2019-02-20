@@ -45,7 +45,7 @@
             <div class="col-sm-9">
 
                 {{-- 文件上传 --}}
-                @uploader(['name' => 'images', 'max' => 3, 'accept' => 'jpg,png,gif','src'=>$goods['images']])
+                @uploader(['name' => 'images', 'max' => 3, 'accept' => 'jpg,jpeg,png,gif','src'=>$goods['images']])
                 @uploader('assets')
 
                 <span> 600 * 600  - | - 720*1280 - | - 1280*720</span>
