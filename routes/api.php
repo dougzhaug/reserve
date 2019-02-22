@@ -17,6 +17,8 @@ $api->version('v1',function ($api){
     $api->group(['namespace' => 'App\Http\Controllers\Api'],function ($api) {
         $api->get('/login','Auth\LoginController@login');
         $api->get('/get_authorized_url','Auth\LoginController@getOpenAuthorizeUrl');
+        $api->get('/index/ad','V1\IndexController@ad');
+        $api->get('/index/icon','V1\IndexController@icon');
    });
 });
 //Route::middleware('auth:api')->get('/user', function (Request $request) {

@@ -16,6 +16,6 @@ class AuthController extends BaseController
     public function __construct(Request $request)
     {
         parent::__construct();
-        $this->middleware('auth:api');
+//        $this->middleware('auth:api');
     }
 }

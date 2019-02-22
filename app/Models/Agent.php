@@ -57,4 +57,15 @@ class Agent extends Authenticatable
     {
         return $this->belongsToMany('App\Models\Goods');
     }
+
+    /**
+     * 多对多-广告位
+     *
+     * @param int $way 广告位编码
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function ad($way=1)
+    {
+        return $this->belongsToMany('App\Models\Goods','agent_ad')->wherePivot('way',$way);
+    }
 }
