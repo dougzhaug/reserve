@@ -273,6 +273,19 @@ if (!function_exists('img_path')){
     }
 }
 
+if (!function_exists('img')){
+    function img($image='')
+    {
+        $img = img_path().$image;
+
+        if(!@getimagesize($img)){
+            $img = config('filesystems.default_image');
+        }
+
+        return $img;
+    }
+}
+
 if (!function_exists('file_format')) {
     /**
      * 获取文件格式
@@ -320,5 +333,22 @@ if (!function_exists('file_format')) {
                 return false;
                 break;
         }
+    }
+}
+
+if (!function_exists('switchery2db'))
+{
+    /**
+     * 处理Switchery开关插件返回的 on 和 off的问题
+     *
+     * @param $switchery
+     * @return int
+     */
+    function switchery2db($switchery){
+        if(!$switchery){
+            return 0;
+        }
+
+        return $switchery == 'on' ? 1 : 0;
     }
 }

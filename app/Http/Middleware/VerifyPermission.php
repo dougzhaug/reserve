@@ -23,7 +23,6 @@ class VerifyPermission
             if(!$user->can($this->getRouteName())){                //注：未定义路由别名的将不受权限管理
                 return response()->view('403', [], 403);
             }
-            $request->user = $user;     //统一获取用户信息
         }
         return $next($request);
     }

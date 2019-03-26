@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('nickname');
             $table->string('openid')->unique();
+            $table->string('phone')->unique()->default('')->comment('手机号码');
             $table->tinyInteger('sex');
             $table->string('language');
             $table->string('city');
@@ -25,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('headimgurl');
             $table->string('privilege');
             $table->string('unionid')->default('');
+            $table->tinyInteger('status')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -55,6 +55,16 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\Agent\CheckAuthorize::class,
         ],
+        'company' => [
+            \App\Http\Middleware\EncryptCookies::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            // \Illuminate\Session\Middleware\AuthenticateSession::class,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \App\Http\Middleware\VerifyCsrfToken::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+//            \App\Http\Middleware\Agent\CheckAuthorize::class,
+        ],
         'api' => [
             'throttle:60,1',
             'bindings',
@@ -79,5 +89,6 @@ class Kernel extends HttpKernel
         'permission' => \App\Http\Middleware\VerifyPermission::class,
         'wechat.oauth' => \Overtrue\LaravelWeChat\Middleware\OAuthAuthenticate::class,
         'api.checkOrigin' => \App\Http\Middleware\Api\CheckOrigin::class,
+        'beforeRequest' => \App\Http\Middleware\BeforeRequest::class,
     ];
 }

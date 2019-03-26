@@ -15,7 +15,7 @@ class CreateWechatMpsTable extends Migration
     {
         Schema::create('wechat_mps', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('agent_id')->comment('所属代理商');
+            $table->integer('company_id')->comment('所属企业');
             $table->string('nick_name')->comment('公众号名称');
             $table->string('qrcode_url')->comment('二维码图片的URL，开发者最好自行也进行保存');
             $table->string('user_name')->comment('授权方公众号的原始ID');

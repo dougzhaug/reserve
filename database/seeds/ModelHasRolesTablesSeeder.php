@@ -21,7 +21,7 @@ class ModelHasRolesTablesSeeder extends Seeder
             [
                 'role_id' => 10,
                 'model_id' => 101,
-                'model_type' => 'App\Models\Agent',
+                'model_type' => 'App\Models\Manager',
             ],
         ];
 

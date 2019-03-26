@@ -43,6 +43,8 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapAgentRoutes();
 
+        $this->mapCompanyRoutes();
+
         //
     }
 
@@ -89,6 +91,21 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware('agent')
             ->namespace($this->namespace)
             ->group(base_path('routes/agent.php'));
+    }
+
+    /**
+     * Define the "company" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapCompanyRoutes()
+    {
+        Route::domain('company.' . config('app.tld'))
+            ->middleware('company')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/company.php'));
     }
 
     /**

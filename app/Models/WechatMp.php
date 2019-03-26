@@ -7,7 +7,7 @@ class WechatMp extends Model
 {
     //
     protected $fillable = [
-        'agent_id',
+        'company_id',
         'nick_name',
         'qrcode_url',
         'user_name',
