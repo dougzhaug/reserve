@@ -76,4 +76,8 @@ Route::namespace('Company')->group(function () {
     Route::resource('users', 'UsersController');
     Route::post('users/index', 'UsersController@index');
 
+    //用户会员卡管理
+    Route::resource('user_vip_cards', 'UserVipCardsController');
+    Route::post('user_vip_cards/index', 'UserVipCardsController@index');
+
 });

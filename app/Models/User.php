@@ -49,4 +49,14 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    /**
+     * 多对多 获取用户的会员卡
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function vipCard()
+    {
+        return $this->belongsToMany('App\Models\VipCard')->withPivot('id as vip_card_id','balance','expired_at','status');
+    }
 }

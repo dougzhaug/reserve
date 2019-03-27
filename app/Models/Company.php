@@ -55,6 +55,6 @@ class Company extends Authenticatable
      */
     public function users()
     {
-        return $this->belongsToMany('App\Models\User','user_company_shop');
+        return $this->belongsToMany('App\Models\User','user_company_shop')->withPivot('shop_id','remark','status');
     }
 }

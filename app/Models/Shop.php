@@ -56,6 +56,28 @@ class Shop extends Model
      */
     public function users()
     {
-        return $this->belongsToMany('App\Models\User','user_company_shop');
+        return $this->belongsToMany('App\Models\User','user_company_shop')->withPivot('company_id','remark','status');
+    }
+
+    /**
+     * 获取店铺下拉
+     *
+     * @param bool $id
+     * @param array $where
+     * @return mixed
+     */
+    public static function getShopSelect($id=false,$where=[])
+    {
+        $shops = self::where(array_merge($where,['status'=>1]))->select(['id','name','id as value'])->get()->toArray();
+
+        array_unshift($shops, ['name'=>'请选择','value'=>'']);
+
+        if($id){
+            foreach ($shops as $key=>$val){
+                if($val['value'] == $id) $shops[$key]['selected'] = true;
+            }
+        }
+
+        return $shops;
     }
 }

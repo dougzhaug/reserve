@@ -17,8 +17,10 @@ class CreateUserVipCardTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('vip_card_id');
+            $table->string('card_number',12)->comment('卡号');
             $table->decimal('balance',10,2)->default(0.00)->comment('余额 充值卡为余额 次卡为剩余次数');
             $table->timestamp('expired_at')->nullable()->comment('到期时间');
+            $table->tinyInteger('status')->default(0)->comment('状态 -1禁用 1正常');
             $table->timestamps();
 
             $table->foreign('user_id')

@@ -51,7 +51,7 @@ class SnsRegisterController extends Controller
                 return redirect()->action('Company\Auth\SnsRegisterController@showRegistrationForm');
             }else{
                 // 认证通过...
-                return redirect()->intended('dashboard');
+                return redirect()->intended('/');
             }
         }
     }

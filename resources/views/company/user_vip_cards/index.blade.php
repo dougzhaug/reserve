@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="box-body">
-        <form id="formSearch" class="form-horizontal form-search" method="POST" action="{{url('users/index')}}">
+        <form id="formSearch" class="form-horizontal form-search" method="POST" action="{{url('user_vip_cards/index')}}">
             <div class="input-group m-b-10 m-r-10 col-sm-3">
                 @include('layouts.plugins.DropdownsInput',['group'=>0,'dropdowns'=>$dropdowns])
             </div>
@@ -31,21 +31,22 @@
         </form>
     </div>
     <div class="box-label m-t-10 m-b-20">
-{{--        <a href="{{url('shops/create')}}" class="btn btn-info">添加商店</a>--}}
+        <a href="{{url('user_vip_cards/create')}}" class="btn btn-info">添加会员卡</a>
     </div>
 
     <div class="table-responsive">
-        <table id="data-tables" class="table table-striped product-overview" data-url="{{url('users/index')}}">
+        <table id="data-tables" class="table table-striped product-overview" data-url="{{url('user_vip_cards/index')}}">
             <thead>
             <tr>
                 <th data-name="id" data-sort="true">ID</th>
-                <th data-name="headimgurl">头像</th>
-                <th data-name="nickname">昵称</th>
-                <th data-name="remark">备注</th>
-                <th data-name="phone">电话号码</th>
-                <th data-name="sex">性别</th>
+                <th data-name="name">名称</th>
+                <th data-name="card_number">卡号</th>
+                <th data-name="type">类型</th>
+                <th data-name="universal">是否通用</th>
+                <th data-name="balance">余额</th>
                 <th data-name="status">状态</th>
-                @if(request()->role == 110)<th data-name="shop_name">所属商店</th>@endif
+                <th data-name="expired_at">过期时间</th>
+                @if(request()->role == 110)<th data-name="shop_id">所属商店</th>@endif
                 <th data-name="created_at">添加时间</th>
                 <th data-name="">操作</th>
             </tr>
@@ -59,12 +60,13 @@
             <tfoot>
             <tr>
                 <th>ID</th>
-                <th>头像</th>
-                <th>昵称</th>
-                <th>备注</th>
-                <th>电话号码</th>
-                <th>性别</th>
+                <th>名称</th>
+                <th>卡号</th>
+                <th>类型</th>
+                <th>是否通用</th>
+                <th>余额</th>
                 <th>状态</th>
+                <th>过期时间</th>
                 @if(request()->role == 110)<th>所属商店</th>@endif
                 <th>添加时间</th>
                 <th>操作</th>
@@ -87,20 +89,6 @@
         function decorateColumn()
         {
             return [
-                {
-                    "targets": 1,   //头像
-                    "render": function (data,type,row){
-                        return `<img src="`+row.headimgurl+`" alt="Boiox" width="40">`;
-                    }
-                },
-                {
-                    "targets": 5,   //性别
-                    className : 'td-center',
-                    "render": function (data,type,row){
-
-                        return row.sex == 1?'男':'女';
-                    }
-                },
                 {
                     "targets": 6,   //状态
                     className : 'td-center',

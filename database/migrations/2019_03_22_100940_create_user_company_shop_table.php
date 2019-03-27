@@ -17,6 +17,8 @@ class CreateUserCompanyShopTable extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('company_id');
             $table->unsignedInteger('shop_id');
+            $table->string('remark')->default('')->comment('用户在所属商店的备注');
+            $table->tinyInteger('status')->default(1)->comment('用户在所属商店的状态');
 
             $table->foreign('user_id')
                 ->references('id')

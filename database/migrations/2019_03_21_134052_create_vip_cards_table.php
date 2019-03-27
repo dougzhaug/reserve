@@ -25,7 +25,7 @@ class CreateVipCardsTable extends Migration
             $table->tinyInteger('universal')->default(0)->comment('通用卡 0否（单店卡） 1是（通用卡）');
             $table->integer('valid_date')->default(0)->comment('有效天数  0永久有效');
             $table->text('direction_for_use')->comment('使用须知');
-            $table->tinyInteger('status')->default(0)->comment('状态 0禁用 1正常');
+            $table->tinyInteger('status')->default(0)->comment('状态 -1禁用 1正常');
             $table->timestamps();
         });
     }

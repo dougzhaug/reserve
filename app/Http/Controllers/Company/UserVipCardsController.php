@@ -2,25 +2,19 @@
 
 namespace App\Http\Controllers\Company;
 
-use App\Models\Company;
-use App\Models\Shop;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class UsersController extends AuthController
+class UserVipCardsController extends AuthController
 {
     //
     public function index(Request $request)
     {
         if($request->isMethod('post')){
 
-            if($request->role == 110){
-                $builder = Company::find($request->user['company_id'])->users()->join('shops','user_company_shop.shop_id','=','shops.id')->select(['users.id','users.nickname','users.phone','users.sex','users.headimgurl','user_company_shop.status','users.created_at','user_company_shop.remark','shops.name as shop_name','shops.id as shop_id']);
-            }elseif ($request->role == 120){
-                $builder = Shop::find($request->user['shop_id'])->users()->select(['id','nickname','phone','sex','headimgurl','created_at','user_company_shop.status','user_company_shop.remark']);
-            }else{
-                return [];
-            }
+            $user_id = 1;   //这个用户是指users表用户
+
+            $builder = User::find($user_id)->vipCard()->select(['vip_cards.shop_id','vip_cards.name','vip_cards.type','vip_cards.universal','user_vip_card.id','user_vip_card.card_number','user_vip_card.balance','user_vip_card.expired_at','user_vip_card.status','user_vip_card.created_at']);
 
             /* where start*/
             if($request->keyword){
@@ -58,9 +52,9 @@ class UsersController extends AuthController
 
         $dropdowns = ['nickname'=>'昵称','remark'=>'备注','phone'=>'手机'];
 
-        return view('company.users.index',[
+        return view('company.user_vip_cards.index',[
             'dropdowns'=>$dropdowns,
-            'shops'=>Shop::getShopSelect(),
+//            'shops'=>Shop::getShopSelect(),
         ]);
     }
 }
