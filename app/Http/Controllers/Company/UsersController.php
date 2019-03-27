@@ -60,7 +60,7 @@ class UsersController extends AuthController
 
         return view('company.users.index',[
             'dropdowns'=>$dropdowns,
-            'shops'=>Shop::getShopSelect(),
+            'shops'=>Shop::getShopSelect(false,['company_id'=>$request->user['company_id']]),
         ]);
     }
 }

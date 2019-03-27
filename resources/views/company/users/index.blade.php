@@ -131,8 +131,9 @@
          */
         function getButton(data,type,row)
         {
+            var shop_id = data.shop_id != undefined ? data.shop_id : 0;
             var html = '';
-            html += '<a href="chapters/'+data.id+'" class="btn btn-success btn-xs tables-console tables-show"><span class="fa fa-credit-card-alt"></span>会员卡管理</a>';
+            html += '<a href="user_vip_cards/'+data.id+'/'+shop_id+'" class="btn btn-success btn-xs tables-console tables-show"><span class="fa fa-credit-card-alt"></span>会员卡管理</a>';
             html += '<a href="shops/'+data.id+'/edit" class="btn btn-info btn-xs tables-console tables-edit"><span class="glyphicon glyphicon-edit"></span>编辑</a>';
             html += '<button data-url="shops/'+data.id+'" onclick="tablesDelete(this)" class="btn btn-danger btn-xs tables-console tables-delete"><span class="glyphicon glyphicon-trash"></span>删除</button>';
             return html;

@@ -55,7 +55,7 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function vipCard()
+    public function vipCards()
     {
         return $this->belongsToMany('App\Models\VipCard')->withPivot('id as vip_card_id','balance','expired_at','status');
     }

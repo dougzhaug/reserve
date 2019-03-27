@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="box-body">
-        <form id="formSearch" class="form-horizontal form-search" method="POST" action="{{url('user_vip_cards/index')}}">
+        <form id="formSearch" class="form-horizontal form-search" method="POST" action="{{url('user_vip_cards/index',[request()->user_id,request()->shop_id])}}">
             <div class="input-group m-b-10 m-r-10 col-sm-3">
                 @include('layouts.plugins.DropdownsInput',['group'=>0,'dropdowns'=>$dropdowns])
             </div>
@@ -35,7 +35,7 @@
     </div>
 
     <div class="table-responsive">
-        <table id="data-tables" class="table table-striped product-overview" data-url="{{url('user_vip_cards/index')}}">
+        <table id="data-tables" class="table table-striped product-overview" data-url="{{url('user_vip_cards/index',[request()->user_id,request()->shop_id])}}">
             <thead>
             <tr>
                 <th data-name="id" data-sort="true">ID</th>
@@ -46,7 +46,7 @@
                 <th data-name="balance">余额</th>
                 <th data-name="status">状态</th>
                 <th data-name="expired_at">过期时间</th>
-                @if(request()->role == 110)<th data-name="shop_id">所属商店</th>@endif
+                @if(request()->role == 110)<th data-name="shop_name">所属商店</th>@endif
                 <th data-name="created_at">添加时间</th>
                 <th data-name="">操作</th>
             </tr>
@@ -90,6 +90,27 @@
         {
             return [
                 {
+                    "targets": 3,   //类型
+                    className : 'td-center',
+                    "render": function (data,type,row){
+                        return row.type==1 ? '充值卡' : '次卡';
+                    }
+                },
+                {
+                    "targets": 4,   //是否通用
+                    className : 'td-center',
+                    "render": function (data,type,row){
+                        return row.universal==1 ? '通用卡' : '非通用';
+                    }
+                },
+                {
+                    "targets": 5,   //余额/余次
+                    className : 'td-center',
+                    "render": function (data,type,row){
+                        return row.type==1 ? row.balance : parseInt(row.balance);
+                    }
+                },
+                {
                     "targets": 6,   //状态
                     className : 'td-center',
                     "render": function (data,type,row){
@@ -104,6 +125,13 @@
                                 break;
                         }
                         return `<span class="label label-` + btn + ` font-weight-100">` + msg + `</span>`;
+                    }
+                },
+                {
+                    "targets": 7,   //过期时间
+                    className : 'td-center',
+                    "render": function (data,type,row){
+                        return row.expired_at=='0000-00-00 00:00:00' || row.expired_at == null? '永久' : row.expired_at;
                     }
                 },
             ];

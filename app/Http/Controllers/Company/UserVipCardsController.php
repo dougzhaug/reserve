@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Company;
 
+use App\Models\Shop;
 use App\Models\User;
+use App\Models\VipCardShop;
 use Illuminate\Http\Request;
 
 class UserVipCardsController extends AuthController
@@ -12,9 +14,24 @@ class UserVipCardsController extends AuthController
     {
         if($request->isMethod('post')){
 
-            $user_id = 1;   //这个用户是指users表用户
+            $user_id = $request->user_id;   //这个用户是指users表用户
 
-            $builder = User::find($user_id)->vipCard()->select(['vip_cards.shop_id','vip_cards.name','vip_cards.type','vip_cards.universal','user_vip_card.id','user_vip_card.card_number','user_vip_card.balance','user_vip_card.expired_at','user_vip_card.status','user_vip_card.created_at']);
+            $builder = User::find($user_id)->vipCards()->leftJoin('shops','vip_cards.shop_id','shops.id');
+
+            if($request->role == 120 || $request->shop_id){
+
+                $shop_id = $request->shop_id?:$request->user['shop_id'];
+
+                $universal_vip_card_id = VipCardShop::where('shop_id',$shop_id)->pluck('vip_card_id');
+
+                $builder->where('vip_cards.shop_id',$shop_id)->orwhere(function ($query) use($user_id,$universal_vip_card_id){
+                    $query->where('vip_cards.shop_id', 0)
+                        ->where('user_vip_card.user_id',$user_id)
+                        ->whereIn('vip_cards.id', $universal_vip_card_id);
+                });
+            }
+
+            $builder->select(['vip_cards.shop_id','vip_cards.name','vip_cards.type','vip_cards.universal','shops.name as shop_name','user_vip_card.id','user_vip_card.card_number','user_vip_card.balance','user_vip_card.expired_at','user_vip_card.status','user_vip_card.created_at']);
 
             /* where start*/
             if($request->keyword){
@@ -23,10 +40,6 @@ class UserVipCardsController extends AuthController
 
             if($request->date_range){
                 $builder->whereBetween('created_at',[$request->start_date,$request->end_date]);
-            }
-
-            if($request->shop_id){
-                $builder->wherePivot('shop_id',$request->shop_id);
             }
 
             /* where end */
@@ -50,11 +63,11 @@ class UserVipCardsController extends AuthController
             ];
         }
 
-        $dropdowns = ['nickname'=>'昵称','remark'=>'备注','phone'=>'手机'];
+        $dropdowns = ['card_number'=>'卡号'];
 
         return view('company.user_vip_cards.index',[
             'dropdowns'=>$dropdowns,
-//            'shops'=>Shop::getShopSelect(),
+            'shops'=>Shop::getShopSelect($request->shop_id,['company_id'=>$request->user['company_id']]),
         ]);
     }
 }
