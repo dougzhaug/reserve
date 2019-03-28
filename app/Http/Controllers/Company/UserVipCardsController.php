@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Company;
 
 use App\Models\Shop;
 use App\Models\User;
+use App\Models\UserVipCard;
 use App\Models\VipCard;
 use App\Models\VipCardShop;
 use Illuminate\Http\Request;
@@ -74,7 +75,8 @@ class UserVipCardsController extends AuthController
     /**
      * 添加
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
      */
     public function create(Request $request)
     {
@@ -91,9 +93,32 @@ class UserVipCardsController extends AuthController
         ]);
     }
 
+    /**
+     * 添加数据
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function store(Request $request)
     {
-        dd($request->post());
+        $this->validate($request, [
+            'user_id' => ['required'],
+            'vip_card' => ['required'],
+            'balance' => ['required'],
+        ]);
+
+        $status = $request->status ? 1 : -1;
+
+        try{
+            $result = UserVipCard::build($request->user_id,$request->vip_card,$request->balance,$status);
+            if($result){
+                return success('添加成功','user_vip_cards/'.$request->user_id.'/'.$request->shop?:0);
+            }else{
+                return error('网络异常');
+            }
+        }catch (\Exception $e){
+            return error($e->getMessage() ?: '网络异常');
+        }
     }
 
     /**

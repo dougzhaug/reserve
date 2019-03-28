@@ -185,12 +185,15 @@
                     $('#vip_price').text(data.price);
                     $('#vip_type').text(data.type==1?'储值卡':'记次卡');
                     $('#vip_present_title').text(data.type==1?'价值':'次数');
-                    $('#vip_present').text(data.type==1 ? parseFloat(parseFloat(data.price)+parseFloat(data.present)).toFixed(2) : Number(data.present));
+                    $('#vip_present').text(data.type==1 ? parseFloat(data.worth).toFixed(2) : Number(data.worth));
                     $('#vip_universal').text(data.universal==1 ? '通用卡【'+data.shops.join(' | ')+'】' : '非通用');
                     $('#vip_valid_date').text(data.valid_date==0 ? '永久' : data.valid_date+'天');
                     $('#vip_direction_for_use').text(data.direction_for_use);
 
                     $('#vip_detail').show();
+
+                    //自动修改需要添加的金额和次数
+                    $('#inputBalance').val(data.type==1 ? parseFloat(data.worth).toFixed(2) : Number(data.worth));
                 },
                 error:function(e) {
                     alert("系统异常，请稍候重试！");

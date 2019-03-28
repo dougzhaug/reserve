@@ -21,7 +21,7 @@ class CreateVipCardsTable extends Migration
             $table->string('bg_image')->default('')->comment('会员卡背景图');
             $table->tinyInteger('type')->default(0)->comment('会员卡类型 1储值卡 2次卡');
             $table->decimal('price',10,2)->default(0.00)->comment('会卡价格');
-            $table->decimal('present',10,2)->default(0)->comment('储值卡:赠送金额  次卡:购买的次数');
+            $table->decimal('worth',10,2)->default(0)->comment('储值卡:价值金额  次卡:购买的次数');
             $table->tinyInteger('universal')->default(0)->comment('通用卡 0否（单店卡） 1是（通用卡）');
             $table->integer('valid_date')->default(0)->comment('有效天数  0永久有效');
             $table->text('direction_for_use')->comment('使用须知');
