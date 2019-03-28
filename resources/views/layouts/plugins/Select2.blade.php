@@ -6,6 +6,7 @@
     @php $selected = $selected ?? 0; @endphp
 
     <select name="{{$name or 'select'}}"
+            id = "{{$name or 'select'}}"
             class="form-control select2 select2-multiple"
             @if(isset($disabled) && $disabled) disabled @endif
             @if(isset($required) && $required) required @endif

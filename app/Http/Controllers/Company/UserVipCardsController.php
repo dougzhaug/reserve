@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Company;
 
 use App\Models\Shop;
 use App\Models\User;
+use App\Models\VipCard;
 use App\Models\VipCardShop;
 use Illuminate\Http\Request;
 
@@ -41,7 +42,6 @@ class UserVipCardsController extends AuthController
             if($request->date_range){
                 $builder->whereBetween('created_at',[$request->start_date,$request->end_date]);
             }
-
             /* where end */
 
             //获取总条数
@@ -69,5 +69,45 @@ class UserVipCardsController extends AuthController
             'dropdowns'=>$dropdowns,
             'shops'=>Shop::getShopSelect($request->shop_id,['company_id'=>$request->user['company_id']]),
         ]);
+    }
+
+    /**
+     * 添加
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function create(Request $request)
+    {
+        if($request->isMethod('post')) {
+            //获取会员卡信息
+            $shop_id = $request->user['shop_id'];
+            if ($request->role == 110) {
+                $shop_id = $request->shop_id;
+            }
+            return VipCard::getVipCardToShopIdSelect($shop_id);
+        }
+        return view('company.user_vip_cards.create',[
+            'shops'=>Shop::getShopSelect($request->shop_id,['company_id'=>$request->user['company_id']]),
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        dd($request->post());
+    }
+
+    /**
+     * 获取会员卡详情信息
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function getVipCard(Request $request)
+    {
+        if($request->isMethod('post')) {
+            $vip_card = VipCard::find($request->vip_card_id);
+            $vip_card->shops = $vip_card->shops()->pluck('name');
+            return $vip_card;
+        }
     }
 }

@@ -31,7 +31,7 @@
         </form>
     </div>
     <div class="box-label m-t-10 m-b-20">
-        <a href="{{url('user_vip_cards/create')}}" class="btn btn-info">添加会员卡</a>
+        <a href="{{url('user_vip_cards/create',[request()->user_id,request()->shop_id])}}" class="btn btn-info">添加会员卡</a>
     </div>
 
     <div class="table-responsive">
