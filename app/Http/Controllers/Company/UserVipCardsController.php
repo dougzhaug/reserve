@@ -27,7 +27,7 @@ class UserVipCardsController extends AuthController
                 $universal_vip_card_id = VipCardShop::where('shop_id',$shop_id)->pluck('vip_card_id');
 
                 $builder->where('vip_cards.shop_id',$shop_id)->orwhere(function ($query) use($user_id,$universal_vip_card_id){
-                    $query->where('vip_cards.shop_id', 0)
+                    $query->where('vip_cards.universal', 1)
                         ->where('user_vip_card.user_id',$user_id)
                         ->whereIn('vip_cards.id', $universal_vip_card_id);
                 });
@@ -39,7 +39,9 @@ class UserVipCardsController extends AuthController
             if($request->keyword){
                 $builder->where($request->current_field,'like','%'.$request->keyword.'%');
             }
-
+            if($request->status){
+                $builder->where('user_vip_card.status',$request->status);
+            }
             if($request->date_range){
                 $builder->whereBetween('created_at',[$request->start_date,$request->end_date]);
             }
@@ -112,12 +114,51 @@ class UserVipCardsController extends AuthController
         try{
             $result = UserVipCard::build($request->user_id,$request->vip_card,$request->balance,$status);
             if($result){
-                return success('添加成功','user_vip_cards/'.$request->user_id.'/'.$request->shop?:0);
+                $shop_id = $request->shop ? : 0;
+                return success('添加成功','user_vip_cards/' . $request->user_id . '/' . $shop_id);
             }else{
                 return error('网络异常');
             }
         }catch (\Exception $e){
             return error($e->getMessage() ?: '网络异常');
+        }
+    }
+
+    /**
+     * 编辑
+     *
+     * @param UserVipCard $userVipCard
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit(UserVipCard $userVipCard)
+    {
+        return view('company.user_vip_cards.edit',[
+            'user_vip_card'=>$userVipCard,
+        ]);
+    }
+
+    /**
+     * 编辑数据
+     *
+     * @param Request $request
+     * @param UserVipCard $userVipCard
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function update(Request $request,UserVipCard $userVipCard)
+    {
+        $this->validate($request, [
+            'balance' => ['required'],
+        ]);
+
+        $status = $request->status ? 1 : -1;
+
+        $result = $userVipCard->update(['balance'=>$request->balance,'status'=>$status]);
+
+        if($result){
+            $shop_id = $request->role == 110 ? 0 : $userVipCard->vipCard['shop_id'];
+            return success('编辑成功','user_vip_cards/' . $userVipCard->user_id . '/' . $shop_id);
+        }else{
+            return error('网络异常');
         }
     }
 

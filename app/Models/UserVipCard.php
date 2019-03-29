@@ -96,4 +96,9 @@ class UserVipCard extends Model
 
         return $prefix . date('Ymds').rand(10000,99999);
     }
+
+    public function vipCard()
+    {
+        return $this->belongsTo('App\Models\VipCard');
+    }
 }

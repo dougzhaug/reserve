@@ -77,6 +77,8 @@ Route::namespace('Company')->group(function () {
     Route::post('users/index', 'UsersController@index');
 
     //用户会员卡管理
+
+    Route::get('user_vip_cards/{user_vip_card}/edit', 'UserVipCardsController@edit');
     Route::get('user_vip_cards/create/{user_id}/{shop_id}', 'UserVipCardsController@create');
     Route::get('user_vip_cards/{user_id}/{shop_id}', 'UserVipCardsController@index');
     Route::post('user_vip_cards/create', 'UserVipCardsController@create');
