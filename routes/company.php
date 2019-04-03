@@ -65,6 +65,7 @@ Route::namespace('Company')->group(function () {
     Route::post('shops/index', 'ShopsController@index');
 
     //预约管理
+    Route::post('reserves/get_reserve_events','ReservesController@getReserveEvents');
     Route::get('reserves/{reserve}/edit', 'ReservesController@edit');
     Route::patch('reserves/{reserve}', 'ReservesController@update');
     Route::resource('reserves', 'ReservesController');

@@ -113,7 +113,7 @@
         function getButton(data,type,row)
         {
             var html = '';
-            // html += '<a href="reserves/'+data.id+'" class="btn btn-success btn-xs tables-console tables-show"><span class="fa fa-file-text-o"></span>预约管理</a>';
+            html += '<a href="reserves/'+data.id+'" class="btn btn-success btn-xs tables-console tables-show"><span class="fa fa-file-text-o"></span>预约管理</a>';
             html += '<a href="reserves/'+data.id+'/edit" class="btn btn-info btn-xs tables-console tables-edit"><span class="glyphicon glyphicon-edit"></span>编辑</a>';
             html += '<button data-url="reserves/'+data.id+'" onclick="tablesDelete(this)" class="btn btn-danger btn-xs tables-console tables-delete"><span class="glyphicon glyphicon-trash"></span>删除</button>';
             return html;

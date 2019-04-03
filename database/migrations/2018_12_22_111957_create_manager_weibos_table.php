@@ -15,7 +15,8 @@ class CreateManagerWeibosTable extends Migration
     {
         Schema::create('manager_weibos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('openid')->comment('Weibo openid');
+            $table->bigInteger('uid')->comment('微博返回的用户id');
+            $table->string('openid')->comment('微博 openid');
             $table->string('name')->default('')->comment('');
             $table->string('email')->default('')->comment('');
             $table->string('screen_name')->comment('屏幕名称');

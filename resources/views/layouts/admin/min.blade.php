@@ -5,6 +5,9 @@
     <link href="{{asset('static/admin/theme/min/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- Menu CSS -->
     <link href="{{asset('static/admin/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css')}}" rel="stylesheet">
+
+    @stack('link')
+
     <!-- animation CSS -->
     <link href="{{asset('static/admin/theme/min/css/animate.css')}}" rel="stylesheet">
     <!--alerts CSS -->
@@ -14,8 +17,6 @@
     <link href="{{asset('static/admin/theme/min/css/spinners.css')}}" rel="stylesheet">
     <!-- color CSS -->
     <link href="{{asset('static/admin/theme/min/css/colors/blue-dark.css')}}" id="theme" rel="stylesheet">
-
-    @stack('link')
 
 @endsection
 
@@ -290,9 +291,9 @@
 
                             @section('content')
                                 <!-- content -->
-                                <h3 class="box-title">Blank Starter page</h3> </div>
+                                <h3 class="box-title">Blank Starter page</h3>
                             @show
-
+                        </div>
                     </div>
                 </div>
             @show

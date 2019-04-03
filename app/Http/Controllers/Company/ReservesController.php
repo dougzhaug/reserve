@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Company;
 
 use App\Models\Reserve;
+use App\Models\ReserveEvent;
 use Illuminate\Http\Request;
 
 class ReservesController extends AuthController
@@ -81,6 +82,7 @@ class ReservesController extends AuthController
         ]);
 
         $create = $request->post();
+        $create['company_id'] = $request->user['company_id'];
         $create['config'] = json_encode(['only'=>$request->only,'interval'=>$request->interval,'queuing'=>$request->queuing]);
 
         $result = Reserve::create($create);
@@ -90,6 +92,17 @@ class ReservesController extends AuthController
         }else{
             return error('网络异常');
         }
+    }
+
+    public function show(Reserve $reserve)
+    {
+
+        return view('company.reserves.show');
+    }
+
+    public function getReserveEvents(Request $request)
+    {
+        return Reserve::find($request->reserve_id)->reserveEvents()->where('date',$request->date)->get();
     }
 
     /**

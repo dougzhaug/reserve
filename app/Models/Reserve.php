@@ -29,4 +29,14 @@ class Reserve extends Model
     {
         return json_decode($value,true);
     }
+
+    /**
+     * 一对多 获取预约项目
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reserveEvents()
+    {
+        return $this->hasMany('App\Models\ReserveEvent');
+    }
 }

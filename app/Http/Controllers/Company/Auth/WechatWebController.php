@@ -31,24 +31,24 @@ class WechatWebController extends Controller
         $raw = Socialite::driver('weixinweb')->user();
 
         //通过用户信息查询数据库信息
-        $agent_wechat = ManagerWechatWeb::where('openid',$raw->id)->first();
+        $wechat = ManagerWechatWeb::where('openid',$raw->id)->first();
 
-        if(!$agent_wechat){
+        if(!$wechat){
             $user = $raw->user;
             $user['refresh_token'] = $raw->refreshToken;
             $user['privilege'] = json_encode($user['privilege']);
             $user['expires'] = date('Y-m-d H:i:s',time()+config('services.sns_user_update_expires'));
-            $agent_wechat = ManagerWechatWeb::create($user);
+            $wechat = ManagerWechatWeb::create($user);
         }
 
-        //加agents表数据
+        //加companies表表数据
         $create_data = [
             'source'=> self::USER_SOURCE,
             'username' => make_username(),
-            'avatar' => $agent_wechat['headimgurl'],
+            'avatar' => $wechat['headimgurl'],
             'password'=> bcrypt(config('services.sns_user_login_password')),
         ];
 
-        return (new SnsLoginController())->login(array_merge($create_data,$agent_wechat->toArray()));
+        return (new SnsLoginController())->login(array_merge($create_data,$wechat->toArray()));
     }
 }

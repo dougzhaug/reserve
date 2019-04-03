@@ -37,12 +37,12 @@ class SnsRegisterController extends Controller
     /**
      * 第三方注册流程
      *
-     * @param array $data
+     * @param array $sns_user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function register(array $data)
+    public function register(array $sns_user)
     {
-        $user = Manager::create($data);
+        $user = Manager::create($sns_user);
 
         RegisterController::autoAssignRoles($user);
 

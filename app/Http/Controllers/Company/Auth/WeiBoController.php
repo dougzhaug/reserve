@@ -30,34 +30,33 @@ class WeiBoController extends Controller
     {
         $raw = Socialite::driver('weibo')->user();
 
-        $openid = 'weibo-' . $raw->id;
-//        dd($raw);die;
         //通过用户信息查询数据库信息
-        $agent_weibo = ManagerWeibo::where('openid',$openid)->first();
+        $weibo = ManagerWeibo::where('uid',$raw->id)->first();
 
-        if(!$agent_weibo){
+        if(!$weibo){
             $user = $raw->user;
-            $user['openid'] = $openid;
-            $user['name'] = $raw->name?:'';
-            $user['email'] = $raw->email?:'';
+            $user['uid'] = $raw->id;
+            $user['openid'] = md5($raw->id);
+            $user['name'] = $raw->name ? : '';
+            $user['email'] = $raw->email ? : '';
             $user['created_time'] = isset($user['created_at']) ? $user['created_at'] : '';
             $user['refresh_token'] = $raw->refreshToken ? : '';
             $user['expires'] = date('Y-m-d H:i:s',time()+config('services.sns_user_update_expires'));
-            $agent_weibo = ManagerWeibo::create($user);
+            $weibo = ManagerWeibo::create($user);
         }
 
-        unset($agent_weibo->id);
+        unset($weibo->id);
 
-        //加agents表数据
+        //加companies表数据
         $create_data = [
             'source'=> self::USER_SOURCE,
             'username' => make_username(),
             'nickname' => $raw->nickname,
-            'sex' => $agent_weibo['gender'] ? $agent_weibo['gender']=='m' ? 1 : 2 : 0,
-            'avatar' => $agent_weibo['avatar_large'],
+            'sex' => $weibo['gender'] ? $weibo['gender']=='m' ? 1 : 2 : 0,
+            'avatar' => $weibo['avatar_large'],
             'password'=> bcrypt(config('services.sns_user_login_password')),
         ];
 
-        return (new SnsLoginController())->login(array_merge($create_data,$agent_weibo->toArray()));
+        return (new SnsLoginController())->login(array_merge($create_data,$weibo->toArray()));
     }
 }

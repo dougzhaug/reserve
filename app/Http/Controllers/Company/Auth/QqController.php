@@ -31,9 +31,9 @@ class QqController extends Controller
         $raw = Socialite::driver('qq')->user();
 
         //通过用户信息查询数据库信息
-        $agent_qq = ManagerQq::where('openid',$raw->id)->first();
+        $qq = ManagerQq::where('openid',$raw->id)->first();
 
-        if(!$agent_qq){
+        if(!$qq){
             $user = $raw->user;
             $user['openid'] = $raw->id;
             $user['name'] = $raw->name?:'';
@@ -41,18 +41,18 @@ class QqController extends Controller
             $user['unionid'] = $raw->unionid;
             $user['refresh_token'] = $raw->refreshToken;
             $user['expires'] = date('Y-m-d H:i:s',time()+config('services.sns_user_update_expires'));
-            $agent_qq = ManagerQq::create($user);
+            $qq = ManagerQq::create($user);
         }
 
-        //加agents表数据
+        //加companies表表数据
         $create_data = [
             'source'=> self::USER_SOURCE,
             'username' => make_username(),
-            'sex' => $agent_qq['gender'] ? $agent_qq['gender']=='男' ? 1 : 2 : 0,
-            'avatar' => $agent_qq['figureurl_qq_2'],
+            'sex' => $qq['gender'] ? $qq['gender']=='男' ? 1 : 2 : 0,
+            'avatar' => $qq['figureurl_qq_2'],
             'password'=> bcrypt(config('services.sns_user_login_password')),
         ];
 
-        return (new SnsLoginController())->login(array_merge($create_data,$agent_qq->toArray()));
+        return (new SnsLoginController())->login(array_merge($create_data,$qq->toArray()));
     }
 }
