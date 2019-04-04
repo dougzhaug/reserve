@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Company;
 
 use App\Models\Reserve;
-use App\Models\ReserveEvent;
 use Illuminate\Http\Request;
 
 class ReservesController extends AuthController
@@ -96,13 +95,22 @@ class ReservesController extends AuthController
 
     public function show(Reserve $reserve)
     {
+//dd(request()->id);die;
+        return view('company.reserves.show',[
+            'reserve'=>$reserve,
+        ]);
+    }
 
-        return view('company.reserves.show');
+    public function getReserves(Request $request)
+    {
+        $month = $request->month?:date('Y-m');
+        return Reserve::find($request->reserve_id)->reserveEvents()->where(['month'=>$month,'status'=>1])->get();
     }
 
     public function getReserveEvents(Request $request)
     {
-        return Reserve::find($request->reserve_id)->reserveEvents()->where('date',$request->date)->get();
+        $date = $request->date?:date('Y-m-d');
+        return Reserve::find($request->reserve_id)->reserveEvents()->where('date',$date)->get();
     }
 
     /**

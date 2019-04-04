@@ -1,7 +1,16 @@
 @extends($layout)
 @push('link')
+    <meta name="_token" content="{{ csrf_token() }}"/>
     <!-- Calendar CSS -->
     <link href="{{asset('static/admin/plugins/bower_components/calendar/dist/fullcalendar.css')}}" rel="stylesheet" />
+    <style>
+        .calendar-events-no-drag{
+            padding: 8px 10px;
+        }
+        .calendar-events-no-drag i{
+            margin-right: 8px;
+        }
+    </style>
 @endpush
 
 @section('row')
@@ -17,6 +26,8 @@
                             <div class="calendar-events" data-class="bg-danger"><i class="fa fa-circle text-danger"></i> My Event Three</div>
                             <div class="calendar-events" data-class="bg-warning"><i class="fa fa-circle text-warning"></i> My Event Four</div>
                         </div>
+                        <input type="hidden" id="reserve_id" value="{{$reserve['id']}}">
+                        <input type="hidden" id="date_num" value="{{$reserve['min_ahead_days']+$reserve['max_ahead_days']}}">
                         <!-- checkbox -->
                         <div class="checkbox">
                             <input id="drop-remove" type="checkbox">
@@ -100,38 +111,9 @@
     <!-- Calendar JavaScript -->
     <script src="{{asset('static/admin/plugins/bower_components/calendar/jquery-ui.min.js')}}"></script>
     <script src="{{asset('static/admin/plugins/bower_components/moment/moment.js')}}"></script>
-    <script src='{{asset('static/admin/plugins/bower_components/calendar/dist/fullcalendar.min.js')}}'></script>
+    <script src='{{asset('static/admin/plugins/bower_components/calendar/dist/fullcalendar-3.6.2.min.js')}}'></script>
     <script src="{{asset('static/admin/plugins/bower_components/calendar/dist/jquery.fullcalendar.js')}}"></script>
     <script src="{{asset('static/admin/plugins/bower_components/calendar/locale/zh-cn.js')}}"></script>
+    <!--业务逻辑-->
     <script src="{{asset('static/admin/plugins/bower_components/calendar/dist/cal-init.js')}}"></script>
-    <script>
-        $(function () {
-            // getReserveEvents(1,'2019-04-03')
-        })
-        
-        function getReserveEvents(reserve_id,date) {
-
-            $.ajax({
-                url: "{{url('reserves/get_reserve_events')}}",
-                dataType: "JSON",
-                data: {'reserve_id':reserve_id, 'date': date, '_token':'{{csrf_token()}}'},
-                type: "post",
-                success:function (data) {
-                    var gradeNum= data.length;
-                    var option = "";
-                    if(gradeNum>0){
-                        for(var i = 0;i<gradeNum;i++){
-                            option += '<div class="calendar-events" data-class="bg-info" style="position: relative;"><i class="fa fa-circle text-info"></i> My Event One</div>';
-                            // option += "<option value='"+data[i].value+"'>"+data[i].name+"</option>";
-                        }
-                    }
-                    $('#calendar-events').html(option);
-                    $('#init-event').click();
-                },
-                error:function(e) {
-                    alert("系统异常，请稍候重试！");
-                }
-            });
-        }
-    </script>
 @endpush

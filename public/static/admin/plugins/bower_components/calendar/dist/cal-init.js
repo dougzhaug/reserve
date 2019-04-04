@@ -11,6 +11,8 @@
         this.$modal = $('#my-event'),
         this.$saveCategoryBtn = $('.save-category'),
         this.$calendarObj = null
+        this.$reserveId = $('#reserve_id').val();
+        this.$dateNum = $('#date_num').val();       //可预约的最晚天数
     };
 
 
@@ -58,48 +60,51 @@
     },
     /* on select */
     CalendarApp.prototype.onSelect = function (start, end, allDay) {
-        var $this = this;
-            $this.$modal.modal({
-                backdrop: 'static'
-            });
-            var form = $("<form></form>");
-            form.append("<div class='row'></div>");
-            form.find(".row")
-                .append("<div class='col-md-6'><div class='form-group'><label class='control-label'>Event Name</label><input class='form-control' placeholder='Insert Event Name' type='text' name='title'/></div></div>")
-                .append("<div class='col-md-6'><div class='form-group'><label class='control-label'>Category</label><select class='form-control' name='category'></select></div></div>")
-                .find("select[name='category']")
-                .append("<option value='bg-danger'>Danger</option>")
-                .append("<option value='bg-success'>Success</option>")
-                .append("<option value='bg-purple'>Purple</option>")
-                .append("<option value='bg-primary'>Primary</option>")
-                .append("<option value='bg-pink'>Pink</option>")
-                .append("<option value='bg-info'>Info</option>")
-                .append("<option value='bg-warning'>Warning</option></div></div>");
-            $this.$modal.find('.delete-event').hide().end().find('.save-event').show().end().find('.modal-body').empty().prepend(form).end().find('.save-event').unbind('click').click(function () {
-                form.submit();
-            });
-            $this.$modal.find('form').on('submit', function () {
-                var title = form.find("input[name='title']").val();
-                var beginning = form.find("input[name='beginning']").val();
-                var ending = form.find("input[name='ending']").val();
-                var categoryClass = form.find("select[name='category'] option:checked").val();
-                if (title !== null && title.length != 0) {
-                    $this.$calendarObj.fullCalendar('renderEvent', {
-                        title: title,
-                        start:start,
-                        end: end,
-                        allDay: false,
-                        className: categoryClass
-                    }, true);  
-                    $this.$modal.modal('hide');
-                }
-                else{
-                    alert('You have to give a title to your event');
-                }
-                return false;
-                
-            });
-            $this.$calendarObj.fullCalendar('unselect');
+        var date = $.fullCalendar.formatDate(start, 'YYYY-MM-DD');
+        this.getReserveEvents(date);
+        // console.log(start);
+        // var $this = this;
+        //     $this.$modal.modal({
+        //         backdrop: 'static'
+        //     });
+        //     var form = $("<form></form>");
+        //     form.append("<div class='row'></div>");
+        //     form.find(".row")
+        //         .append("<div class='col-md-6'><div class='form-group'><label class='control-label'>Event Name</label><input class='form-control' placeholder='Insert Event Name' type='text' name='title'/></div></div>")
+        //         .append("<div class='col-md-6'><div class='form-group'><label class='control-label'>Category</label><select class='form-control' name='category'></select></div></div>")
+        //         .find("select[name='category']")
+        //         .append("<option value='bg-danger'>Danger</option>")
+        //         .append("<option value='bg-success'>Success</option>")
+        //         .append("<option value='bg-purple'>Purple</option>")
+        //         .append("<option value='bg-primary'>Primary</option>")
+        //         .append("<option value='bg-pink'>Pink</option>")
+        //         .append("<option value='bg-info'>Info</option>")
+        //         .append("<option value='bg-warning'>Warning</option></div></div>");
+        //     $this.$modal.find('.delete-event').hide().end().find('.save-event').show().end().find('.modal-body').empty().prepend(form).end().find('.save-event').unbind('click').click(function () {
+        //         form.submit();
+        //     });
+        //     $this.$modal.find('form').on('submit', function () {
+        //         var title = form.find("input[name='title']").val();
+        //         var beginning = form.find("input[name='beginning']").val();
+        //         var ending = form.find("input[name='ending']").val();
+        //         var categoryClass = form.find("select[name='category'] option:checked").val();
+        //         if (title !== null && title.length != 0) {
+        //             $this.$calendarObj.fullCalendar('renderEvent', {
+        //                 title: title,
+        //                 start:start,
+        //                 end: end,
+        //                 allDay: false,
+        //                 className: categoryClass
+        //             }, true);
+        //             $this.$modal.modal('hide');
+        //         }
+        //         else{
+        //             alert('You have to give a title to your event');
+        //         }
+        //         return false;
+        //
+        //     });
+        //     $this.$calendarObj.fullCalendar('unselect');
     },
     CalendarApp.prototype.enableDrag = function() {
         //init events
@@ -118,10 +123,64 @@
                 revertDuration: 0  //  original position after the drag
             });
         });
+    },
+    CalendarApp.prototype.getReserves = function(month){
+        //获取预约数据
+        var $this = this;
+        var monthData = [];
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            },
+            url: "/reserves/get_reserves",
+            dataType: "JSON",
+            data: {'reserve_id':$this.$reserveId, 'month': month},
+            type: "post",
+            async:false,
+            success:function (data) {
+                monthData = data;
+            },
+            error:function(e) {
+                alert("系统异常，请稍候重试！");
+            }
+        });
+        return monthData;
+    },
+    CalendarApp.prototype.getReserveEvents = function(date){
+        //获取预约数据
+        var $this = this;
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            },
+            url: "/reserves/get_reserve_events",
+            dataType: "JSON",
+            data: {'reserve_id':$this.$reserveId, 'date': date},
+            type: "post",
+            async:false,
+            success:function (data) {
+                var gradeNum= data.length;
+                var option = "";
+                if(gradeNum>0){
+                    for(var i = 0;i<gradeNum;i++){
+                        var color = data[i].status == 1 ? 'info' : 'success';
+                        var text = data[i].status == 1 ? ' 已预约【'+data[i].name+'】':' 可预约';
+                        var cla = data[i].status == 1 ?'calendar-events':'calendar-events-no-drag';
+                        option += '<div class="'+cla+'" data-class="bg-'+ color +'" style="position: relative;"><i class="fa fa-circle text-'+ color +'"></i>'+ data[i].start_time +'-'+ data[i].end_time+text+'</div>';
+                    }
+                }
+                $this.$extEvents.html(option);
+                $this.enableDrag();
+            },
+            error:function(e) {
+                alert("系统异常，请稍候重试！");
+            }
+        });
+
     }
     /* Initializing */
     CalendarApp.prototype.init = function() {
-        this.enableDrag();
+        this.getReserveEvents();
         /*  Initialize the calendar  */
         var date = new Date();
         var d = date.getDate();
@@ -129,54 +188,80 @@
         var y = date.getFullYear();
         var form = '';
         var today = new Date($.now());
+        var endDate = new Date($.now() + 84800000 * this.$dateNum);
 
-        var defaultEvents =  [{
-                title: 'Released Ample Admin!',
-                start: new Date($.now() + 506800000),
-                className: 'bg-info'
-            }, {
-                title: 'This is today check date',
-                start: today,
-                end: today,
-                className: 'bg-danger'
-            }, {
-                title: 'This is your birthday',
-                start: new Date($.now() + 848000000),
-                className: 'bg-info'
-            },{
-                title: 'your meeting with john',
-                start: new Date($.now() - 1099000000),
-                end:  new Date($.now() - 919000000),
-                className: 'bg-warning'
-            },{
-                title: 'your meeting with john',
-                start: new Date($.now() - 1199000000),
-                end: new Date($.now() - 1199000000),
-                className: 'bg-purple'
-            },{
-                title: 'your meeting with john',
-                start: new Date($.now() - 399000000),
-                end: new Date($.now() - 219000000),
-                className: 'bg-info'
-            },  
-              {
-                title: 'Hanns birthday',
-                start: new Date($.now() + 868000000),
-                className: 'bg-danger'
-            },{
-                title: 'Like it?',
-                start: new Date($.now() + 348000000),
-                className: 'bg-success'
-            }];
+        var defaultEvents = [];
+        var events = this.getReserves('2019-04');
+        console.log(events);
+        var eventNum = events.length
+        if(eventNum>0){
+            for(var i = 0;i<eventNum;i++){
+                defaultEvents[i] = {
+                    title:events[i].name,
+                    start:events[i].date+' '+events[i].start_time,
+                    end:events[i].date+' '+events[i].end_time,
+                    className:'bg-info'
+                }
+            }
+        }
+        // events.each(function (k,v) {
+        //     defaultEvents[k] = {
+        //         title:v.name,
+        //         start:v.start_time,
+        //         className:'bg-info'
+        //     }
+        // })
+        // var defaultEvents =  [{
+        //         title: 'Released Ample Admin!',
+        //         start: new Date($.now() + 506800000),
+        //         className: ''
+        //     }, {
+        //         title: 'This is today check date',
+        //         start: today,
+        //         end: today,
+        //         className: 'bg-danger'
+        //     }, {
+        //         title: 'This is your birthday',
+        //         start: new Date($.now() + 848000000),
+        //         className: 'bg-info'
+        //     },{
+        //         title: 'your meeting with john',
+        //         start: new Date($.now() - 1099000000),
+        //         end:  new Date($.now() - 919000000),
+        //         className: 'bg-warning'
+        //     },{
+        //         title: 'your meeting with john',
+        //         start: new Date($.now() - 1199000000),
+        //         end: new Date($.now() - 1199000000),
+        //         className: 'bg-purple'
+        //     },{
+        //         title: 'your meeting with john',
+        //         start: new Date($.now() - 399000000),
+        //         end: new Date($.now() - 219000000),
+        //         className: 'bg-info'
+        //     },
+        //       {
+        //         title: 'Hanns birthday',
+        //         start: new Date($.now() + 868000000),
+        //         className: 'bg-danger'
+        //     },{
+        //         title: 'Like it?',
+        //         start: new Date($.now() + 348000000),
+        //         className: 'bg-success'
+        //     }];
 
         var $this = this;
         $this.$calendarObj = $this.$calendar.fullCalendar({
             slotDuration: '00:15:00', /* If we want to split day time each 15minutes */
             minTime: '08:00:00',
             maxTime: '19:00:00',  
-            defaultView: 'month',  
-            handleWindowResize: true,   
-             
+            defaultView: 'month',
+            validRange: {
+                start: today.toLocaleDateString(),
+                end: endDate.toLocaleDateString(),
+            },
+            handleWindowResize: true,
+
             header: {
                 left: 'prev,next today',
                 center: 'title',

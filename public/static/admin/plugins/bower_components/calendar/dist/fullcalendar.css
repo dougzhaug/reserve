@@ -44,9 +44,22 @@ body .fc { /* extra precedence to overcome jqui */
 .fc-unthemed .fc-popover .fc-header .fc-close {
 	color: #666;
 }
-
+/*当前时间*/
 .fc-unthemed .fc-today {
-	background: #fcf8e3;
+	background: #ffc36d;
+	color:#fff;
+	font-weight:bold;
+}
+
+/*星期六背景色和字体颜色wheat */
+.fc-unthemed td.fc-sat{
+	background: #F5DEB3;
+	/*color:#0000FF;*/
+}
+/*星期天背景色和字体颜色burlywood */
+.fc-unthemed td.fc-sun{
+	background: #F5DEB3;
+	/*color:#FF0000 ;*/
 }
 
 .fc-highlight { /* when user is selecting cells */
