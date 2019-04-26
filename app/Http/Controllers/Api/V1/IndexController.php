@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Auth;
 class IndexController extends AuthController
 {
     //
+    public function index()
+    {
+        return ['V1'];
+    }
     /**
      * 首页广告
      */

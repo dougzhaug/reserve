@@ -352,3 +352,17 @@ if (!function_exists('switchery2db'))
         return $switchery == 'on' ? 1 : 0;
     }
 }
+if (!function_exists('sld'))
+{
+    /**
+     * 获取二级域名（子域名）
+     *
+     * @return mixed
+     */
+    function sld(){
+
+        preg_match("#(http|https)://(.*?)\.#i",request()->url(),$match);
+
+        return $match[2]??'';
+    }
+}

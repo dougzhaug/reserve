@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Dingo\Api\Http\Parser\Accept;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -35,17 +36,23 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-        $this->mapApiRoutes();
 
-        $this->mapWebRoutes();
-
-        $this->mapAdminRoutes();
-
-        $this->mapAgentRoutes();
-
-        $this->mapCompanyRoutes();
-
-        //
+        switch (sld()){
+            case 'api':
+                $this->mapApiRoutes();
+                break;
+            case 'admin':
+                $this->mapAdminRoutes();
+                break;
+            case 'company':
+                $this->mapCompanyRoutes();
+                break;
+            case 'www':
+                $this->mapWebRoutes();
+                break;
+            default:
+                $this->mapWebRoutes();
+        }
     }
 
     /**
@@ -117,9 +124,13 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
+        $accept = (new Accept(config('api.standardsTree'), config('api.subtype'), config('api.version'), config('api.defaultFormat')))->parse(request());
+
+        $routeFile = $accept['version'] . '.php';
+
         Route::domain('api.' . config('app.tld'))
-             ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/api/'.$routeFile));
     }
 }
